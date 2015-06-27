@@ -5,5 +5,10 @@
     [TestFixture]
     public class StyleCopTests
     {
+        [Test]
+        public void AnalyzeShouldReturnAllAnalysisIssues()
+        {
+            var styleCop = new StyleCop();
+        }
     }
 }
