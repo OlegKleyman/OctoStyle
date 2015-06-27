@@ -24,7 +24,7 @@ namespace OctoStyle.Core
             this.projectPath = projectPath;
         }
 
-        public IEnumerable<Violation> Analyze(string filePath)
+        public IEnumerable<Violation> Analyze(string filePath, int startLine, int endLine)
         {
             throw new System.NotImplementedException();
         }

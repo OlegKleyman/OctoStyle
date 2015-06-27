@@ -17,7 +17,7 @@
 						Assembly.GetExecutingAssembly().Location)));
 
             var styleCop = new CodeAnalyzer(projectPath);
-            var analysis = styleCop.Analyze(Path.Combine(projectPath, "StyleCopTests.cs"));
+            var analysis = styleCop.Analyze(Path.Combine(projectPath, "StyleCopTests.cs"), 8, 15);
         }
     }
 }
