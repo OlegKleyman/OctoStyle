@@ -3,8 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0F9BB33A-FF1F-4618-8EE7-40681F90BF0C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{25EC794C-A39E-4420-B2FA-F670CB4530AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{6568C5DF-0251-4D9B-992C-4802B74FB8C3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{C3E6F8E7-76E7-4BEE-AEEE-9B867E852F12}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{B633535F-801F-4151-A760-40370E6C438F}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{25EC794C-A39E-4420-B2FA-F670CB4530AC} = {0F9BB33A-FF1F-4618-8EE7-40681F90BF0C}
+		{6568C5DF-0251-4D9B-992C-4802B74FB8C3} = {0F9BB33A-FF1F-4618-8EE7-40681F90BF0C}
 	EndGlobalSection
 EndGlobal
