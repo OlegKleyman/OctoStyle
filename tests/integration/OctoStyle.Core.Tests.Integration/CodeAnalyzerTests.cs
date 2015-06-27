@@ -16,8 +16,8 @@
 					Path.GetDirectoryName(
 						Assembly.GetExecutingAssembly().Location)));
 
-            var styleCop = new CodeAnalyzer();
-            var analysis = styleCop.Analyze(projectPath, Path.Combine(projectPath, "StyleCopTests.cs"));
+            var styleCop = new CodeAnalyzer(projectPath);
+            var analysis = styleCop.Analyze(Path.Combine(projectPath, "StyleCopTests.cs"));
         }
     }
 }

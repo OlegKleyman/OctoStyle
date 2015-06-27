@@ -1,12 +1,30 @@
 namespace OctoStyle.Core
 {
+    using System;
     using System.Collections.Generic;
 
     using StyleCop;
 
     public class CodeAnalyzer
     {
-        public IEnumerable<Violation> Analyze(string projectPath, string filePath)
+        private readonly string projectPath;
+
+        public CodeAnalyzer(string projectPath)
+        {
+            if (projectPath == null)
+            {
+                throw new ArgumentNullException("projectPath");
+            }
+
+            if (projectPath == String.Empty)
+            {
+                throw new ArgumentException("Cannot be empty.", "projectPath");
+            }
+
+            this.projectPath = projectPath;
+        }
+
+        public IEnumerable<Violation> Analyze(string filePath)
         {
             throw new System.NotImplementedException();
         }
