@@ -40,6 +40,9 @@
     <Reference Include="StyleCop.CSharp">
       <HintPath>..\..\packages\StyleCop.4.7.49.0\lib\net35\StyleCop.CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="StyleCop.CSharp.Rules">
+      <HintPath>..\..\common\lib\StyleCop.CSharp.Rules.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
