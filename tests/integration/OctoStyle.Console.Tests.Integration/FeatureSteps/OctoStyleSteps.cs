@@ -15,7 +15,7 @@
         [Given(@"I have a pull request with stylistic problems")]
         public void GivenIHaveAPullRequestWithStylisticProblems()
         {
-            ScenarioContext.Current.Pending();
+            ScenarioContextExtended.Current.PullRequestNumber = 1;
         }
 
         [When(@"I run the OctoStyle")]
