@@ -47,6 +47,7 @@
       <DependentUpon>OctoStyle.feature</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Extensions\FeatureContextExtentions.cs" />
     <Compile Include="Steps\OctoStyleSteps.cs" />
   </ItemGroup>
   <ItemGroup>
