@@ -1,4 +1,4 @@
-﻿namespace OctoStyle.Console.Tests.Integration.Steps
+﻿namespace OctoStyle.Console.Tests.Integration.FeatureSteps
 {
     using TechTalk.SpecFlow;
 
