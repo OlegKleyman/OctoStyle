@@ -49,6 +49,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FeatureContextExtended.cs" />
     <Compile Include="FeatureSteps\OctoStyleSteps.cs" />
+    <Compile Include="ScenarioContextExtended.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
