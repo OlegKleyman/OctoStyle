@@ -13,7 +13,7 @@
     [Binding]
     public class OctoStyleSteps : Steps
     {
-        [BeforeFeature("OctoStyle")]
+        [BeforeFeature("octoStyle")]
         public static void BeforeFeature()
         {
             FeatureContextExtended.Current.RepositoryOwner = "OlegKleyman";
