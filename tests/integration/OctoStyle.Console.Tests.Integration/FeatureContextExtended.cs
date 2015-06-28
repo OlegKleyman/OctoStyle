@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using Octokit;
+
     using TechTalk.SpecFlow;
 
     public class FeatureContextExtended
@@ -10,6 +12,8 @@
         private static readonly FeatureContextExtended CurrentContext = new FeatureContextExtended(FeatureContext.Current);
 
         private readonly FeatureContext context;
+
+        private const string GitClientKey = "GIT_CLIENT";
         private const string RepositoryKey = "REPOSITORY";
         private const string RepositoryOwnerKey = "REPOSITORY_OWNER";
 
@@ -62,6 +66,23 @@
             set
             {
                 this.context.Set(value, RepositoryKey);
+            }
+        }
+
+        public GitHubClient GitClient
+        {
+            get
+            {
+                if (!this.context.ContainsKey(GitClientKey))
+                {
+                    throw new KeyNotFoundException(RepositoryKey);
+                }
+
+                return this.context.Get<GitHubClient>(GitClientKey);
+            }
+            set
+            {
+                this.context.Set(value, GitClientKey);
             }
         }
     }
