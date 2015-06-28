@@ -6,17 +6,17 @@
 
     public class ScenarioContextExtended
     {
-        private static readonly ScenarioContextExtended context = new ScenarioContextExtended(ScenarioContext.Current);
+        private static readonly ScenarioContextExtended CurrentContext = new ScenarioContextExtended(ScenarioContext.Current);
 
         public static ScenarioContextExtended Current
         {
             get
             {
-                return context;
+                return CurrentContext;
             }
         }
 
-        public ScenarioContext Context { get; set; }
+        private readonly ScenarioContext context;
 
         public ScenarioContextExtended(ScenarioContext context)
         {
@@ -25,7 +25,7 @@
                 throw new ArgumentNullException("context");
             }
 
-            this.Context = context;
+            this.context = context;
         }
     }
 }

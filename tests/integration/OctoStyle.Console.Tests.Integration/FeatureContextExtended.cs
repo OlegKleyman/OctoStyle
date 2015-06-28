@@ -5,47 +5,46 @@
 
     using TechTalk.SpecFlow;
 
-    public class FeatureContextExtended : FeatureContext
+    public class FeatureContextExtended
     {
-        private static FeatureContextExtended context;
+        private static readonly FeatureContextExtended CurrentContext = new FeatureContextExtended(FeatureContext.Current);
 
-        private readonly FeatureContext currentContext;
+        private readonly FeatureContext context;
         private const string RepositoryKey = "REPOSITORY";
         private const string RepositoryOwnerKey = "REPOSITORY_OWNER";
 
-        public static new FeatureContextExtended Current
+        public static FeatureContextExtended Current
         {
             get
             {
-                return context ?? (context = new FeatureContextExtended(FeatureContext.Current));
+                return CurrentContext;
             }
         }
 
         public FeatureContextExtended(FeatureContext context)
-            : base(context.FeatureInfo, context.BindingCulture)
         {
             if (context == null)
             {
                 throw new ArgumentNullException("context");
             }
 
-            this.currentContext = context;
+            this.context = context;
         }
 
         public string RepositoryOwner
         {
             get
             {
-                if (!this.currentContext.ContainsKey(RepositoryOwnerKey))
+                if (!this.context.ContainsKey(RepositoryOwnerKey))
                 {
                     throw new KeyNotFoundException(RepositoryOwnerKey);
                 }
 
-                return this.currentContext.Get<string>(RepositoryOwnerKey);
+                return this.context.Get<string>(RepositoryOwnerKey);
             }
             set
             {
-                this.currentContext.Set(value, RepositoryOwnerKey);
+                this.context.Set(value, RepositoryOwnerKey);
             }
         }
 
@@ -53,16 +52,16 @@
         {
             get
             {
-                if (!this.currentContext.ContainsKey(RepositoryKey))
+                if (!this.context.ContainsKey(RepositoryKey))
                 {
                     throw new KeyNotFoundException(RepositoryKey);
                 }
 
-                return this.currentContext.Get<string>(RepositoryKey);
+                return this.context.Get<string>(RepositoryKey);
             }
             set
             {
-                this.currentContext.Set(value, RepositoryKey);
+                this.context.Set(value, RepositoryKey);
             }
         }
     }
