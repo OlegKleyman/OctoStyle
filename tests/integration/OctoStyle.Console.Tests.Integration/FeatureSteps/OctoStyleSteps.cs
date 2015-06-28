@@ -1,5 +1,8 @@
 ﻿namespace OctoStyle.Console.Tests.Integration.FeatureSteps
 {
+    using System.Globalization;
+    using System.IO;
+
     using TechTalk.SpecFlow;
 
     [Binding]
@@ -21,7 +24,11 @@
         [When(@"I run the OctoStyle")]
         public void WhenIRunTheOctoStyle()
         {
-            ScenarioContext.Current.Pending();
+            const string relativeSolutionDirectory = @"..\..\..\..\..\Common\OctoStyle";
+            Program.Main(new[] { Path.GetFullPath(relativeSolutionDirectory),
+                                 FeatureContextExtended.Current.RepositoryOwner,
+                                 FeatureContextExtended.Current.Repository,
+                                 ScenarioContextExtended.Current.PullRequestNumber.ToString(CultureInfo.InvariantCulture) });
         }
 
         [Then(@"there should be comments on the pull request on the lines of the found violations")]
