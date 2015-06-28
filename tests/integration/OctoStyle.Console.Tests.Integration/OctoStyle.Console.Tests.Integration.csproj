@@ -47,6 +47,12 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\OctoStyle.Console\OctoStyle.Console.csproj">
+      <Project>{35948f68-a753-47be-94d5-db8a11a3db19}</Project>
+      <Name>OctoStyle.Console</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
