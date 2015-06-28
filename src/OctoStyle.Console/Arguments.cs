@@ -65,22 +65,22 @@
             var repository = default(string);
             var pullRequestNumber = default(int);
 
-            var options =new OptionSet()
+            var options = new OptionSet()
                 .Add("d=", d => solutionDirectory = d)
                 .Add("o=", o => repositoryOwner = o)
                 .Add("r=", r => repository = r)
                 .Add("pr=",
                     pu =>
+                    {
+                        if (!int.TryParse(
+                            pu,
+                            NumberStyles.Integer,
+                            CultureInfo.InvariantCulture,
+                            out pullRequestNumber))
                         {
-                            if (!int.TryParse(
-                                pu,
-                                NumberStyles.Integer,
-                                CultureInfo.InvariantCulture,
-                                out pullRequestNumber))
-                            {
-                                throw new ArgumentException("pu must be an integer referencing an active pull request");
-                            }
-                        });
+                            throw new ArgumentException("pu must be an integer referencing an active pull request");
+                        }
+                    });
             options.Parse(args);
 
             try
