@@ -34,5 +34,12 @@
                         "-r {Repository}",
                         "-pr {Pull Request Number}")));
         }
+
+        [Test]
+        public void ParseShouldThrowExceptionWhenArgumentIsNull()
+        {
+            var ex = Assert.Throws<ArgumentNullException>(() => Arguments.Parse(null));
+            Assert.That(ex.Message, Is.EqualTo("Value cannot be null.\r\nParameter name: args"));
+        }
     }
 }

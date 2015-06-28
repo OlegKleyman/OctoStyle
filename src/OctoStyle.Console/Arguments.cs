@@ -55,6 +55,11 @@
 
         public static Arguments Parse(IEnumerable<string> args)
         {
+            if (args == null)
+            {
+                throw new ArgumentNullException("args");
+            }
+
             var solutionDirectory = default(string);
             var repositoryOwner = default(string);
             var repository = default(string);
@@ -76,7 +81,7 @@
                                 throw new ArgumentException("pu must be an integer referencing an active pull request");
                             }
                         });
-            var res = options.Parse(args);
+            options.Parse(args);
 
             try
             {
