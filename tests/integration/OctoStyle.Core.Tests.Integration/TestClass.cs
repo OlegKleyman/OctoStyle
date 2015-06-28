@@ -13,7 +13,7 @@ namespace OctoStyle.Core.Tests.Integration
         {
             if (1.ToString() == "1")
             {
-                
+                var t = 1 + 1;
             }
             2.ToString();
         }

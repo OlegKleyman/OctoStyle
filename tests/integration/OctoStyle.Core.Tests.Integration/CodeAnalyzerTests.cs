@@ -14,10 +14,6 @@
         {
             var projectPath = Directory.GetCurrentDirectory();
 
-            if (projectPath == null)
-            {
-                throw new InvalidOperationException("projectPath is null");
-            }
 
             var styleCop = new CodeAnalyzer(projectPath);
             var violations = styleCop.Analyze(Path.Combine(projectPath, "TestClass.cs")).ToList();
@@ -28,6 +24,7 @@
             Assert.That(violations[1].Rule.CheckId, Is.EqualTo("SA1600"));
             Assert.That(violations[2].Message, Is.EqualTo("The file header must contain a copyright tag."));
             Assert.That(violations[2].Rule.CheckId, Is.EqualTo("SA1634"));
+            var t = 9+9;
             Assert.That(violations[3].Message, Is.EqualTo("An opening curly bracket must not be followed by a blank line."));
             Assert.That(violations[3].Rule.CheckId, Is.EqualTo("SA1505"));
             Assert.That(violations[4].Message, Is.EqualTo("A closing curly bracket must not be preceded by a blank line."));
