@@ -5,9 +5,10 @@ namespace OctoStyle.Core
 
     using StyleCop;
 
-    public class CodeAnalyzer
+    public class CodeAnalyzer : ICodeAnalyzer
     {
-        private readonly string projectPath;
+        private readonly Queue<Violation> violations;
+        private readonly CodeProject project;
 
         public CodeAnalyzer(string projectPath)
         {
@@ -21,12 +22,26 @@ namespace OctoStyle.Core
                 throw new ArgumentException("Cannot be empty.", "projectPath");
             }
 
-            this.projectPath = projectPath;
+            this.violations = new Queue<Violation>();
+            this.project = new CodeProject(0, projectPath, new Configuration(null));
         }
 
-        public IEnumerable<Violation> Analyze(string filePath, int startLine, int endLine)
+        public IEnumerable<Violation> Analyze(string filePath)
         {
-            throw new System.NotImplementedException();
+            this.violations.Clear();
+            var console = new StyleCopConsole(null, false, null, null, true);
+            
+            console.Core.Environment.AddSourceCode(this.project, filePath, null);
+            console.ViolationEncountered += this.OnViolationEncountered;
+
+            console.Start(new[] { this.project }, true);
+            
+            return this.violations;
+        }
+
+        private void OnViolationEncountered(object sender, ViolationEventArgs e)
+        {
+            this.violations.Enqueue(e.Violation);
         }
     }
 }
