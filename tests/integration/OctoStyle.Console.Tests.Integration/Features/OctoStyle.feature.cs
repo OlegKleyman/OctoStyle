@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace OctoStyle.Console.Tests.Integration
+namespace OctoStyle.Console.Tests.Integration.Features
 {
     using TechTalk.SpecFlow;
     
@@ -19,20 +19,20 @@ namespace OctoStyle.Console.Tests.Integration
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("OctoStyleFeature")]
-    public partial class OctoStyleFeatureFeature
+    [NUnit.Framework.DescriptionAttribute("OctoStyle")]
+    public partial class OctoStyleFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "OctoStyleFeature.feature"
+#line 1 "OctoStyle.feature"
 #line hidden
         
         [NUnit.Framework.TestFixtureSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "OctoStyleFeature", "As a user I want to run the OctoStyle\napplication and have it comment on any styl" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "OctoStyle", "As a user I want to run the OctoStyle\napplication and have it comment on any styl" +
                     "e cop\nissues it finds on a pull request", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
