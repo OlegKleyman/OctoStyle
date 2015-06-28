@@ -20,6 +20,7 @@ namespace OctoStyle.Console.Tests.Integration.Features
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("OctoStyle")]
+    [NUnit.Framework.CategoryAttribute("octoStyle")]
     public partial class OctoStyleFeature
     {
         
@@ -33,7 +34,8 @@ namespace OctoStyle.Console.Tests.Integration.Features
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "OctoStyle", "As a user I want to run the OctoStyle\napplication and have it comment on any styl" +
-                    "e cop\nissues it finds on a pull request", ProgrammingLanguage.CSharp, ((string[])(null)));
+                    "e cop\nissues it finds on a pull request", ProgrammingLanguage.CSharp, new string[] {
+                        "octoStyle"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -72,13 +74,13 @@ namespace OctoStyle.Console.Tests.Integration.Features
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Pull request with issues", new string[] {
                         "pullRequest"});
-#line 7
-this.ScenarioSetup(scenarioInfo);
 #line 8
- testRunner.Given("I have a pull request with stylistic problems", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 9
- testRunner.When("I run the OctoStyle", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given("I have a pull request with stylistic problems", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 10
+ testRunner.When("I run the OctoStyle", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 11
  testRunner.Then("there should be comments on the pull request on the lines of the found violations" +
                     "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
