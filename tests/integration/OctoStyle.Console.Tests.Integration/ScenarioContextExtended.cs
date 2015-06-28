@@ -6,6 +6,16 @@
 
     public class ScenarioContextExtended
     {
+        private static readonly ScenarioContextExtended context = new ScenarioContextExtended(ScenarioContext.Current);
+
+        public static ScenarioContextExtended Current
+        {
+            get
+            {
+                return context;
+            }
+        }
+
         public ScenarioContext Context { get; set; }
 
         public ScenarioContextExtended(ScenarioContext context)
