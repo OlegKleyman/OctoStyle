@@ -5,6 +5,13 @@
     [Binding]
     public class OctoStyleSteps : Steps
     {
+        [BeforeFeature("OctoStyle")]
+        public static void BeforeFeature()
+        {
+            FeatureContextExtended.Current.RepositoryOwner = "OlegKleyman";
+            FeatureContextExtended.Current.Repository = "OctoStyleTest";
+        }
+
         [Given(@"I have a pull request with stylistic problems")]
         public void GivenIHaveAPullRequestWithStylisticProblems()
         {
