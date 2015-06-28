@@ -20,7 +20,7 @@
             }
 
             var styleCop = new CodeAnalyzer(projectPath);
-            var violations = styleCop.Analyze(Path.Combine(projectPath, "TestClass.cs")).ToList();
+            var violations = styleCop.Analyze(Path.Combine(projectPath, @"Resources\TestClass.cs")).ToList();
 
             Assert.That(violations[0].Message, Is.EqualTo("The class must have a documentation header."));
             Assert.That(violations[0].Rule.CheckId, Is.EqualTo("SA1600"));
