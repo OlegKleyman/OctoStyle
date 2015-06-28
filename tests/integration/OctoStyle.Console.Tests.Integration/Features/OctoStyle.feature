@@ -4,6 +4,7 @@ Feature: OctoStyle
 	application and have it comment on any style cop
 	issues it finds on a pull request
 
+@ignore
 @pullRequest
 Scenario: Pull request with issues
 	Given I have a pull request with stylistic problems	
