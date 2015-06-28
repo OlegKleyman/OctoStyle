@@ -7,9 +7,9 @@
 
     public class FeatureContextExtended : FeatureContext
     {
-        private const string RepositoryOwnerKey = "REPOSITORY_OWNER";
-
         private readonly FeatureContext currentContext;
+        private const string RepositoryKey = "REPOSITORY";
+        private const string RepositoryOwnerKey = "REPOSITORY_OWNER";
 
         public FeatureContextExtended(FeatureContext context)
             : base(context.FeatureInfo, context.BindingCulture)
@@ -36,6 +36,23 @@
             set
             {
                 this.currentContext.Set(value, RepositoryOwnerKey);
+            }
+        }
+
+        public string Repository
+        {
+            get
+            {
+                if (!this.currentContext.ContainsKey(RepositoryKey))
+                {
+                    throw new KeyNotFoundException(RepositoryKey);
+                }
+
+                return this.currentContext.Get<string>(RepositoryKey);
+            }
+            set
+            {
+                this.currentContext.Set(value, RepositoryKey);
             }
         }
     }
