@@ -1,5 +1,6 @@
 ﻿namespace OctoStyle.Console.Tests.Integration.FeatureSteps
 {
+    using System;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -31,10 +32,15 @@
         public void WhenIRunTheOctoStyle()
         {
             const string relativeSolutionDirectory = @"..\..\..\..\..\Common\OctoStyle";
-            Program.Main(new[] { Path.GetFullPath(relativeSolutionDirectory),
-                                 FeatureContextExtended.Current.RepositoryOwner,
-                                 FeatureContextExtended.Current.Repository,
-                                 ScenarioContextExtended.Current.PullRequestNumber.ToString(CultureInfo.InvariantCulture) });
+            var arguments = String.Format(
+                CultureInfo.InvariantCulture,
+                "-d {0} -o {1} -r {2} -pr {3}",
+                Path.GetFullPath(relativeSolutionDirectory),
+                FeatureContextExtended.Current.RepositoryOwner,
+                FeatureContextExtended.Current.Repository,
+                ScenarioContextExtended.Current.PullRequestNumber);
+
+            Program.Main(arguments.Split(' '));
         }
 
         [Then(@"there should be comments on the pull request on the lines of the found violations")]
