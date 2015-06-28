@@ -7,9 +7,19 @@
 
     public class FeatureContextExtended : FeatureContext
     {
+        private static FeatureContextExtended context;
+
         private readonly FeatureContext currentContext;
         private const string RepositoryKey = "REPOSITORY";
         private const string RepositoryOwnerKey = "REPOSITORY_OWNER";
+
+        public static new FeatureContextExtended Current
+        {
+            get
+            {
+                return context ?? (context = new FeatureContextExtended(FeatureContext.Current));
+            }
+        }
 
         public FeatureContextExtended(FeatureContext context)
             : base(context.FeatureInfo, context.BindingCulture)
