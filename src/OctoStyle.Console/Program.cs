@@ -2,6 +2,8 @@
 {
     using System;
 
+    using Octokit;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -17,6 +19,12 @@
                 Console.WriteLine(ex.Message);
                 return;
             }
+
+            var gitClient = new GitHubClient(new ProductHeaderValue("OctoStyle"));
+            var pullRequest =
+                gitClient.PullRequest.Get(arguments.RepositoryOwner, arguments.Repository, arguments.PullRequestNumber)
+                    .GetAwaiter()
+                    .GetResult();
         }
     }
 }
