@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Borrowed\DiffTests.cs" />
     <Compile Include="FileContents.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
