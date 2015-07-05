@@ -59,5 +59,25 @@ namespace OctoStyle.Core.Tests.Unit {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] TestLibraryCsprojNew {
+            get {
+                object obj = ResourceManager.GetObject("TestLibraryCsprojNew", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] TestLibraryCsprojOld {
+            get {
+                object obj = ResourceManager.GetObject("TestLibraryCsprojOld", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
