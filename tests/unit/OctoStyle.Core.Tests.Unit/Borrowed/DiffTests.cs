@@ -49,5 +49,45 @@
             Assert.That(diff[10].EntryType, Is.EqualTo(DiffEntryType.Equal));
             Assert.That(diff[10].Count, Is.EqualTo(3));
         }
+
+        [Test]
+        public void DiffShouldReturnDiffListForMultiChunkDiff()
+        {
+            var diff = Diff.CreateDiff(
+                FileContents.TestClass2CsOld.Split('\n'),
+                FileContents.TestClass2CsNew.Split('\n'));
+
+            Assert.That(diff.Count, Is.EqualTo(10));
+            Assert.That(diff[0].LineNumber, Is.EqualTo(1));
+            Assert.That(diff[0].EntryType, Is.EqualTo(DiffEntryType.Add));
+            Assert.That(diff[0].Object, Is.EqualTo("//test"));
+            Assert.That(diff[1].LineNumber, Is.EqualTo(0));
+            Assert.That(diff[1].EntryType, Is.EqualTo(DiffEntryType.Equal));
+            Assert.That(diff[1].Count, Is.EqualTo(7));
+            Assert.That(diff[2].LineNumber, Is.EqualTo(8));
+            Assert.That(diff[2].EntryType, Is.EqualTo(DiffEntryType.Remove));
+            Assert.That(diff[2].Object, Is.EqualTo("            {"));
+            Assert.That(diff[3].LineNumber, Is.EqualTo(9));
+            Assert.That(diff[3].EntryType, Is.EqualTo(DiffEntryType.Remove));
+            Assert.That(diff[3].Object, Is.EqualTo("                "));
+            Assert.That(diff[4].LineNumber, Is.EqualTo(10));
+            Assert.That(diff[4].EntryType, Is.EqualTo(DiffEntryType.Remove));
+            Assert.That(diff[4].Object, Is.EqualTo("            }"));
+            Assert.That(diff[5].LineNumber, Is.EqualTo(11));
+            Assert.That(diff[5].EntryType, Is.EqualTo(DiffEntryType.Remove));
+            Assert.That(diff[5].Object, Is.EqualTo("            foreach (var b in new[] { 1, 2, 3, 4 })"));
+            Assert.That(diff[6].LineNumber, Is.EqualTo(0));
+            Assert.That(diff[6].EntryType, Is.EqualTo(DiffEntryType.Equal));
+            Assert.That(diff[6].Count, Is.EqualTo(1));
+            Assert.That(diff[7].LineNumber, Is.EqualTo(13));
+            Assert.That(diff[7].EntryType, Is.EqualTo(DiffEntryType.Remove));
+            Assert.That(diff[7].Object, Is.EqualTo(""));
+            Assert.That(diff[8].LineNumber, Is.EqualTo(10));
+            Assert.That(diff[8].EntryType, Is.EqualTo(DiffEntryType.Add));
+            Assert.That(diff[8].Object, Is.EqualTo("                var TestVar = 3;"));
+            Assert.That(diff[9].LineNumber, Is.EqualTo(0));
+            Assert.That(diff[9].EntryType, Is.EqualTo(DiffEntryType.Equal));
+            Assert.That(diff[9].Count, Is.EqualTo(3));
+        }
     }
 }
