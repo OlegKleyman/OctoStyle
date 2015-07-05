@@ -61,22 +61,81 @@ namespace OctoStyle.Core.Tests.Unit {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized string similar to //test
+        ///namespace TestLibrary
+        ///{
+        ///    public class TestClass2
+        ///    {
+        ///        public void testMethod()
+        ///        {
+        ///            foreach (var i in new [] {1,2,3,4})
+        ///            {
+        ///                var TestVar = 3;
+        ///            }
+        ///        }
+        ///    }
+        ///}
+        ///.
         /// </summary>
-        internal static byte[] TestLibraryCsprojNew {
+        internal static string TestClass2CsNew {
             get {
-                object obj = ResourceManager.GetObject("TestLibraryCsprojNew", resourceCulture);
-                return ((byte[])(obj));
+                return ResourceManager.GetString("TestClass2CsNew", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized string similar to namespace TestLibrary
+        ///{
+        ///    public class TestClass2
+        ///    {
+        ///        public void testMethod()
+        ///        {
+        ///            foreach (var i in new [] {1,2,3,4})
+        ///            {
+        ///                
+        ///            }
+        ///            foreach (var b in new[] { 1, 2, 3, 4 })
+        ///            {
+        ///
+        ///            }
+        ///        }
+        ///    }
+        ///}
+        ///.
         /// </summary>
-        internal static byte[] TestLibraryCsprojOld {
+        internal static string TestClass2CsOld {
             get {
-                object obj = ResourceManager.GetObject("TestLibraryCsprojOld", resourceCulture);
-                return ((byte[])(obj));
+                return ResourceManager.GetString("TestClass2CsOld", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;Project ToolsVersion=&quot;12.0&quot; DefaultTargets=&quot;Build&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
+        ///  &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
+        ///  &lt;PropertyGroup&gt;
+        ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
+        ///    &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
+        ///    &lt;Proj [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string TestLibraryCsprojNew {
+            get {
+                return ResourceManager.GetString("TestLibraryCsprojNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;Project ToolsVersion=&quot;12.0&quot; DefaultTargets=&quot;Build&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
+        ///  &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
+        ///  &lt;PropertyGroup&gt;
+        ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
+        ///    &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
+        ///    &lt;Proj [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string TestLibraryCsprojOld {
+            get {
+                return ResourceManager.GetString("TestLibraryCsprojOld", resourceCulture);
             }
         }
     }
