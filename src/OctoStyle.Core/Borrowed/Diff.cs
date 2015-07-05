@@ -21,6 +21,7 @@ namespace OctoStyle.Core.Borrowed
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public static class Diff
     {
@@ -145,7 +146,30 @@ namespace OctoStyle.Core.Borrowed
             } while (stck.Count > 0);
 
             diffList.Reverse();
+            
+            if (diffList.Count > 0)
+            {
+                const int maxEqualPadding = 3;
+                if (diffList[0].LineNumber > 1)
+                {
+                    var lineDifference = diffList[0].LineNumber == maxEqualPadding
+                                             ? 2
+                                             : diffList[0].LineNumber - Math.Abs(diffList[0].LineNumber - maxEqualPadding);
 
+
+                    diffList.Insert(0, new DiffEntry<T> { Count = lineDifference });
+                }
+
+                var lastEntry = diffList.Last();
+
+                var lastLineDifference = arr2.Length - lastEntry.LineNumber;
+
+                if (lastLineDifference > 0)
+                {
+                    diffList.Add(new DiffEntry<T> { Count = Math.Min(lastLineDifference, maxEqualPadding) });
+                }
+            }
+            
             return diffList;
         }
 
