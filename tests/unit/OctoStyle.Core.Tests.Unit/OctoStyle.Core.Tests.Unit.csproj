@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Borrowed\DiffTests.cs" />
+    <Compile Include="DiffEntryListExtensionsTests.cs" />
     <Compile Include="FileContents.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
