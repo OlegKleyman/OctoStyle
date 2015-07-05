@@ -1,7 +1,5 @@
 ﻿namespace OctoStyle.Core.Tests.Unit.Borrowed
 {
-    using System;
-
     using NUnit.Framework;
 
     using OctoStyle.Core.Borrowed;
