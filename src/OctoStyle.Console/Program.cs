@@ -35,7 +35,7 @@
                     new Uri(pullRequestUrlFormat),
                     null,
                     "application/vnd.github.VERSION.diff",
-                    true);
+                    true).GetAwaiter().GetResult();
         }
     }
 }
