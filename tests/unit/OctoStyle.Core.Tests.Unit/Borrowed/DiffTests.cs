@@ -8,7 +8,7 @@
     public class DiffTests
     {
         [Test]
-        public void SingleHunkDiffShouldReturnDiffList()
+        public void DiffShouldReturnDiffListForSingleChunkDiff()
         {
             var diff = Diff.CreateDiff(
                 FileContents.TestLibraryCsprojOld.Split('\n'),
