@@ -19,10 +19,24 @@
 
 namespace OctoStyle.Core.Borrowed
 {
+    /// <summary>
+    /// Represents a diff record type
+    /// </summary>
     public enum DiffEntryType
     {
+        /// <summary>
+        /// Represents a deleted record
+        /// </summary>
         Remove,
+
+        /// <summary>
+        /// Represents an added record
+        /// </summary>
         Add,
+
+        /// <summary>
+        /// Represents a record with no modifications.
+        /// </summary>
         Equal
     };
 }

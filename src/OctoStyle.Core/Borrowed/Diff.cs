@@ -23,6 +23,9 @@ namespace OctoStyle.Core.Borrowed
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Used for finding a unified diff between two arrays of IComparable objects
+    /// </summary>
     public static class Diff
     {
         #region Public static methods

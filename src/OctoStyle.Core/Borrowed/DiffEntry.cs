@@ -21,9 +21,16 @@ namespace OctoStyle.Core.Borrowed
 {
     using System;
 
+    /// <summary>
+    /// Represents a record in a unified diff
+    /// </summary>
+    /// <typeparam name="T">Type that will be diffed</typeparam>
     public class DiffEntry<T>
     {
-        public int LineNumber { get; set; }
+        /// <summary>
+        /// Gets the line number of the record
+        /// </summary>
+        public int LineNumber { get; private set; }
 
         #region Fields
         
