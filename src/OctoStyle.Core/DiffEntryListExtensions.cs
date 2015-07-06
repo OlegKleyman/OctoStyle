@@ -8,7 +8,7 @@ namespace OctoStyle.Core
 
     public static class DiffEntryListExtensions
     {
-        public static IReadOnlyList<GitDiffEntry> ToGitDiff(this List<DiffEntry<string>> diff)
+        public static IReadOnlyList<GitDiffEntry> ToGitDiff(this IEnumerable<DiffEntry<string>> diff)
         {
             if (diff == null)
             {

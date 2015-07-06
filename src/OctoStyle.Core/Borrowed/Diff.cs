@@ -33,7 +33,7 @@ namespace OctoStyle.Core.Borrowed
         /// <param name="arr1">Array of units.</param>
         /// <param name="arr2">Array of units.</param>
         /// <returns>List of DiffEntry classes.</returns>
-        public static List<DiffEntry<T>> CreateDiff<T>(T[] arr1, T[] arr2) where T : IComparable
+        public static IReadOnlyList<DiffEntry<T>> CreateDiff<T>(T[] arr1, T[] arr2) where T : IComparable
         {
             int start = 0;
             int end = 0;
@@ -47,7 +47,7 @@ namespace OctoStyle.Core.Borrowed
             }
 
             if (start == arr1.Length && start == arr2.Length)
-                return new List<DiffEntry<T>>();
+                return new List<DiffEntry<T>>().AsReadOnly();
 
             for (int i = 0; i < Math.Min(arr1.Length, arr2.Length) - start; i++)
             {
@@ -170,7 +170,7 @@ namespace OctoStyle.Core.Borrowed
                 }
             }
             
-            return diffList;
+            return diffList.AsReadOnly();
         }
 
         #endregion
