@@ -40,6 +40,7 @@
     <Compile Include="GitDiffEntryFactory.cs" />
     <Compile Include="GitDiffEntryStatus.cs" />
     <Compile Include="ICodeAnalyzer.cs" />
+    <Compile Include="IGitDiffEntryFactory.cs" />
     <Compile Include="ModificationGitDiffEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CodeAnalyzer.cs" />

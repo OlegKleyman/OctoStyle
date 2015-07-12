@@ -6,7 +6,7 @@
 
     using OctoStyle.Core.Borrowed;
 
-    public class GitDiffEntryFactory
+    public class GitDiffEntryFactory : IGitDiffEntryFactory
     {
         public IReadOnlyList<GitDiffEntry> Get(DiffEntry<string> entry, int position)
         {
