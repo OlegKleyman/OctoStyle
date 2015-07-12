@@ -71,52 +71,64 @@
 
             foreach (var file in files)
             {
-                if (file.Status == "modified")
+                if (file.FileName.EndsWith(".cs", true, CultureInfo.InvariantCulture))
                 {
-                    
-                }
-                else if (file.Status == "added")
-                {
-                    var violations =
-                        analyzer.Analyze(Path.Combine(arguments.SolutionDirectory, file.FileName).Replace("/", @"\"));
-                    foreach (var violation in violations)
+                    if (file.Status == "modified")
                     {
-                        var message = String.Format(
-                            CultureInfo.InvariantCulture,
-                            "{0} - {1}",
-                            violation.Rule.CheckId,
-                            violation.Message);
 
-                        var comment = new PullRequestReviewCommentCreate(message, commits.Last().Sha, file.FileName, violation.Line);
-
-                        client.PullRequest.Comment.Create(
-                            arguments.RepositoryOwner,
-                            arguments.Repository,
-                            arguments.PullRequestNumber,
-                            comment).GetAwaiter().GetResult();
                     }
-                }
-                else if (file.Status == "renamed")
-                {
-                    if (file.Changes > 0)
+                    else if (file.Status == "added")
                     {
-                        var comment = new PullRequestReviewCommentCreate("Renamed files not supported", commits.Last().Sha, file.FileName, 1);
+                        var violations =
+                            analyzer.Analyze(
+                                Path.Combine(arguments.SolutionDirectory, file.FileName).Replace("/", @"\"));
+                        foreach (var violation in violations)
+                        {
+                            var message = String.Format(
+                                CultureInfo.InvariantCulture,
+                                "{0} - {1}",
+                                violation.Rule.CheckId,
+                                violation.Message);
 
-                        client.PullRequest.Comment.Create(
-                            arguments.RepositoryOwner,
-                            arguments.Repository,
-                            arguments.PullRequestNumber,
-                            comment).GetAwaiter().GetResult();
+                            var comment = new PullRequestReviewCommentCreate(
+                                message,
+                                commits.Last().Sha,
+                                file.FileName,
+                                violation.Line);
+
+                            client.PullRequest.Comment.Create(
+                                arguments.RepositoryOwner,
+                                arguments.Repository,
+                                arguments.PullRequestNumber,
+                                comment).GetAwaiter().GetResult();
+                        }
                     }
-                }
-                else if (file.Status == "deleted")
-                {
-                    //no work to do
-                }
-                else
-                {
-                    throw new InvalidOperationException(
-                        String.Format(CultureInfo.InvariantCulture, "Unknown file status: {0}.", file.Status));
+                    else if (file.Status == "renamed")
+                    {
+                        if (file.Changes > 0)
+                        {
+                            var comment = new PullRequestReviewCommentCreate(
+                                "Renamed files not supported",
+                                commits.Last().Sha,
+                                file.FileName,
+                                1);
+
+                            client.PullRequest.Comment.Create(
+                                arguments.RepositoryOwner,
+                                arguments.Repository,
+                                arguments.PullRequestNumber,
+                                comment).GetAwaiter().GetResult();
+                        }
+                    }
+                    else if (file.Status == "deleted")
+                    {
+                        //no work to do
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException(
+                            String.Format(CultureInfo.InvariantCulture, "Unknown file status: {0}.", file.Status));
+                    }
                 }
             }
         }
