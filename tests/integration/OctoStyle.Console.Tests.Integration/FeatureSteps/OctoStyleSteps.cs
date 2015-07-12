@@ -17,6 +17,24 @@
         [BeforeFeature("octoStyle")]
         public static void BeforeFeature()
         {
+            const string loginKey = "OCTOSTYLE_LOGIN";
+            const string passwordKey = "OCTOSTYLE_PASSWORD";
+
+            var login = Environment.GetEnvironmentVariable(loginKey);
+            var password = Environment.GetEnvironmentVariable(passwordKey);
+
+            if (String.IsNullOrEmpty(login))
+            {
+                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "{0} enviroment variable is missing.", loginKey));
+            }
+
+            if (String.IsNullOrEmpty(password))
+            {
+                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "{0} enviroment variable is missing.", passwordKey));
+            }
+
+            FeatureContextExtended.Current.GitLogin = login;
+            FeatureContextExtended.Current.GitPassword = password;
             FeatureContextExtended.Current.RepositoryOwner = "OlegKleyman";
             FeatureContextExtended.Current.Repository = "OctoStyleTest";
             FeatureContextExtended.Current.GitClient = new GitHubClient(new ProductHeaderValue("IntegrationTests"));
@@ -34,7 +52,9 @@
             const string relativeSolutionDirectory = @"..\..\..\..\..\Common\OctoStyle";
             var arguments = String.Format(
                 CultureInfo.InvariantCulture,
-                "-d {0} -o {1} -r {2} -pr {3}",
+                "-l {0} -p {1} -d {2} -o {3} -r {4} -pr {5}",
+                FeatureContextExtended.Current.GitLogin,
+                FeatureContextExtended.Current.GitPassword,
                 Path.GetFullPath(relativeSolutionDirectory),
                 FeatureContextExtended.Current.RepositoryOwner,
                 FeatureContextExtended.Current.Repository,

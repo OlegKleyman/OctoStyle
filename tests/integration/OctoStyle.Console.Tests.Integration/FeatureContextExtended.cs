@@ -16,6 +16,8 @@
         private const string GitClientKey = "GIT_CLIENT";
         private const string RepositoryKey = "REPOSITORY";
         private const string RepositoryOwnerKey = "REPOSITORY_OWNER";
+        private const string GitLoginKey = "GIT_LOGIN";
+        private const string GitPasswordKey = "GIT_PASSWORD";
 
         public static FeatureContextExtended Current
         {
@@ -69,13 +71,47 @@
             }
         }
 
+        public string GitLogin
+        {
+            get
+            {
+                if (!this.context.ContainsKey(GitLoginKey))
+                {
+                    throw new KeyNotFoundException(GitLoginKey);
+                }
+
+                return this.context.Get<string>(GitLoginKey);
+            }
+            set
+            {
+                this.context.Set(value, GitLoginKey);
+            }
+        }
+
+        public string GitPassword
+        {
+            get
+            {
+                if (!this.context.ContainsKey(GitPasswordKey))
+                {
+                    throw new KeyNotFoundException(GitPasswordKey);
+                }
+
+                return this.context.Get<string>(GitPasswordKey);
+            }
+            set
+            {
+                this.context.Set(value, GitPasswordKey);
+            }
+        }
+
         public GitHubClient GitClient
         {
             get
             {
                 if (!this.context.ContainsKey(GitClientKey))
                 {
-                    throw new KeyNotFoundException(RepositoryKey);
+                    throw new KeyNotFoundException(GitClientKey);
                 }
 
                 return this.context.Get<GitHubClient>(GitClientKey);
