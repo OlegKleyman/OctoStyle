@@ -71,7 +71,7 @@
         [When(@"I run the OctoStyle")]
         public void WhenIRunTheOctoStyle()
         {
-            const string relativeSolutionDirectory = @"..\..\..\..\..\Common\OctoStyleTest";
+            const string relativeSolutionDirectory = @"..\..\..\OctoStyleTest";
             var arguments = String.Format(
                 CultureInfo.InvariantCulture,
                 "-l {0} -p {1} -d {2} -o {3} -r {4} -pr {5}",
