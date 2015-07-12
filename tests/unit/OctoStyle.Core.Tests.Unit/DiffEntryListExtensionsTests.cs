@@ -1,5 +1,7 @@
 namespace OctoStyle.Core.Tests.Unit
 {
+    using Moq;
+
     using NUnit.Framework;
 
     using OctoStyle.Core.Borrowed;
@@ -7,6 +9,14 @@ namespace OctoStyle.Core.Tests.Unit
     [TestFixture]
     public class DiffEntryListExtensionsTests
     {
+        private Mock<IGitDiffEntryFactory> MockGitDiffEntryFactory { get; set; }
+
+        [TestFixtureSetUp]
+        public void Setup()
+        {
+            MockGitDiffEntryFactory = new Mock<IGitDiffEntryFactory>();
+        }
+
         [Test]
         public void ToGitDiffShouldReturnGitDiffForSingleChunkDiff()
         {
@@ -14,7 +24,7 @@ namespace OctoStyle.Core.Tests.Unit
                 FileContents.TestLibraryCsprojOld.Split('\n'),
                 FileContents.TestLibraryCsprojNew.Split('\n'));
 
-            var gitDiff = diff.ToGitDiff();
+            var gitDiff = diff.ToGitDiff(MockGitDiffEntryFactory.Object);
 
             Assert.That(gitDiff.Count, Is.EqualTo(16));
             Assert.That(gitDiff[0], Is.TypeOf<EqualGitDiffEntry>());
@@ -72,7 +82,7 @@ namespace OctoStyle.Core.Tests.Unit
                 FileContents.TestClass2CsOld.Split('\n'),
                 FileContents.TestClass2CsNew.Split('\n'));
 
-            var gitDiff = diff.ToGitDiff();
+            var gitDiff = diff.ToGitDiff(MockGitDiffEntryFactory.Object);
 
             Assert.That(gitDiff.Count, Is.EqualTo(18));
             Assert.That(gitDiff[0], Is.TypeOf<ModificationGitDiffEntry>());
