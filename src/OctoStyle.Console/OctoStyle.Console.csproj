@@ -39,6 +39,15 @@
     <Reference Include="Octokit">
       <HintPath>..\..\packages\Octokit.0.13.0\lib\net45\Octokit.dll</HintPath>
     </Reference>
+    <Reference Include="StyleCop">
+      <HintPath>..\..\packages\StyleCop.4.7.49.0\lib\net35\StyleCop.dll</HintPath>
+    </Reference>
+    <Reference Include="StyleCop.CSharp">
+      <HintPath>..\..\packages\StyleCop.4.7.49.0\lib\net35\StyleCop.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="StyleCop.CSharp.Rules">
+      <HintPath>..\..\common\lib\StyleCop.CSharp.Rules.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Net.Http" />
   </ItemGroup>
@@ -50,6 +59,12 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OctoStyle.Core\OctoStyle.Core.csproj">
+      <Project>{EA9E7DD6-21B0-4C12-8907-8495BB41B190}</Project>
+      <Name>OctoStyle.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
