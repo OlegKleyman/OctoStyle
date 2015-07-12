@@ -9,6 +9,7 @@
     using Octokit.Internal;
 
     using OctoStyle.Core;
+    using OctoStyle.Core.Borrowed;
 
     public class Program
     {
@@ -75,6 +76,79 @@
                 {
                     if (file.Status == "modified")
                     {
+                        var originalFile = client.Repository.Content.GetAllContents(
+                            arguments.RepositoryOwner,
+                            arguments.Repository,
+                            file.FileName).GetAwaiter().GetResult();
+
+                        if (originalFile == null || originalFile.Count == 0)
+                        {
+                            throw new InvalidOperationException(
+                                String.Format(
+                                    CultureInfo.InvariantCulture,
+                                    "Unable to retrieve original file for modified file: {0}",
+                                    file.FileName));
+                        }
+
+                        if (originalFile.Count > 1)
+                        {
+                            throw new InvalidOperationException(
+                                String.Format(
+                                    CultureInfo.InvariantCulture,
+                                    "Retrieving original file returned multiple results. File: {0}",
+                                    file.FileName));
+                        }
+
+                        var modifiedFile = client.Connection.Get<string>(file.RawUrl, null, null).GetAwaiter().GetResult().Body;
+
+                        if (modifiedFile == null)
+                        {
+                            throw new InvalidOperationException(
+                                String.Format(
+                                    CultureInfo.InvariantCulture,
+                                    "Unale to retrieve modified pull request File: {0}",
+                                    file.FileName));
+                        }
+
+                        const char githubNewlineDelimeter = '\n';
+                        var diff =
+                            Diff
+                                .CreateDiff(originalFile.First()
+                                    .Content.Split(new[] { githubNewlineDelimeter }, StringSplitOptions.None),
+                                modifiedFile.Split(new[] { githubNewlineDelimeter }, StringSplitOptions.None))
+                                .ToGitDiff(new GitDiffEntryFactory())
+                                .OfType<ModificationGitDiffEntry>();
+
+                        var violations =
+                            analyzer.Analyze(
+                                Path.Combine(arguments.SolutionDirectory, file.FileName).Replace("/", @"\"));
+
+                        var accessibleViolations = diff.Join(
+                            violations,
+                            entry => entry.LineNumber,
+                            violation => violation.Line,
+                            (entry, violation) => new { entry.Position, violation.Rule.CheckId, violation.Message });
+
+                        foreach (var violation in accessibleViolations)
+                        {
+                            var message = String.Format(
+                                CultureInfo.InvariantCulture,
+                                "{0} - {1}",
+                                violation.CheckId,
+                                violation.Message);
+
+                            var comment = new PullRequestReviewCommentCreate(
+                                message,
+                                commits.Last().Sha,
+                                file.FileName,
+                                violation.Position);
+
+                            client.PullRequest.Comment.Create(
+                                arguments.RepositoryOwner,
+                                arguments.Repository,
+                                arguments.PullRequestNumber,
+                                comment).GetAwaiter().GetResult();
+                        }
 
                     }
                     else if (file.Status == "added")
