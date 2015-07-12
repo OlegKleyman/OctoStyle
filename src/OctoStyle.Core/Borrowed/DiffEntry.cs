@@ -66,7 +66,9 @@ namespace OctoStyle.Core.Borrowed
             get
             {
                 if (this.entryType != DiffEntryType.Equal)
-                    throw new InvalidOperationException("Count is only valid for Equal entries");
+                {
+                    return 1;
+                }
 
                 return this.count;
             }
