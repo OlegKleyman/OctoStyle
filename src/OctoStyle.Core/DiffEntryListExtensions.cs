@@ -21,7 +21,7 @@ namespace OctoStyle.Core
             }
 
             var gitDiff = new List<GitDiffEntry>();
-            var position = 0;
+            var position = 1;
 
             foreach (var entry in diff)
             {
