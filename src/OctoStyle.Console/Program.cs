@@ -2,10 +2,13 @@
 {
     using System;
     using System.Globalization;
+    using System.IO;
     using System.Linq;
 
     using Octokit;
     using Octokit.Internal;
+
+    using OctoStyle.Core;
 
     public class Program
     {
@@ -64,6 +67,8 @@
                     .GetAwaiter()
                     .GetResult();
 
+            var analyzer = new CodeAnalyzer(arguments.SolutionDirectory);
+
             foreach (var file in files)
             {
                 if (file.Status == "modified")
@@ -72,7 +77,24 @@
                 }
                 else if (file.Status == "added")
                 {
-                    
+                    var violations =
+                        analyzer.Analyze(Path.Combine(arguments.SolutionDirectory, file.FileName).Replace("/", @"\"));
+                    foreach (var violation in violations)
+                    {
+                        var message = String.Format(
+                            CultureInfo.InvariantCulture,
+                            "{0} - {1}",
+                            violation.Rule.CheckId,
+                            violation.Message);
+
+                        var comment = new PullRequestReviewCommentCreate(message, commits.Last().Sha, file.FileName, violation.Line);
+
+                        client.PullRequest.Comment.Create(
+                            arguments.RepositoryOwner,
+                            arguments.Repository,
+                            arguments.PullRequestNumber,
+                            comment).GetAwaiter().GetResult();
+                    }
                 }
                 else if (file.Status == "renamed")
                 {
