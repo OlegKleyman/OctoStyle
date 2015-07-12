@@ -28,6 +28,25 @@
             Assert.That(result[2].Position, Is.EqualTo(5));
         }
 
+        [Test]
+        public void GetEntryShouldReturnModificationGitDiffEntryForNewLines()
+        {
+            var factory = GetGitDiffEntryFactory();
+
+            var entry = new DiffEntry<string>(DiffEntryType.Add, null, 4);
+
+            var result = factory.Get(entry, 3);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Count, Is.EqualTo(1));
+
+            Assert.That(result[0], Is.InstanceOf<ModificationGitDiffEntry>());
+            Assert.That(result[0].Position, Is.EqualTo(3));
+            var modifiedEntry = (ModificationGitDiffEntry)result[0];
+            Assert.That(modifiedEntry.LineNumber, Is.EqualTo(4));
+            Assert.That(modifiedEntry.Status, Is.EqualTo(GitDiffEntryStatus.New));
+        }
+
         private GitDiffEntryFactory GetGitDiffEntryFactory()
         {
             return new GitDiffEntryFactory();
