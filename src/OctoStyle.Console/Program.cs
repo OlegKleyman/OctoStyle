@@ -182,7 +182,7 @@
                         if (file.Changes > 0)
                         {
                             var comment = new PullRequestReviewCommentCreate(
-                                "Renamed files not supported",
+                                "Renamed files not supported.",
                                 commits.Last().Sha,
                                 file.FileName,
                                 1);
