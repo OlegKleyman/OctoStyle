@@ -64,7 +64,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="StyleCop.CSharp.Rules.dll">
+    <None Include="..\..\common\lib\StyleCop.CSharp.Rules.dll">
+      <Link>StyleCop.CSharp.Rules.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
