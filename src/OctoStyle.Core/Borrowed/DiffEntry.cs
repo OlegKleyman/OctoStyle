@@ -78,7 +78,7 @@ namespace OctoStyle.Core.Borrowed
         #endregion
 
         #region Constructors
-        internal DiffEntry(DiffEntryType entryType, T obj, int lineNumber)
+        public DiffEntry(DiffEntryType entryType, T obj, int lineNumber)
         {
             this.LineNumber = lineNumber;
             this.entryType = entryType;
