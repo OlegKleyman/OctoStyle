@@ -33,7 +33,7 @@
             var client = new GitHubClient(
                 new ProductHeaderValue("OctoStyle"),
                 new InMemoryCredentialStore(
-                    new Credentials(arguments.Login, "e5459d51eed64fd5e9f7ae947ca444d621aa386a")));
+                    new Credentials(arguments.Login, arguments.Password)));
 
             var pullrequestInformationMessage = String.Format(
                 CultureInfo.InvariantCulture,
