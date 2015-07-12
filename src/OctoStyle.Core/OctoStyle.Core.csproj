@@ -37,6 +37,7 @@
     <Compile Include="DiffEntryListExtensions.cs" />
     <Compile Include="EqualGitDiffEntry.cs" />
     <Compile Include="GitDiffEntry.cs" />
+    <Compile Include="GitDiffEntryFactory.cs" />
     <Compile Include="GitDiffEntryStatus.cs" />
     <Compile Include="ICodeAnalyzer.cs" />
     <Compile Include="ModificationGitDiffEntry.cs" />
