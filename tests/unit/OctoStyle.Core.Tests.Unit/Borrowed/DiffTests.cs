@@ -1,5 +1,7 @@
 ﻿namespace OctoStyle.Core.Tests.Unit.Borrowed
 {
+    using System;
+
     using NUnit.Framework;
 
     using OctoStyle.Core.Borrowed;
@@ -11,8 +13,8 @@
         public void DiffShouldReturnDiffListForSingleChunkDiff()
         {
             var diff = Diff.CreateDiff(
-                FileContents.TestLibraryCsprojOld.Split('\n'),
-                FileContents.TestLibraryCsprojNew.Split('\n'));
+                FileContents.TestLibraryCsprojOld.Replace(Environment.NewLine, "\n").Split('\n'),
+                FileContents.TestLibraryCsprojNew.Replace(Environment.NewLine, "\n").Split('\n'));
 
             Assert.That(diff.Count, Is.EqualTo(11));
             Assert.That(diff[0].LineNumber, Is.EqualTo(0));
@@ -54,8 +56,8 @@
         public void DiffShouldReturnDiffListForMultiChunkDiff()
         {
             var diff = Diff.CreateDiff(
-                FileContents.TestClass2CsOld.Split('\n'),
-                FileContents.TestClass2CsNew.Split('\n'));
+                FileContents.TestClass2CsOld.Replace(Environment.NewLine, "\n").Split('\n'),
+                FileContents.TestClass2CsNew.Replace(Environment.NewLine, "\n").Split('\n'));
 
             Assert.That(diff.Count, Is.EqualTo(10));
             Assert.That(diff[0].LineNumber, Is.EqualTo(1));
