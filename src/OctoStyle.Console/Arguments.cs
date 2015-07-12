@@ -8,8 +8,18 @@
 
     public class Arguments
     {
-        private Arguments(string solutionDirectory, string repositoryOwner, string repository, int pullRequestNumber)
+        private Arguments(string login, string accessToken, string solutionDirectory, string repositoryOwner, string repository, int pullRequestNumber)
         {
+            if (login == null)
+            {
+                throw new ArgumentNullException("login");
+            }
+
+            if (accessToken == null)
+            {
+                throw new ArgumentNullException("accessToken");
+            }
+
             if (solutionDirectory == null)
             {
                 throw new ArgumentNullException("solutionDirectory");
@@ -27,6 +37,16 @@
 
             const string cannotBeEmptyMessage = "Cannot be empty";
 
+            if (login == String.Empty)
+            {
+                throw new ArgumentException(cannotBeEmptyMessage, "login");
+            }
+
+            if (accessToken == String.Empty)
+            {
+                throw new ArgumentException(cannotBeEmptyMessage, "accessToken");
+            }
+
             if (solutionDirectory == String.Empty)
             {
                 throw new ArgumentException(cannotBeEmptyMessage, "solutionDirectory");
@@ -42,6 +62,8 @@
                 throw new ArgumentException(cannotBeEmptyMessage, "repository");
             }
 
+            this.Login = login;
+            this.AccessToken = accessToken;
             this.SolutionDirectory = solutionDirectory;
             this.RepositoryOwner = repositoryOwner;
             this.Repository = repository;
@@ -52,6 +74,9 @@
         public string RepositoryOwner { get; private set; }
         public string Repository { get; private set; }
         public int PullRequestNumber { get; private set; }
+        public string Login { get; private set; }
+
+        public string AccessToken { get; set; }
 
         public static Arguments Parse(IEnumerable<string> args)
         {
@@ -60,12 +85,16 @@
                 throw new ArgumentNullException("args");
             }
 
+            var login = default(string);
+            var accessToken = default(string);
             var solutionDirectory = default(string);
             var repositoryOwner = default(string);
             var repository = default(string);
             var pullRequestNumber = default(int);
 
             var options = new OptionSet()
+                .Add("l=", l => login = l)
+                .Add("at=", at => accessToken = at)
                 .Add("d=", d => solutionDirectory = d)
                 .Add("o=", o => repositoryOwner = o)
                 .Add("r=", r => repository = r)
@@ -85,7 +114,7 @@
 
             try
             {
-                return new Arguments(solutionDirectory, repositoryOwner, repository, pullRequestNumber);
+                return new Arguments(login, accessToken, solutionDirectory, repositoryOwner, repository, pullRequestNumber);
             }
             catch (ArgumentException ex)
             {
