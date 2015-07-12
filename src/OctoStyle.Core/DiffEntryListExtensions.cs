@@ -25,7 +25,20 @@ namespace OctoStyle.Core
 
             foreach (var entry in diff)
             {
-                gitDiff.AddRange(factory.Get(entry, position++));
+                var entries = factory.Get(entry, position++);
+                
+                if (entries == null)
+                {
+                    throw new InvalidOperationException(
+                        String.Format(
+                            CultureInfo.InvariantCulture,
+                            "Unable to retrieve git diff entry for Type: {0}, Line Number: {1}, Position: {2}",
+                            entry.EntryType,
+                            entry.LineNumber,
+                            position));
+                }
+
+                gitDiff.AddRange(entries);
             }
 
             return gitDiff.AsReadOnly();
