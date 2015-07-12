@@ -25,7 +25,7 @@ namespace OctoStyle.Core
 
             foreach (var entry in diff)
             {
-                var entries = factory.Get(entry, position++);
+                var entries = factory.Get(entry, position);
                 
                 if (entries == null)
                 {
@@ -39,6 +39,7 @@ namespace OctoStyle.Core
                 }
 
                 gitDiff.AddRange(entries);
+                position += entry.Count;
             }
 
             return gitDiff.AsReadOnly();
