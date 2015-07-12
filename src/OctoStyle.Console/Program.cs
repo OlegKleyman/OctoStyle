@@ -102,7 +102,7 @@
                                     file.FileName));
                         }
 
-                        var modifiedFile = client.Connection.Get<string>(file.RawUrl, null, null).GetAwaiter().GetResult().Body;
+                        var modifiedFile = client.Connection.Get<string>(file.ContentsUrl, null, "application/vnd.github.v3.raw+json").GetAwaiter().GetResult().Body;
 
                         if (modifiedFile == null)
                         {
