@@ -8,16 +8,16 @@
 
     public class Arguments
     {
-        private Arguments(string login, string accessToken, string solutionDirectory, string repositoryOwner, string repository, int pullRequestNumber)
+        private Arguments(string login, string password, string solutionDirectory, string repositoryOwner, string repository, int pullRequestNumber)
         {
             if (login == null)
             {
                 throw new ArgumentNullException("login");
             }
 
-            if (accessToken == null)
+            if (password == null)
             {
-                throw new ArgumentNullException("accessToken");
+                throw new ArgumentNullException("password");
             }
 
             if (solutionDirectory == null)
@@ -42,9 +42,9 @@
                 throw new ArgumentException(cannotBeEmptyMessage, "login");
             }
 
-            if (accessToken == String.Empty)
+            if (password == String.Empty)
             {
-                throw new ArgumentException(cannotBeEmptyMessage, "accessToken");
+                throw new ArgumentException(cannotBeEmptyMessage, "password");
             }
 
             if (solutionDirectory == String.Empty)
@@ -63,7 +63,7 @@
             }
 
             this.Login = login;
-            this.AccessToken = accessToken;
+            this.Password = password;
             this.SolutionDirectory = solutionDirectory;
             this.RepositoryOwner = repositoryOwner;
             this.Repository = repository;
@@ -76,7 +76,7 @@
         public int PullRequestNumber { get; private set; }
         public string Login { get; private set; }
 
-        public string AccessToken { get; set; }
+        public string Password { get; set; }
 
         public static Arguments Parse(IEnumerable<string> args)
         {
@@ -86,7 +86,7 @@
             }
 
             var login = default(string);
-            var accessToken = default(string);
+            var password = default(string);
             var solutionDirectory = default(string);
             var repositoryOwner = default(string);
             var repository = default(string);
@@ -94,7 +94,7 @@
 
             var options = new OptionSet()
                 .Add("l=", l => login = l)
-                .Add("at=", at => accessToken = at)
+                .Add("p=", p => password = p)
                 .Add("d=", d => solutionDirectory = d)
                 .Add("o=", o => repositoryOwner = o)
                 .Add("r=", r => repository = r)
@@ -114,15 +114,17 @@
 
             try
             {
-                return new Arguments(login, accessToken, solutionDirectory, repositoryOwner, repository, pullRequestNumber);
+                return new Arguments(login, password, solutionDirectory, repositoryOwner, repository, pullRequestNumber);
             }
             catch (ArgumentException ex)
             {
                 var helpMessage = String.Format(
                     CultureInfo.InvariantCulture,
-                    "{1}{0}{2}{0}{3}{0}{4}",
+                    "{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}",
                     Environment.NewLine,
-                    "-d {Solution Directory",
+                    "-l {Git Login}",
+                    "-p {Git Password",
+                    "-d {Solution Directory}",
                     "-o {Repository Owner}",
                     "-r {Repository}",
                     "-pr {Pull Request Number}");

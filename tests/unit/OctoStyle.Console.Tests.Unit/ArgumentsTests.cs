@@ -11,7 +11,10 @@
         [Test]
         public void ParseShouldReturnArguments()
         {
-            var arguments = Arguments.Parse(@"-d C:\test -o OlegKleyman -r OctoStyleTest -pr 1".Split(' '));
+            var arguments = Arguments.Parse(@"-l TestUser -p testpass -d C:\test -o OlegKleyman -r OctoStyleTest -pr 1".Split(' '));
+
+            Assert.That(arguments.Login, Is.EqualTo("TestUser"));
+            Assert.That(arguments.Password, Is.EqualTo("testpass"));
             Assert.That(arguments.SolutionDirectory, Is.EqualTo(@"C:\test"));
             Assert.That(arguments.RepositoryOwner, Is.EqualTo(@"OlegKleyman"));
             Assert.That(arguments.Repository, Is.EqualTo(@"OctoStyleTest"));
@@ -27,9 +30,11 @@
                 Is.EqualTo(
                     String.Format(
                         CultureInfo.InvariantCulture,
-                        "{1}{0}{2}{0}{3}{0}{4}",
+                        "{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}",
                         Environment.NewLine,
-                        "-d {Solution Directory",
+                        "-l {Git Login}",
+                        "-p {Git Password",
+                        "-d {Solution Directory}",
                         "-o {Repository Owner}",
                         "-r {Repository}",
                         "-pr {Pull Request Number}")));
