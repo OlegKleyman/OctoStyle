@@ -8,6 +8,7 @@
     using NUnit.Framework;
 
     using Octokit;
+    using Octokit.Internal;
 
     using TechTalk.SpecFlow;
 
@@ -37,7 +38,28 @@
             FeatureContextExtended.Current.GitPassword = password;
             FeatureContextExtended.Current.RepositoryOwner = "OlegKleyman";
             FeatureContextExtended.Current.Repository = "OctoStyleTest";
-            FeatureContextExtended.Current.GitClient = new GitHubClient(new ProductHeaderValue("IntegrationTests"));
+            FeatureContextExtended.Current.GitClient = new GitHubClient(
+                new ProductHeaderValue("IntegrationTests"),
+                new InMemoryCredentialStore(new Credentials(login, password)));
+        }
+
+        [AfterScenario("pullRequest")]
+        public void CleanUpComments()
+        {
+            var client = FeatureContextExtended.Current.GitClient;
+
+            var comments = client.PullRequest.Comment.GetAll(
+                FeatureContextExtended.Current.RepositoryOwner,
+                FeatureContextExtended.Current.Repository,
+                ScenarioContextExtended.Current.PullRequestNumber).GetAwaiter().GetResult();
+
+            foreach (var comment in comments)
+            {
+                client.PullRequest.Comment.Delete(
+                    FeatureContextExtended.Current.RepositoryOwner,
+                    FeatureContextExtended.Current.Repository,
+                    comment.Id).GetAwaiter().GetResult();
+            }
         }
 
         [Given(@"I have a pull request with stylistic problems")]
