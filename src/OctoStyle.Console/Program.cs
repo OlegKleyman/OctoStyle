@@ -75,7 +75,7 @@
 
             var pathResolver = new PathResolver(new FileSystemManager());
 
-            var commentTasks = new List<Task<PullRequestReviewComment>>();
+            var commentTasks = new List<Task<IEnumerable<PullRequestReviewComment>>>();
 
             foreach (var file in files)
             {

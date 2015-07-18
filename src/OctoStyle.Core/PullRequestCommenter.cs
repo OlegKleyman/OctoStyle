@@ -1,6 +1,7 @@
 namespace OctoStyle.Core
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Octokit;
@@ -27,7 +28,7 @@ namespace OctoStyle.Core
             this.repository = repository;
         }
 
-        public abstract Task<PullRequestReviewComment> Create(string filePath, string commitId, int pullRequestNumber);
+        public abstract Task<IEnumerable<PullRequestReviewComment>> Create(string filePath, string commitId, int pullRequestNumber);
 
         protected async Task<PullRequestReviewComment> Create(PullRequestReviewCommentCreate comment, int pullRequestNumber)
         {

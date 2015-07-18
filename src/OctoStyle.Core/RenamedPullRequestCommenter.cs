@@ -1,5 +1,6 @@
 namespace OctoStyle.Core
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Octokit;
@@ -14,7 +15,7 @@ namespace OctoStyle.Core
 
         }
 
-        public async override Task<PullRequestReviewComment> Create(string filePath, string commitId, int pullRequestNumber)
+        public async override Task<IEnumerable<PullRequestReviewComment>> Create(string filePath, string commitId, int pullRequestNumber)
         {
             var comment = new PullRequestReviewCommentCreate(
                 "Renamed files not supported.",
@@ -22,7 +23,9 @@ namespace OctoStyle.Core
                 filePath,
                 1);
 
-            return await Create(comment, pullRequestNumber);
+            var addedComment = await Create(comment, pullRequestNumber);
+
+            return new List<PullRequestReviewComment> { addedComment };
         }
     }
 }
