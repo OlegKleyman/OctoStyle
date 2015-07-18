@@ -169,26 +169,17 @@
                         var analyzer = new CodeAnalyzer(pathResolver.GetPath(filePath, "*.csproj"));
 
                         var violations = analyzer.Analyze(filePath);
-                        foreach (var violation in violations)
-                        {
-                            var message = String.Format(
-                                CultureInfo.InvariantCulture,
-                                "{0} - {1}",
-                                violation.Rule.CheckId,
-                                violation.Message);
 
-                            var comment = new PullRequestReviewCommentCreate(
-                                message,
-                                commits.Last().Sha,
-                                file.FileName,
-                                violation.Line);
+                        var commenter = new AddedPullRequestCommenter(
+                            client.PullRequest.Comment,
+                            new GitRepository(arguments.RepositoryOwner, arguments.Repository));
 
-                            client.PullRequest.Comment.Create(
-                                arguments.RepositoryOwner,
-                                arguments.Repository,
-                                arguments.PullRequestNumber,
-                                comment).GetAwaiter().GetResult();
-                        }
+                        commentTasks.Add(
+                            commenter.Create(
+                                pullRequestFile,
+                                violations.Select(
+                                    violation =>
+                                    new GitHubStyleViolation(violation.Rule.CheckId, violation.Message, violation.Line))));
                     }
                     else if (file.Status == "renamed")
                     {
