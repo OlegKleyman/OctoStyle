@@ -29,9 +29,6 @@
                 return;
             }
             
-            Console.WriteLine(arguments.Login);
-            Console.WriteLine(arguments.Password);
-
             var client = new GitHubClient(
                 new ProductHeaderValue("OctoStyle"),
                 new InMemoryCredentialStore(
