@@ -1,6 +1,7 @@
 ﻿namespace OctoStyle.Core.Tests.Unit
 {
     using System;
+    using System.Linq;
 
     using Moq;
 
@@ -15,13 +16,13 @@
         public async void CreateShouldCreateComment()
         {
             PullRequestCommenter commenter = GetRenamedPullRequestCommenter();
-            var comment = await commenter.Create("src/TestLibrary/Nested/TestClass2.cs", "123", 1);
+            var comment = (await commenter.Create("src/TestLibrary/Nested/TestClass2.cs", "123", 1)).ToList();
 
-            Assert.That(comment, Is.Not.Null);
-            Assert.That(comment.Path, Is.EqualTo("src/TestLibrary/Nested/TestClass2.cs"));
-            Assert.That(comment.Body, Is.EqualTo("Renamed files not supported."));
-            Assert.That(comment.Id, Is.EqualTo(1));
-            Assert.That(comment.Position, Is.EqualTo(1));
+            Assert.That(comment.Count, Is.EqualTo(1));
+            Assert.That(comment[0].Path, Is.EqualTo("src/TestLibrary/Nested/TestClass2.cs"));
+            Assert.That(comment[0].Body, Is.EqualTo("Renamed files not supported."));
+            Assert.That(comment[0].Id, Is.EqualTo(1));
+            Assert.That(comment[0].Position, Is.EqualTo(1));
         }
 
         private RenamedPullRequestCommenter GetRenamedPullRequestCommenter()
