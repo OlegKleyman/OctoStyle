@@ -71,12 +71,14 @@
                     .GetAwaiter()
                     .GetResult();
 
-            var analyzer = new CodeAnalyzer(arguments.SolutionDirectory);
+            var pathResolver = new PathResolver(new FileSystemManager());
 
             foreach (var file in files)
             {
                 if (file.FileName.EndsWith(".cs", true, CultureInfo.InvariantCulture))
                 {
+                    var filePath = Path.Combine(arguments.SolutionDirectory, file.FileName).Replace('/', '\\');
+
                     if (file.Status == "modified")
                     {
                         var originalFile = client.Repository.Content.GetAllContents(
@@ -122,9 +124,10 @@
                                 .ToGitDiff(new GitDiffEntryFactory())
                                 .OfType<ModificationGitDiffEntry>();
 
+                        var analyzer = new CodeAnalyzer(pathResolver.GetPath(filePath, "*.csproj"));
                         var violations =
                             analyzer.Analyze(
-                                Path.Combine(arguments.SolutionDirectory, file.FileName).Replace("/", @"\"));
+                                filePath);
 
                         var accessibleViolations = diff.Join(
                             violations,
@@ -156,9 +159,9 @@
                     }
                     else if (file.Status == "added")
                     {
-                        var violations =
-                            analyzer.Analyze(
-                                Path.Combine(arguments.SolutionDirectory, file.FileName).Replace("/", @"\"));
+                        var analyzer = new CodeAnalyzer(pathResolver.GetPath(filePath, "*.csproj"));
+
+                        var violations = analyzer.Analyze(filePath);
                         foreach (var violation in violations)
                         {
                             var message = String.Format(
