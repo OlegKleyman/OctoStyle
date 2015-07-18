@@ -55,7 +55,7 @@
                         null,
                         null));
 
-            return new RenamedPullRequestCommenter(pullRequestCommentClient.Object, "OlegKleyman", "OctoStyle");
+            return new RenamedPullRequestCommenter(pullRequestCommentClient.Object, new GitRepository("OlegKleyman", "OctoStyle"));
         }
     }
 }

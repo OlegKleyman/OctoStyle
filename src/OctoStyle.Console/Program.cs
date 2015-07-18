@@ -193,8 +193,7 @@
                         {
                             var commenter = new RenamedPullRequestCommenter(
                                 client.PullRequest.Comment,
-                                arguments.RepositoryOwner,
-                                arguments.Repository);
+                                new GitRepository(arguments.RepositoryOwner, arguments.Repository));
 
                             commentTasks.Add(
                                 commenter.Create(file.FileName, commits.Last().Sha, arguments.PullRequestNumber));

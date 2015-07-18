@@ -9,49 +9,29 @@ namespace OctoStyle.Core
     {
         private readonly IPullRequestReviewCommentsClient client;
 
-        private readonly string repositoryOwner;
+        private readonly GitRepository repository;
 
-        private readonly string repositoryName;
-
-        protected PullRequestCommenter(IPullRequestReviewCommentsClient client, string repositoryOwner, string repositoryName)
+        protected PullRequestCommenter(IPullRequestReviewCommentsClient client, GitRepository repository)
         {
             if (client == null)
             {
                 throw new ArgumentNullException("client");
             }
 
-            if (repositoryOwner == null)
+            if (repository == null)
             {
-                throw new ArgumentNullException("repositoryOwner");
-            }
-
-            if (repositoryName == null)
-            {
-                throw new ArgumentNullException("repositoryName");
-            }
-
-            const string cannotBeEmptyMessage = "Cannot be empty.";
-
-            if (repositoryOwner.Length == 0)
-            {
-                throw new ArgumentException(cannotBeEmptyMessage, "repositoryOwner");
-            }
-
-            if (repositoryName.Length == 0)
-            {
-                throw new ArgumentException(cannotBeEmptyMessage, "repositoryName");
+                throw new ArgumentNullException("repository");
             }
 
             this.client = client;
-            this.repositoryOwner = repositoryOwner;
-            this.repositoryName = repositoryName;
+            this.repository = repository;
         }
 
         public abstract Task<PullRequestReviewComment> Create(string filePath, string commitId, int pullRequestNumber);
 
         protected async Task<PullRequestReviewComment> Create(PullRequestReviewCommentCreate comment, int pullRequestNumber)
         {
-            return await client.Create(repositoryOwner, repositoryName, pullRequestNumber, comment);
+            return await client.Create(repository.Owner, repository.Name, pullRequestNumber, comment);
         }
     }
 }

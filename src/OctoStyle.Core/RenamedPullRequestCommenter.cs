@@ -8,10 +8,10 @@ namespace OctoStyle.Core
     {
         public RenamedPullRequestCommenter(
             IPullRequestReviewCommentsClient client,
-            string repositoryOwner,
-            string repositoryName)
-            : base(client, repositoryOwner, repositoryName)
+            GitRepository repository)
+            : base(client, repository)
         {
+
         }
 
         public async override Task<PullRequestReviewComment> Create(string filePath, string commitId, int pullRequestNumber)
