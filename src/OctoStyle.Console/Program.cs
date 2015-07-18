@@ -1,9 +1,11 @@
 ﻿namespace OctoStyle.Console
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using Octokit;
     using Octokit.Internal;
@@ -72,6 +74,8 @@
                     .GetResult();
 
             var pathResolver = new PathResolver(new FileSystemManager());
+
+            var commentTasks = new List<Task<PullRequestReviewComment>>();
 
             foreach (var file in files)
             {
@@ -187,17 +191,13 @@
                     {
                         if (file.Changes > 0)
                         {
-                            var comment = new PullRequestReviewCommentCreate(
-                                "Renamed files not supported.",
-                                commits.Last().Sha,
-                                file.FileName,
-                                1);
-
-                            client.PullRequest.Comment.Create(
+                            var commenter = new RenamedPullRequestCommenter(
+                                client.PullRequest.Comment,
                                 arguments.RepositoryOwner,
-                                arguments.Repository,
-                                arguments.PullRequestNumber,
-                                comment).GetAwaiter().GetResult();
+                                arguments.Repository);
+
+                            commentTasks.Add(
+                                commenter.Create(file.FileName, commits.Last().Sha, arguments.PullRequestNumber));
                         }
                     }
                     else if (file.Status == "deleted")
@@ -210,6 +210,11 @@
                             String.Format(CultureInfo.InvariantCulture, "Unknown file status: {0}.", file.Status));
                     }
                 }
+            }
+
+            foreach (var comment in commentTasks)
+            {
+                comment.GetAwaiter().GetResult();
             }
         }
     }
