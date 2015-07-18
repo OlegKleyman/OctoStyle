@@ -6,6 +6,8 @@ namespace OctoStyle.Core
 
     using Octokit;
 
+    using StyleCop;
+
     public class AddedPullRequestCommenter : PullRequestCommenter
     {
         public AddedPullRequestCommenter(IPullRequestReviewCommentsClient client, GitRepository repository)
@@ -13,7 +15,7 @@ namespace OctoStyle.Core
         {
         }
 
-        public async override Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequestFile file)
+        public async override Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequestFile file, IEnumerable<Violation> violations)
         {
             throw new NotImplementedException();
         }

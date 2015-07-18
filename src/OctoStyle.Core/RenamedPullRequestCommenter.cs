@@ -5,6 +5,8 @@ namespace OctoStyle.Core
 
     using Octokit;
 
+    using StyleCop;
+
     public class RenamedPullRequestCommenter : PullRequestCommenter
     {
         public RenamedPullRequestCommenter(
@@ -15,7 +17,7 @@ namespace OctoStyle.Core
 
         }
 
-        public async override Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequestFile file)
+        public async override Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequestFile file, IEnumerable<Violation> violations)
         {
             var comment = new PullRequestReviewCommentCreate(
                 "Renamed files not supported.",

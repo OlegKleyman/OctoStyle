@@ -199,7 +199,7 @@
                                 new GitRepository(arguments.RepositoryOwner, arguments.Repository));
 
                             commentTasks.Add(
-                                commenter.Create(pullRequestFile));
+                                commenter.Create(pullRequestFile, null));
                         }
                     }
                     else if (file.Status == "deleted")

@@ -6,6 +6,8 @@ namespace OctoStyle.Core
 
     using Octokit;
 
+    using StyleCop;
+
     public abstract class PullRequestCommenter
     {
         private readonly IPullRequestReviewCommentsClient client;
@@ -28,7 +30,7 @@ namespace OctoStyle.Core
             this.repository = repository;
         }
 
-        public abstract Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequestFile file);
+        public abstract Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequestFile file, IEnumerable<Violation> violations);
 
         protected async Task<PullRequestReviewComment> Create(PullRequestReviewCommentCreate comment, int pullRequestNumber)
         {

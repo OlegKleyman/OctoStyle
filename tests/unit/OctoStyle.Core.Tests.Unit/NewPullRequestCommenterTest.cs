@@ -23,7 +23,8 @@
             var pullRequestFile = new GitHubPullRequestFile(
                 "src/TestLibrary/Nested/TestClass2.cs",
                 new GitHubPullRequest(1, "123"));
-            var comment = (await commenter.Create(pullRequestFile)).ToList();
+            
+            var comment = (await commenter.Create(pullRequestFile, null)).ToList();
 
             Assert.That(comment.Count, Is.EqualTo(3));
 
