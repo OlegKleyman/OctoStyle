@@ -39,6 +39,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FileContents.resx</DependentUpon>
     </Compile>
+    <Compile Include="NewPullRequestCommenterTest.cs" />
     <Compile Include="PathResolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Resources\BomMode.cs" />
