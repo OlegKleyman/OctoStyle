@@ -13,7 +13,7 @@
     using Octokit;
 
     [TestFixture]
-    public class NewPullRequestCommenterTest
+    public class ModifiedPullRequestCommenterTest
     {
         private const int noFileHeaderCommentId = 1;
         private const string addedFilePath = "src/TestLibrary/Nested/TestClass3.cs";
@@ -67,7 +67,7 @@
             Assert.That(comments[2].Position, Is.EqualTo(classMustHaveDocumentationHeaderPosition));
         }
 
-        private static AddedPullRequestCommenter GetAddedPullRequestCommenter()
+        private static ModifiedPullRequestCommenter GetAddedPullRequestCommenter()
         {
             var pullRequestCommentClient = new Mock<IPullRequestReviewCommentsClient>();
 
@@ -88,7 +88,7 @@
                         classMustHaveDocumentationHeaderMessage,
                         classMustHaveDocumentationHeaderCommentId));
 
-            return new AddedPullRequestCommenter(pullRequestCommentClient.Object, new GitRepository("OlegKleyman", "OctoStyle"));
+            return new ModifiedPullRequestCommenter(pullRequestCommentClient.Object, new GitRepository("OlegKleyman", "OctoStyle"));
         }
 
         private static Expression<Func<IPullRequestReviewCommentsClient, Task<PullRequestReviewComment>>>

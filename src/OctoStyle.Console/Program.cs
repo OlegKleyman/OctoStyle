@@ -143,7 +143,7 @@
                             (entry, violation) =>
                             new GitHubStyleViolation(violation.Rule.CheckId, violation.Message, entry.Position));
 
-                        var commenter = new AddedPullRequestCommenter(
+                        var commenter = new ModifiedPullRequestCommenter(
                             client.PullRequest.Comment,
                             new GitRepository(arguments.RepositoryOwner, arguments.Repository));
 
@@ -156,7 +156,7 @@
 
                         var violations = analyzer.Analyze(filePath);
 
-                        var commenter = new AddedPullRequestCommenter(
+                        var commenter = new ModifiedPullRequestCommenter(
                             client.PullRequest.Comment,
                             new GitRepository(arguments.RepositoryOwner, arguments.Repository));
 

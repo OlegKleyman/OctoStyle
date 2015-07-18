@@ -7,9 +7,9 @@ namespace OctoStyle.Core
 
     using Octokit;
 
-    public class AddedPullRequestCommenter : PullRequestCommenter
+    public class ModifiedPullRequestCommenter : PullRequestCommenter
     {
-        public AddedPullRequestCommenter(IPullRequestReviewCommentsClient client, GitRepository repository)
+        public ModifiedPullRequestCommenter(IPullRequestReviewCommentsClient client, GitRepository repository)
             : base(client, repository)
         {
         }
