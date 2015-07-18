@@ -1,5 +1,7 @@
 ﻿namespace OctoStyle.Core
 {
+    using System.IO;
+
     public interface IFileSystemManager
     {
         /// <summary>
@@ -11,5 +13,7 @@
         ///     A <see cref="System.String"/> array of file paths.
         /// </returns>
         string[] GetFiles(string targetDirectory, string fileFilter);
+
+        bool IsDirectory(string path);
     }
 }

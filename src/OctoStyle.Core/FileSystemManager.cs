@@ -17,5 +17,11 @@
         {
             return Directory.GetFiles(targetDirectory, fileFilter);
         }
+
+        public bool IsDirectory(string path)
+        {
+            var attributes = File.GetAttributes(path);
+            return attributes.HasFlag(FileAttributes.Directory);
+        }
     }
 }
