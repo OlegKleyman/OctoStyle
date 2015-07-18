@@ -15,15 +15,15 @@ namespace OctoStyle.Core
 
         }
 
-        public async override Task<IEnumerable<PullRequestReviewComment>> Create(string filePath, string commitId, int pullRequestNumber)
+        public async override Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequestFile file)
         {
             var comment = new PullRequestReviewCommentCreate(
                 "Renamed files not supported.",
-                commitId,
-                filePath,
+                file.PullRequest.LastCommitId,
+                file.FileName,
                 1);
 
-            var addedComment = await Create(comment, pullRequestNumber);
+            var addedComment = await Create(comment, file.PullRequest.Number);
 
             return new List<PullRequestReviewComment> { addedComment };
         }

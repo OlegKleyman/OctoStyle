@@ -28,7 +28,7 @@ namespace OctoStyle.Core
             this.repository = repository;
         }
 
-        public abstract Task<IEnumerable<PullRequestReviewComment>> Create(string filePath, string commitId, int pullRequestNumber);
+        public abstract Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequestFile file);
 
         protected async Task<PullRequestReviewComment> Create(PullRequestReviewCommentCreate comment, int pullRequestNumber)
         {

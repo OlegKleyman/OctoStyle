@@ -76,9 +76,12 @@
             var pathResolver = new PathResolver(new FileSystemManager());
 
             var commentTasks = new List<Task<IEnumerable<PullRequestReviewComment>>>();
+            var pullRequest = new GitHubPullRequest(arguments.PullRequestNumber, commits.Last().Sha);
 
             foreach (var file in files)
             {
+                var pullRequestFile = new GitHubPullRequestFile(file.FileName, pullRequest);
+
                 if (file.FileName.EndsWith(".cs", true, CultureInfo.InvariantCulture))
                 {
                     var filePath = Path.Combine(arguments.SolutionDirectory, file.FileName).Replace('/', '\\');
@@ -196,7 +199,7 @@
                                 new GitRepository(arguments.RepositoryOwner, arguments.Repository));
 
                             commentTasks.Add(
-                                commenter.Create(file.FileName, commits.Last().Sha, arguments.PullRequestNumber));
+                                commenter.Create(pullRequestFile));
                         }
                     }
                     else if (file.Status == "deleted")

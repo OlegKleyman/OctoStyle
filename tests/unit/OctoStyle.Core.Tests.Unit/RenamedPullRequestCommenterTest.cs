@@ -16,7 +16,10 @@
         public async void CreateShouldCreateComment()
         {
             PullRequestCommenter commenter = GetRenamedPullRequestCommenter();
-            var comment = (await commenter.Create("src/TestLibrary/Nested/TestClass2.cs", "123", 1)).ToList();
+            var pullRequestFile = new GitHubPullRequestFile(
+                "src/TestLibrary/Nested/TestClass2.cs",
+                new GitHubPullRequest(1, "123"));
+            var comment = (await commenter.Create(pullRequestFile)).ToList();
 
             Assert.That(comment.Count, Is.EqualTo(1));
             Assert.That(comment[0].Path, Is.EqualTo("src/TestLibrary/Nested/TestClass2.cs"));

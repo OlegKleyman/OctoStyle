@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AddedPullRequestCommenter.cs" />
     <Compile Include="Borrowed\Diff.cs" />
     <Compile Include="Borrowed\DiffEntry.cs" />
     <Compile Include="Borrowed\DiffEntryType.cs" />
@@ -39,6 +40,8 @@
     <Compile Include="GitDiffEntry.cs" />
     <Compile Include="GitDiffEntryFactory.cs" />
     <Compile Include="GitDiffEntryStatus.cs" />
+    <Compile Include="GitHubPullRequest.cs" />
+    <Compile Include="GitHubPullRequestFile.cs" />
     <Compile Include="GitRepository.cs" />
     <Compile Include="ICodeAnalyzer.cs" />
     <Compile Include="IFileSystemManager.cs" />

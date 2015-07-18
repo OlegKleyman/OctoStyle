@@ -1,5 +1,6 @@
 ﻿namespace OctoStyle.Core.Tests.Unit
 {
+    using System;
     using System.Linq;
 
     using Moq;
@@ -18,8 +19,11 @@
         [Test]
         public async void CreateShouldCreateComment()
         {
-            PullRequestCommenter commenter = GetAddedPullRequestCommenter();
-            var comment = (await commenter.Create(addedFilePath, addedCommitId, pullRequestNumber)).ToList();
+            var commenter = GetAddedPullRequestCommenter();
+            var pullRequestFile = new GitHubPullRequestFile(
+                "src/TestLibrary/Nested/TestClass2.cs",
+                new GitHubPullRequest(1, "123"));
+            var comment = (await commenter.Create(pullRequestFile)).ToList();
 
             Assert.That(comment.Count, Is.EqualTo(3));
 
@@ -42,6 +46,33 @@
         private static AddedPullRequestCommenter GetAddedPullRequestCommenter()
         {
             var pullRequestCommentClient = new Mock<IPullRequestReviewCommentsClient>();
+            pullRequestCommentClient.Setup(
+                client =>
+                client.Create(
+                    "OlegKleyman",
+                    "OctoStyle",
+                    pullRequestNumber,
+                    It.Is<PullRequestReviewCommentCreate>(
+                        create =>
+                        create.Path == addedFilePath
+                        && create.Body == "Renamed files not supported." && create.CommitId == addedCommitId
+                        && create.Position == 1)))
+                .ReturnsAsync(
+                    new PullRequestReviewComment(
+                        null,
+                        1,
+                        null,
+                        addedFilePath,
+                        1,
+                        null,
+                        "1",
+                        null,
+                        null,
+                        "Renamed files not supported.",
+                        default(DateTimeOffset),
+                        default(DateTimeOffset),
+                        null,
+                        null));
 
             return new AddedPullRequestCommenter(pullRequestCommentClient.Object, new GitRepository("OlegKleyman", "OctoStyle"));
         }
