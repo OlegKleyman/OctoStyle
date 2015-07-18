@@ -5,5 +5,15 @@
     [TestFixture]
     public class PathResolverTests
     {
+        [Test]
+        public void GetPathPathByFilePathShouldReturnPath()
+        {
+            var resolver = GetPathResolver();
+        }
+
+        private PathResolver GetPathResolver()
+        {
+            return new PathResolver();
+        }
     }
 }
