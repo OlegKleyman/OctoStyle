@@ -1,6 +1,7 @@
 ﻿namespace OctoStyle.Core.Tests.Unit
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using Moq;
@@ -23,25 +24,31 @@
             var pullRequestFile = new GitHubPullRequestFile(
                 "src/TestLibrary/Nested/TestClass2.cs",
                 new GitHubPullRequest(1, "123"));
-            
-            var comment = (await commenter.Create(pullRequestFile, null)).ToList();
 
-            Assert.That(comment.Count, Is.EqualTo(3));
+            var violations = new List<GitHubStyleViolation>
+                                 {
+                                     new GitHubStyleViolation("SA1633", "The file has no header, the header Xml is invalid, or the header is not located at the top of the file.", 1),
+                                     new GitHubStyleViolation("SA1200", "All using directives must be placed inside of the namespace.", 1),
+                                     new GitHubStyleViolation("SA1600", "The class must have a documentation header.", 9)
+                                 };
+            var comments = (await commenter.Create(pullRequestFile, violations)).ToList();
 
-            Assert.That(comment[0].Path, Is.EqualTo(addedFilePath));
-            Assert.That(comment[0].Body, Is.EqualTo("SA1633 - The file has no header, the header Xml is invalid, or the header is not located at the top of the file."));
-            Assert.That(comment[0].Id, Is.EqualTo(1));
-            Assert.That(comment[0].Position, Is.EqualTo(1));
+            Assert.That(comments.Count, Is.EqualTo(3));
 
-            Assert.That(comment[1].Path, Is.EqualTo(addedFilePath));
-            Assert.That(comment[1].Body, Is.EqualTo("SA1200 - All using directives must be placed inside of the namespace."));
-            Assert.That(comment[1].Id, Is.EqualTo(2));
-            Assert.That(comment[1].Position, Is.EqualTo(1));
+            Assert.That(comments[0].Path, Is.EqualTo(addedFilePath));
+            Assert.That(comments[0].Body, Is.EqualTo("SA1633 - The file has no header, the header Xml is invalid, or the header is not located at the top of the file."));
+            Assert.That(comments[0].Id, Is.EqualTo(1));
+            Assert.That(comments[0].Position, Is.EqualTo(1));
 
-            Assert.That(comment[2].Path, Is.EqualTo(addedFilePath));
-            Assert.That(comment[2].Body, Is.EqualTo("SA1600 - The class must have a documentation header."));
-            Assert.That(comment[2].Id, Is.EqualTo(3));
-            Assert.That(comment[2].Position, Is.EqualTo(9));
+            Assert.That(comments[1].Path, Is.EqualTo(addedFilePath));
+            Assert.That(comments[1].Body, Is.EqualTo("SA1200 - All using directives must be placed inside of the namespace."));
+            Assert.That(comments[1].Id, Is.EqualTo(2));
+            Assert.That(comments[1].Position, Is.EqualTo(1));
+
+            Assert.That(comments[2].Path, Is.EqualTo(addedFilePath));
+            Assert.That(comments[2].Body, Is.EqualTo("SA1600 - The class must have a documentation header."));
+            Assert.That(comments[2].Id, Is.EqualTo(3));
+            Assert.That(comments[2].Position, Is.EqualTo(9));
         }
 
         private static AddedPullRequestCommenter GetAddedPullRequestCommenter()
