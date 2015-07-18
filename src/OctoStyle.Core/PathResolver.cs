@@ -21,13 +21,13 @@
 
         public string GetPath(string initialPath, string fileFilter)
         {
-            if (manager.GetFiles(initialPath, fileFilter).Any())
+            if (manager.IsDirectory(initialPath) && manager.GetFiles(initialPath, fileFilter).Any())
             {
                 return initialPath;
             }
 
             var directoryName = Path.GetDirectoryName(initialPath);
-            
+
             if (directoryName == null)
             {
                 throw new InvalidOperationException(

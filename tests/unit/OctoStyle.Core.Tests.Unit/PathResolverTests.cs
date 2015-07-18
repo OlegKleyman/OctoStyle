@@ -42,6 +42,15 @@
             mockFileSystemManager.Setup(manager => manager.GetFiles(ProjectPath, this.ProjectFileFilter))
                 .Returns(new[] { "test.csproj" });
 
+            mockFileSystemManager.Setup(manager => manager.IsDirectory(GetPathShouldReturnPathInitialFilePath))
+                .Returns(false);
+            mockFileSystemManager.Setup(manager => manager.IsDirectory(GetPathShouldReturnPathInitialOuterMostDirectoryPath))
+                .Returns(true);
+            mockFileSystemManager.Setup(manager => manager.IsDirectory(GetPathShouldReturnPathInitialMiddleDirectoryPath))
+                .Returns(true);
+            mockFileSystemManager.Setup(manager => manager.IsDirectory(ProjectPath))
+                .Returns(true);
+
             return new PathResolver(mockFileSystemManager.Object);
         }
     }
