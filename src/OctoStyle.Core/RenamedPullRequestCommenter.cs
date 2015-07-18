@@ -17,7 +17,7 @@ namespace OctoStyle.Core
 
         }
 
-        public async override Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequestFile file, IEnumerable<Violation> violations)
+        public async override Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequestFile file, IEnumerable<GitHubStyleViolation> violations)
         {
             var comment = new PullRequestReviewCommentCreate(
                 "Renamed files not supported.",

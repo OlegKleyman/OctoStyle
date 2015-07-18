@@ -54,6 +54,7 @@
     <Compile Include="CodeAnalyzer.cs" />
     <Compile Include="PullRequestCommenter.cs" />
     <Compile Include="RenamedPullRequestCommenter.cs" />
+    <Compile Include="GitHubStyleViolation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Octokit">
