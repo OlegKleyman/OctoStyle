@@ -7,28 +7,23 @@
 
     public class PathResolver : IPathResolver
     {
+        private readonly IFileSystemManager manager;
+
+        public PathResolver(IFileSystemManager manager)
+        {
+            if (manager == null)
+            {
+                throw new ArgumentNullException("manager");
+            }
+
+            this.manager = manager;
+        }
+
         public string GetPath(string initialPath, string fileFilter)
         {
-            if (initialPath == null)
+            if (manager.GetFiles(initialPath, fileFilter).Any())
             {
-                throw new ArgumentNullException("initialPath");
-            }
-
-            if (fileFilter == null)
-            {
-                throw new ArgumentNullException("fileFilter");
-            }
-
-            const string cannotBeEmptyMessage = "Cannot be empty";
-
-            if (initialPath.Length == 0)
-            {
-                throw new ArgumentException(cannotBeEmptyMessage, "initialPath");
-            }
-
-            if (fileFilter.Length == 0)
-            {
-                throw new ArgumentException(cannotBeEmptyMessage, "fileFilter");
+                return initialPath;
             }
 
             var directoryName = Path.GetDirectoryName(initialPath);
@@ -37,11 +32,6 @@
             {
                 throw new InvalidOperationException(
                     String.Format(CultureInfo.InvariantCulture, "Directory name of {0} was not found", initialPath));
-            }
-
-            if (Directory.GetFiles(directoryName, fileFilter).Any())
-            {
-                return directoryName;
             }
 
             return GetPath(directoryName, fileFilter);
