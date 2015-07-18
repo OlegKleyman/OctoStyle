@@ -68,6 +68,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="FileSystemManagerFiles\TestDirectory\TestFile.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="FileSystemManagerFiles\TestFile2.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

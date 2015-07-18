@@ -37,6 +37,15 @@
             }
         }
 
+        [TestCase(@"FileSystemManagerFiles\TestDirectory\TestFile.txt", false)]
+        [TestCase(@"FileSystemManagerFiles\TestDirectory", true)]
+        public void IsDirectoryShouldReturnWhetherPathIsDiretory(string path, bool expected)
+        {
+            var manager = GetFileSystemManager();
+            
+            Assert.That(manager.IsDirectory(path), Is.EqualTo(expected));
+        }
+
         private FileSystemManager GetFileSystemManager()
         {
             return new FileSystemManager();
