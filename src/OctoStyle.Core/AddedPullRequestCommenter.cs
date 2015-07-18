@@ -7,8 +7,6 @@ namespace OctoStyle.Core
 
     using Octokit;
 
-    using StyleCop;
-
     public class AddedPullRequestCommenter : PullRequestCommenter
     {
         public AddedPullRequestCommenter(IPullRequestReviewCommentsClient client, GitRepository repository)
@@ -16,7 +14,9 @@ namespace OctoStyle.Core
         {
         }
 
-        public async override Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequestFile file, IEnumerable<GitHubStyleViolation> violations)
+        public override async Task<IEnumerable<PullRequestReviewComment>> Create(
+            GitHubPullRequestFile file,
+            IEnumerable<GitHubStyleViolation> violations)
         {
             if (violations == null)
             {
@@ -28,10 +28,10 @@ namespace OctoStyle.Core
             foreach (var violation in violations)
             {
                 var message = String.Format(
-                                CultureInfo.InvariantCulture,
-                                "{0} - {1}",
-                                violation.RuleId,
-                                violation.Message);
+                    CultureInfo.InvariantCulture,
+                    "{0} - {1}",
+                    violation.RuleId,
+                    violation.Message);
 
                 var comment = new PullRequestReviewCommentCreate(
                     message,
