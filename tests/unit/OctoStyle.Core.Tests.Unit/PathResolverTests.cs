@@ -5,10 +5,15 @@
     [TestFixture]
     public class PathResolverTests
     {
-        [Test]
-        public void GetPathPathByFilePathShouldReturnPath()
+        [TestCase(@"C:\testPath\innerDirectory1\innerDirectory2\someFile.cs", @"C:\testPath")]
+        [TestCase(@"C:\testPath\innerDirectory1\innerDirectory2", @"C:\testPath")]
+        [TestCase(@"C:\testPath\innerDirectory1", @"C:\testPath")]
+        [TestCase(@"C:\testPath", @"C:\testPath")]
+        public void GetPathShouldReturnPath(string initialPath, string expectedPath)
         {
-            var resolver = GetPathResolver();
+            IPathResolver resolver = GetPathResolver();
+            var path = resolver.GetPath(initialPath, "*.csproj");
+            Assert.That(path, Is.EqualTo(expectedPath));
         }
 
         private PathResolver GetPathResolver()
