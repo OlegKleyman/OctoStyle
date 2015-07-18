@@ -48,8 +48,13 @@
     <Compile Include="PathResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CodeAnalyzer.cs" />
+    <Compile Include="PullRequestCommenter.cs" />
+    <Compile Include="RenamedPullRequestCommenter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Octokit">
+      <HintPath>..\..\packages\Octokit.0.13.0\lib\net45\Octokit.dll</HintPath>
+    </Reference>
     <Reference Include="StyleCop">
       <HintPath>..\..\packages\StyleCop.4.7.49.0\lib\net35\StyleCop.dll</HintPath>
     </Reference>
@@ -60,6 +65,7 @@
       <HintPath>..\..\common\lib\StyleCop.CSharp.Rules.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
