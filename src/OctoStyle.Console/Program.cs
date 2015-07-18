@@ -140,28 +140,14 @@
                             violations,
                             entry => entry.LineNumber,
                             violation => violation.Line,
-                            (entry, violation) => new { entry.Position, violation.Rule.CheckId, violation.Message });
+                            (entry, violation) =>
+                            new GitHubStyleViolation(violation.Rule.CheckId, violation.Message, entry.Position));
 
-                        foreach (var violation in accessibleViolations)
-                        {
-                            var message = String.Format(
-                                CultureInfo.InvariantCulture,
-                                "{0} - {1}",
-                                violation.CheckId,
-                                violation.Message);
+                        var commenter = new AddedPullRequestCommenter(
+                            client.PullRequest.Comment,
+                            new GitRepository(arguments.RepositoryOwner, arguments.Repository));
 
-                            var comment = new PullRequestReviewCommentCreate(
-                                message,
-                                commits.Last().Sha,
-                                file.FileName,
-                                violation.Position);
-
-                            client.PullRequest.Comment.Create(
-                                arguments.RepositoryOwner,
-                                arguments.Repository,
-                                arguments.PullRequestNumber,
-                                comment).GetAwaiter().GetResult();
-                        }
+                        commentTasks.Add(commenter.Create(pullRequestFile, accessibleViolations));
 
                     }
                     else if (file.Status == "added")
