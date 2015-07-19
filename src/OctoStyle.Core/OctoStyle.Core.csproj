@@ -37,6 +37,7 @@
     <Compile Include="Borrowed\DiffEntryType.cs" />
     <Compile Include="DiffEntryListExtensions.cs" />
     <Compile Include="EqualGitDiffEntry.cs" />
+    <Compile Include="FileContentRetriever.cs" />
     <Compile Include="GitDiffEntry.cs" />
     <Compile Include="GitDiffEntryFactory.cs" />
     <Compile Include="GitDiffEntryStatus.cs" />
@@ -45,6 +46,7 @@
     <Compile Include="GitPullRequestFileStatus.cs" />
     <Compile Include="GitRepository.cs" />
     <Compile Include="ICodeAnalyzer.cs" />
+    <Compile Include="IFileContentRetriever.cs" />
     <Compile Include="IFileSystemManager.cs" />
     <Compile Include="IGitDiffEntryFactory.cs" />
     <Compile Include="IPathResolver.cs" />
