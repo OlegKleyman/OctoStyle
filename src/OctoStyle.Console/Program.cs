@@ -13,8 +13,13 @@
 
     public class Program
     {
+        public static readonly List<Task<IEnumerable<PullRequestReviewComment>>> CommentTasks =
+            new List<Task<IEnumerable<PullRequestReviewComment>>>();
+
         public static void Main(string[] args)
         {
+            CommentTasks.Clear();
+
             Arguments arguments;
 
             try
@@ -32,8 +37,6 @@
                 new InMemoryCredentialStore(new Credentials(arguments.Login, arguments.Password)));
 
             var pathResolver = new PathResolver(new FileSystemManager());
-
-            var commentTasks = new List<Task<IEnumerable<PullRequestReviewComment>>>();
 
             var repository = new GitRepository(arguments.RepositoryOwner, arguments.Repository);
 
@@ -53,14 +56,11 @@
                     var factory = new PullRequestCommenterFactory(client.PullRequest.Comment, repository, diffRetriever);
                     var analyzer = new CodeAnalyzer(projectPath);
 
-                    commentTasks.Add(factory.Get(file.Status).Create(file, analyzer, filePath));
+                    CommentTasks.Add(factory.Get(file.Status).Create(file, analyzer, filePath));
                 }
             }
 
-            foreach (var comment in commentTasks)
-            {
-                comment.GetAwaiter().GetResult();
-            }
+            CommentTasks.ForEach(task => task.GetAwaiter().GetResult());
         }
     }
 }
