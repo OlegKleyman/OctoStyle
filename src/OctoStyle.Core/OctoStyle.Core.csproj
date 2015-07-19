@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AddedPullRequestCommenter.cs" />
+    <Compile Include="IPullRequestCommenterFactory.cs" />
     <Compile Include="ModifiedPullRequestCommenter.cs" />
     <Compile Include="Borrowed\Diff.cs" />
     <Compile Include="Borrowed\DiffEntry.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CodeAnalyzer.cs" />
     <Compile Include="PullRequestCommenter.cs" />
+    <Compile Include="PullRequestCommenterFactory.cs" />
     <Compile Include="PullRequestRetriver.cs" />
     <Compile Include="RenamedPullRequestCommenter.cs" />
     <Compile Include="GitHubStyleViolation.cs" />
