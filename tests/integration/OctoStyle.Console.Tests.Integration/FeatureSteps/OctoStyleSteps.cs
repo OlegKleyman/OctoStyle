@@ -48,12 +48,7 @@
         {
             var client = FeatureContextExtended.Current.GitClient;
 
-            var comments = client.PullRequest.Comment.GetAll(
-                FeatureContextExtended.Current.RepositoryOwner,
-                FeatureContextExtended.Current.Repository,
-                ScenarioContextExtended.Current.PullRequestNumber).GetAwaiter().GetResult();
-
-            foreach (var comment in comments)
+            foreach (var comment in ScenarioContextExtended.Current.CreatedComments)
             {
                 client.PullRequest.Comment.Delete(
                     FeatureContextExtended.Current.RepositoryOwner,
@@ -83,6 +78,9 @@
                 ScenarioContextExtended.Current.PullRequestNumber);
             
             Program.Main(arguments.Split(' '));
+
+            ScenarioContextExtended.Current.CreatedComments =
+                Program.CommentTasks.SelectMany(task => task.GetAwaiter().GetResult());
         }
 
         [Then(@"there should be comments on the pull request on the lines of the found violations")]

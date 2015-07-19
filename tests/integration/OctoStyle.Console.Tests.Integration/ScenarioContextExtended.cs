@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using Octokit;
+
     using TechTalk.SpecFlow;
 
     public class ScenarioContextExtended
@@ -20,6 +22,8 @@
         }
 
         private readonly ScenarioContext context;
+
+        private const string CreatedCommentsKey = "CREATED_COMMENTS";
 
         public ScenarioContextExtended(ScenarioContext context)
         {
@@ -45,6 +49,23 @@
             set
             {
                 this.context.Set(value, PullRequestNumberKey);
+            }
+        }
+
+        public IEnumerable<PullRequestReviewComment> CreatedComments
+        {
+            get
+            {
+                if (!this.context.ContainsKey(CreatedCommentsKey))
+                {
+                    throw new KeyNotFoundException(CreatedCommentsKey);
+                }
+
+                return this.context.Get<IEnumerable<PullRequestReviewComment>>(CreatedCommentsKey);
+            }
+            set
+            {
+                this.context.Set(value, CreatedCommentsKey);
             }
         }
     }
