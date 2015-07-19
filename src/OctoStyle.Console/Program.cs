@@ -47,7 +47,7 @@
             {
                 if (file.FileName.EndsWith(".cs", true, CultureInfo.InvariantCulture))
                 {
-                    var filePath = Path.Combine(arguments.SolutionDirectory, file.FileName).Replace('/', '\\');
+                    var filePath = Path.Combine(arguments.SolutionDirectory, file.FileName);
 
                     var projectPath = pathResolver.GetPath(filePath, "*.csproj");
 
