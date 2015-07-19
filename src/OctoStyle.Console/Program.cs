@@ -54,7 +54,6 @@
 
                     if (file.Status == GitPullRequestFileStatus.Modified)
                     {
-
                         var diffRetriever = new GitHubDiffRetriever(client.Connection, repository);
 
                         var diff =
