@@ -6,6 +6,6 @@ namespace OctoStyle.Core
 
     public interface ICodeAnalyzer
     {
-        IEnumerable<Violation> Analyze(string filePath);
+        IEnumerable<GitHubStyleViolation> Analyze(string filePath);
     }
 }

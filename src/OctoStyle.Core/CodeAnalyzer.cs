@@ -2,6 +2,7 @@ namespace OctoStyle.Core
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using StyleCop;
 
@@ -26,7 +27,7 @@ namespace OctoStyle.Core
             this.project = new CodeProject(0, projectPath, new Configuration(null));
         }
 
-        public IEnumerable<Violation> Analyze(string filePath)
+        public IEnumerable<GitHubStyleViolation> Analyze(string filePath)
         {
             this.violations.Clear();
             var console = new StyleCopConsole(null, false, null, null, true);
@@ -35,8 +36,10 @@ namespace OctoStyle.Core
             console.ViolationEncountered += this.OnViolationEncountered;
 
             console.Start(new[] { this.project }, true);
-            
-            return this.violations;
+
+            return
+                this.violations.Select(
+                    violation => new GitHubStyleViolation(violation.Rule.CheckId, violation.Message, violation.Line));
         }
 
         private void OnViolationEncountered(object sender, ViolationEventArgs e)

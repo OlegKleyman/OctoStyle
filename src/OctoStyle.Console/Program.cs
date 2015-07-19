@@ -70,9 +70,9 @@
                         var accessibleViolations = diff.Join(
                             violations,
                             entry => entry.LineNumber,
-                            violation => violation.Line,
+                            violation => violation.Position,
                             (entry, violation) =>
-                            new GitHubStyleViolation(violation.Rule.CheckId, violation.Message, entry.Position));
+                            new GitHubStyleViolation(violation.RuleId, violation.Message, entry.Position));
 
                         var commenter = new ModifiedPullRequestCommenter(
                             client.PullRequest.Comment,
@@ -91,12 +91,7 @@
                             client.PullRequest.Comment,
                             repository);
 
-                        commentTasks.Add(
-                            commenter.Create(
-                                file,
-                                violations.Select(
-                                    violation =>
-                                    new GitHubStyleViolation(violation.Rule.CheckId, violation.Message, violation.Line))));
+                        commentTasks.Add(commenter.Create(file, violations));
                     }
                     else if (file.Status == GitPullRequestFileStatus.Renamed)
                     {
