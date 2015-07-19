@@ -40,8 +40,8 @@
             
             var newFileEndpoint = new Uri(baseUri, String.Concat(filePath, "?ref=", newBranch));
             var originalFileEndpoint = new Uri(baseUri, String.Concat(filePath, "?ref=", originalBranch));
-            var newFileContents = await Connection.Get<Octokit.RepositoryContent>(newFileEndpoint, null, null);
-            var originalFileContents = await Connection.Get<Octokit.RepositoryContent>(originalFileEndpoint, null, null);
+            var newFileContents = await Connection.Get<RepositoryContent>(newFileEndpoint, null, null);
+            var originalFileContents = await Connection.Get<RepositoryContent>(originalFileEndpoint, null, null);
 
             if (newFileContents.Body == null)
             {
