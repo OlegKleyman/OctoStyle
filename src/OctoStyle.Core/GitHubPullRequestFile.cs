@@ -10,8 +10,6 @@ namespace OctoStyle.Core
 
         public GitPullRequestFileStatus Status { get; private set; }
 
-        public Uri ContentUri { get; private set; }
-
         public int Changes { get; private set; }
 
         public GitHubPullRequestFile(string fileName, GitHubPullRequest pullRequest, GitPullRequestFileStatus status, int changes)
