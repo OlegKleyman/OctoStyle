@@ -8,7 +8,9 @@ namespace OctoStyle.Core
 
         public GitHubPullRequest PullRequest { get; private set; }
 
-        public GitHubPullRequestFile(string fileName, GitHubPullRequest pullRequest)
+        public GitPullRequestFileStatus Status { get; private set; }
+
+        public GitHubPullRequestFile(string fileName, GitHubPullRequest pullRequest, GitPullRequestFileStatus status)
         {
             if (fileName == null)
             {
@@ -27,6 +29,7 @@ namespace OctoStyle.Core
 
             this.FileName = fileName;
             this.PullRequest = pullRequest;
+            this.Status = status;
         }
     }
 }

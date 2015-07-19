@@ -73,11 +73,14 @@
             var pathResolver = new PathResolver(new FileSystemManager());
 
             var commentTasks = new List<Task<IEnumerable<PullRequestReviewComment>>>();
-            var pullRequest = new GitHubPullRequest(arguments.PullRequestNumber, commits.Last().Sha);
+            var pullRequest = new GitHubPullRequest(arguments.PullRequestNumber, commits.Last().Sha, files);
 
             foreach (var file in files)
             {
-                var pullRequestFile = new GitHubPullRequestFile(file.FileName, pullRequest);
+                var pullRequestFile = new GitHubPullRequestFile(
+                    file.FileName,
+                    pullRequest,
+                    (GitPullRequestFileStatus)Enum.Parse(typeof(GitPullRequestFileStatus), file.Status, true));
 
                 if (file.FileName.EndsWith(".cs", true, CultureInfo.InvariantCulture))
                 {

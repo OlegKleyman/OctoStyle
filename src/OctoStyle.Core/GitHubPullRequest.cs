@@ -1,6 +1,10 @@
 namespace OctoStyle.Core
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Octokit;
 
     public class GitHubPullRequest
     {
@@ -8,11 +12,18 @@ namespace OctoStyle.Core
 
         public string LastCommitId { get; private set; }
 
-        public GitHubPullRequest(int number, string lastCommitId)
+        public IReadOnlyList<GitHubPullRequestFile> Files { get; private set; }
+
+        public GitHubPullRequest(int number, string lastCommitId, IEnumerable<PullRequestFile> files)
         {
             if (lastCommitId == null)
             {
                 throw new ArgumentNullException("lastCommitId");
+            }
+
+            if (files == null)
+            {
+                throw new ArgumentNullException("files");
             }
 
             if (lastCommitId.Length == 0)
@@ -27,6 +38,13 @@ namespace OctoStyle.Core
 
             this.Number = number;
             this.LastCommitId = lastCommitId;
+            this.Files =
+                files.Select(
+                    file =>
+                    new GitHubPullRequestFile(
+                        file.FileName,
+                        this,
+                        (GitPullRequestFileStatus)Enum.Parse(typeof(GitPullRequestFileStatus), file.Status, true))).ToList();
         }
     }
 }

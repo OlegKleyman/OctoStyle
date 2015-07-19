@@ -42,17 +42,20 @@
     <Compile Include="GitDiffEntryStatus.cs" />
     <Compile Include="GitHubPullRequest.cs" />
     <Compile Include="GitHubPullRequestFile.cs" />
+    <Compile Include="GitPullRequestFileStatus.cs" />
     <Compile Include="GitRepository.cs" />
     <Compile Include="ICodeAnalyzer.cs" />
     <Compile Include="IFileSystemManager.cs" />
     <Compile Include="IGitDiffEntryFactory.cs" />
     <Compile Include="IPathResolver.cs" />
     <Compile Include="FileSystemManager.cs" />
+    <Compile Include="IPullRequestRetriever.cs" />
     <Compile Include="ModificationGitDiffEntry.cs" />
     <Compile Include="PathResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CodeAnalyzer.cs" />
     <Compile Include="PullRequestCommenter.cs" />
+    <Compile Include="PullRequestRetriver.cs" />
     <Compile Include="RenamedPullRequestCommenter.cs" />
     <Compile Include="GitHubStyleViolation.cs" />
   </ItemGroup>

@@ -1,6 +1,7 @@
 ﻿namespace OctoStyle.Core.Tests.Unit
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using Moq;
@@ -18,7 +19,9 @@
             PullRequestCommenter commenter = GetRenamedPullRequestCommenter();
             var pullRequestFile = new GitHubPullRequestFile(
                 "src/TestLibrary/Nested/TestClass2.cs",
-                new GitHubPullRequest(1, "123"));
+                new GitHubPullRequest(1, "123", new List<PullRequestFile>()),
+                GitPullRequestFileStatus.Renamed);
+
             var comment = (await commenter.Create(pullRequestFile, null)).ToList();
 
             Assert.That(comment.Count, Is.EqualTo(1));
