@@ -45,7 +45,6 @@ namespace OctoStyle.Core
                         file.FileName,
                         this,
                         (GitPullRequestFileStatus)Enum.Parse(typeof(GitPullRequestFileStatus), file.Status, true),
-                        file.ContentsUrl,
                         file.Changes)).ToList();
         }
     }

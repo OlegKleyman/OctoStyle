@@ -41,7 +41,6 @@
                 addedFilePath,
                 new GitHubPullRequest(1, "123", new List<PullRequestFile>()),
                 GitPullRequestFileStatus.Added,
-                new Uri("http://localhost"),
                 0);
 
             var violations = new List<GitHubStyleViolation>
