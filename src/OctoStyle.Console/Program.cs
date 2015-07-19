@@ -4,14 +4,12 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Octokit;
     using Octokit.Internal;
 
     using OctoStyle.Core;
-    using OctoStyle.Core.Borrowed;
 
     public class Program
     {
@@ -50,41 +48,12 @@
                     var filePath = Path.Combine(arguments.SolutionDirectory, file.FileName);
 
                     var projectPath = pathResolver.GetPath(filePath, "*.csproj");
+                    var diffRetriever = new GitHubDiffRetriever(client.Connection, repository);
 
-                    if (file.Status == GitPullRequestFileStatus.Modified)
-                    {
-                        var diffRetriever = new GitHubDiffRetriever(client.Connection, repository);
+                    var factory = new PullRequestCommenterFactory(client.PullRequest.Comment, repository, diffRetriever);
+                    var analyzer = new CodeAnalyzer(projectPath);
 
-                        var analyzer = new CodeAnalyzer(projectPath);
-
-                        var commenter = new ModifiedPullRequestCommenter(client.PullRequest.Comment, repository, diffRetriever);
-
-                        commentTasks.Add(commenter.Create(file, analyzer, filePath));
-
-                    }
-                    else if (file.Status == GitPullRequestFileStatus.Added)
-                    {
-                        var analyzer = new CodeAnalyzer(projectPath);
-
-                        var commenter = new AddedPullRequestCommenter(client.PullRequest.Comment, repository);
-
-                        commentTasks.Add(commenter.Create(file, analyzer, filePath));
-                    }
-                    else if (file.Status == GitPullRequestFileStatus.Renamed)
-                    {
-                        var commenter = new RenamedPullRequestCommenter(client.PullRequest.Comment, repository);
-
-                        commentTasks.Add(commenter.Create(file, null, filePath));
-                    }
-                    else if (file.Status == GitPullRequestFileStatus.Deleted)
-                    {
-                        PullRequestCommenter.NoCommentPullRequestCommenter.NoComment.Create(null, null, null);
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException(
-                            String.Format(CultureInfo.InvariantCulture, "Unknown file status: {0}.", file.Status));
-                    }
+                    commentTasks.Add(factory.Get(file.Status).Create(file, analyzer, filePath));
                 }
             }
 
