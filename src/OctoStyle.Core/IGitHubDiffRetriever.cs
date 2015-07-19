@@ -5,7 +5,7 @@
 
     using OctoStyle.Core.Borrowed;
 
-    public interface IGitDiffRetriever
+    public interface IGitHubDiffRetriever
     {
         Task<IReadOnlyList<GitDiffEntry>> RetrieveAsync(string filePath, string newBranch, string originalBranch);
     }

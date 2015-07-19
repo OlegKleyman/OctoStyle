@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AddedPullRequestCommenter.cs" />
+    <Compile Include="ModifiedPullRequestCommenter.cs" />
     <Compile Include="Borrowed\Diff.cs" />
     <Compile Include="Borrowed\DiffEntry.cs" />
     <Compile Include="Borrowed\DiffEntryType.cs" />
@@ -47,7 +48,7 @@
     <Compile Include="GitPullRequestFileStatus.cs" />
     <Compile Include="GitRepository.cs" />
     <Compile Include="ICodeAnalyzer.cs" />
-    <Compile Include="IGitDiffRetriever.cs" />
+    <Compile Include="IGitHubDiffRetriever.cs" />
     <Compile Include="IFileSystemManager.cs" />
     <Compile Include="IGitDiffEntryFactory.cs" />
     <Compile Include="IPathResolver.cs" />

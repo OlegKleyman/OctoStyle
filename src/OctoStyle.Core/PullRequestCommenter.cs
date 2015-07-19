@@ -30,7 +30,7 @@ namespace OctoStyle.Core
             this.repository = repository;
         }
 
-        public abstract Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequestFile file, IEnumerable<GitHubStyleViolation> violations);
+        public abstract Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequestFile file, ICodeAnalyzer analyzer, string physicalFilePath);
 
         protected async Task<PullRequestReviewComment> Create(PullRequestReviewCommentCreate comment, int pullRequestNumber)
         {

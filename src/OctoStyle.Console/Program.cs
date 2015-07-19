@@ -53,45 +53,26 @@
                     {
                         var diffRetriever = new GitHubDiffRetriever(client.Connection, repository);
 
-                        var diff =
-                            diffRetriever.RetrieveAsync(
-                                file.FileName,
-                                pullRequest.Branches.Branch,
-                                pullRequest.Branches.MergeBranch)
-                                .GetAwaiter()
-                                .GetResult()
-                                .OfType<ModificationGitDiffEntry>();
-
                         var analyzer = new CodeAnalyzer(pathResolver.GetPath(filePath, "*.csproj"));
-                        var violations = analyzer.Analyze(filePath);
 
-                        var accessibleViolations = diff.Join(
-                            violations,
-                            entry => entry.LineNumber,
-                            violation => violation.Position,
-                            (entry, violation) =>
-                            new GitHubStyleViolation(violation.RuleId, violation.Message, entry.Position));
+                        var commenter = new ModifiedPullRequestCommenter(client.PullRequest.Comment, repository, diffRetriever);
 
-                        var commenter = new ModifiedPullRequestCommenter(client.PullRequest.Comment, repository);
-
-                        commentTasks.Add(commenter.Create(file, accessibleViolations));
+                        commentTasks.Add(commenter.Create(file, analyzer, filePath));
 
                     }
                     else if (file.Status == GitPullRequestFileStatus.Added)
                     {
                         var analyzer = new CodeAnalyzer(pathResolver.GetPath(filePath, "*.csproj"));
 
-                        var violations = analyzer.Analyze(filePath);
+                        var commenter = new AddedPullRequestCommenter(client.PullRequest.Comment, repository);
 
-                        var commenter = new ModifiedPullRequestCommenter(client.PullRequest.Comment, repository);
-
-                        commentTasks.Add(commenter.Create(file, violations));
+                        commentTasks.Add(commenter.Create(file, analyzer, filePath));
                     }
                     else if (file.Status == GitPullRequestFileStatus.Renamed)
                     {
                         var commenter = new RenamedPullRequestCommenter(client.PullRequest.Comment, repository);
 
-                        commentTasks.Add(commenter.Create(file, null));
+                        commentTasks.Add(commenter.Create(file, null, filePath));
                     }
                     else if (file.Status == GitPullRequestFileStatus.Deleted)
                     {

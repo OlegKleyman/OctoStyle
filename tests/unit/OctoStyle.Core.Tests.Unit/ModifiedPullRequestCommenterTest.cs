@@ -15,30 +15,30 @@
     [TestFixture]
     public class ModifiedPullRequestCommenterTest
     {
-        private const int noFileHeaderCommentId = 1;
-        private const string addedFilePath = "src/TestLibrary/Nested/TestClass3.cs";
+        private const int noMethodDocumentationHeaderCommentId = 1;
+
+        private const string modifiedFilePath = "src/TestLibrary/TestClass.cs";
+
         private const int pullRequestNumber = 1;
-        private const string noFileHeaderMessage = "SA1633 - The file has no header, the header Xml is invalid, or the header is not located at the top of the file.";
-        private const int noFileHeaderPosition = 1;
 
-        private const int allDirectivesInNamespaceCommentId = 2;
+        private const string noMethodDocumentationHeaderMessage =
+            "SA1600 - The method must have a documentation header.";
 
-        private const int allDirectivesInNamespacePosition = 1;
+        private const int noMethodDocumentationHeaderPosition = 5;
 
-        private const string allDirectivesInNamespaceMessage = "SA1200 - All using directives must be placed inside of the namespace.";
+        private const int mustBeFollowedByBlankLineCommentId = 2;
 
-        private const string classMustHaveDocumentationHeaderMessage = "SA1600 - The class must have a documentation header.";
+        private const int mustBeFollowedByBlankLinePosition = 9;
 
-        private const int classMustHaveDocumentationHeaderCommentId = 3;
-
-        private const int classMustHaveDocumentationHeaderPosition = 9;
+        private const string mustBeFollowedByBlankLineMessage =
+            "SA1513 - Statements or elements wrapped in curly brackets must be followed by a blank line.";
 
         [Test]
         public async void CreateShouldCreateComment()
         {
             var commenter = GetAddedPullRequestCommenter();
             var pullRequestFile = new GitHubPullRequestFile(
-                addedFilePath,
+                modifiedFilePath,
                 new GitHubPullRequest(
                     1,
                     "123",
@@ -49,52 +49,75 @@
 
             var violations = new List<GitHubStyleViolation>
                                  {
-                                     new GitHubStyleViolation("SA1633", "The file has no header, the header Xml is invalid, or the header is not located at the top of the file.", noFileHeaderPosition),
-                                     new GitHubStyleViolation("SA1200", "All using directives must be placed inside of the namespace.", allDirectivesInNamespacePosition),
-                                     new GitHubStyleViolation("SA1600", "The class must have a documentation header.", classMustHaveDocumentationHeaderPosition)
+                                     new GitHubStyleViolation(
+                                         "SA1600",
+                                         "The method must have a documentation header.",
+                                         21),
+                                     new GitHubStyleViolation(
+                                         "SA1513",
+                                         "Statements or elements wrapped in curly brackets must be followed by a blank line.",
+                                         25)
                                  };
-            var comments = (await commenter.Create(pullRequestFile, violations)).ToList();
+            var mockAnalyzer = new Mock<ICodeAnalyzer>();
 
-            Assert.That(comments.Count, Is.EqualTo(3));
+            const string modifiedPhysicalFilePath = @"C:\repo\TestLibrary\TestClass.cs";
+            mockAnalyzer.Setup(analyzer => analyzer.Analyze(modifiedPhysicalFilePath)).Returns(violations);
 
-            Assert.That(comments[0].Path, Is.EqualTo(addedFilePath));
-            Assert.That(comments[0].Body, Is.EqualTo(noFileHeaderMessage));
-            Assert.That(comments[0].Id, Is.EqualTo(noFileHeaderCommentId));
-            Assert.That(comments[0].Position, Is.EqualTo(noFileHeaderPosition));
+            var comments =
+                (await commenter.Create(pullRequestFile, mockAnalyzer.Object, modifiedPhysicalFilePath)).ToList();
 
-            Assert.That(comments[1].Path, Is.EqualTo(addedFilePath));
-            Assert.That(comments[1].Body, Is.EqualTo(allDirectivesInNamespaceMessage));
-            Assert.That(comments[1].Id, Is.EqualTo(allDirectivesInNamespaceCommentId));
-            Assert.That(comments[1].Position, Is.EqualTo(allDirectivesInNamespacePosition));
+            Assert.That(comments.Count, Is.EqualTo(2));
 
-            Assert.That(comments[2].Path, Is.EqualTo(addedFilePath));
-            Assert.That(comments[2].Body, Is.EqualTo(classMustHaveDocumentationHeaderMessage));
-            Assert.That(comments[2].Id, Is.EqualTo(classMustHaveDocumentationHeaderCommentId));
-            Assert.That(comments[2].Position, Is.EqualTo(classMustHaveDocumentationHeaderPosition));
+            Assert.That(comments[0].Path, Is.EqualTo(modifiedFilePath));
+            Assert.That(comments[0].Body, Is.EqualTo(noMethodDocumentationHeaderMessage));
+            Assert.That(comments[0].Id, Is.EqualTo(noMethodDocumentationHeaderCommentId));
+            Assert.That(comments[0].Position, Is.EqualTo(noMethodDocumentationHeaderPosition));
+
+            Assert.That(comments[1].Path, Is.EqualTo(modifiedFilePath));
+            Assert.That(comments[1].Body, Is.EqualTo(mustBeFollowedByBlankLineMessage));
+            Assert.That(comments[1].Id, Is.EqualTo(mustBeFollowedByBlankLineCommentId));
+            Assert.That(comments[1].Position, Is.EqualTo(mustBeFollowedByBlankLinePosition));
         }
 
         private static ModifiedPullRequestCommenter GetAddedPullRequestCommenter()
         {
             var pullRequestCommentClient = new Mock<IPullRequestReviewCommentsClient>();
 
-            pullRequestCommentClient.Setup(GetCreateMethodMock(noFileHeaderMessage, noFileHeaderPosition))
-                .ReturnsAsync(GetComment(noFileHeaderPosition, noFileHeaderMessage, noFileHeaderCommentId));
             pullRequestCommentClient.Setup(
-                GetCreateMethodMock(allDirectivesInNamespaceMessage, allDirectivesInNamespacePosition))
+                GetCreateMethodMock(noMethodDocumentationHeaderMessage, noMethodDocumentationHeaderPosition))
                 .ReturnsAsync(
                     GetComment(
-                        allDirectivesInNamespacePosition,
-                        allDirectivesInNamespaceMessage,
-                        allDirectivesInNamespaceCommentId));
+                        noMethodDocumentationHeaderPosition,
+                        noMethodDocumentationHeaderMessage,
+                        noMethodDocumentationHeaderCommentId));
             pullRequestCommentClient.Setup(
-                GetCreateMethodMock(classMustHaveDocumentationHeaderMessage, classMustHaveDocumentationHeaderPosition))
+                GetCreateMethodMock(mustBeFollowedByBlankLineMessage, mustBeFollowedByBlankLinePosition))
                 .ReturnsAsync(
                     GetComment(
-                        classMustHaveDocumentationHeaderPosition,
-                        classMustHaveDocumentationHeaderMessage,
-                        classMustHaveDocumentationHeaderCommentId));
+                        mustBeFollowedByBlankLinePosition,
+                        mustBeFollowedByBlankLineMessage,
+                        mustBeFollowedByBlankLineCommentId));
 
-            return new ModifiedPullRequestCommenter(pullRequestCommentClient.Object, new GitRepository("OlegKleyman", "OctoStyle"));
+            var diffRetriever = new Mock<IGitHubDiffRetriever>();
+            var diff = new List<GitDiffEntry>
+                           {
+                               new ModificationGitDiffEntry(4, GitDiffEntryStatus.New,  20),
+                               new ModificationGitDiffEntry(5, GitDiffEntryStatus.New,  21),
+                               new ModificationGitDiffEntry(6, GitDiffEntryStatus.New,  22),
+                               new ModificationGitDiffEntry(7, GitDiffEntryStatus.New,  23),
+                               new ModificationGitDiffEntry(8, GitDiffEntryStatus.New,  24),
+                               new ModificationGitDiffEntry(9, GitDiffEntryStatus.New,  25),
+                               new ModificationGitDiffEntry(10, GitDiffEntryStatus.New,  26),
+                               new ModificationGitDiffEntry(11, GitDiffEntryStatus.New,  27)
+                           };
+
+            diffRetriever.Setup(retriever => retriever.RetrieveAsync(modifiedFilePath, "test_branch", "master"))
+                .ReturnsAsync(diff);
+
+            return new ModifiedPullRequestCommenter(
+                pullRequestCommentClient.Object,
+                new GitRepository("OlegKleyman", "OctoStyle"),
+                diffRetriever.Object);
         }
 
         private static Expression<Func<IPullRequestReviewCommentsClient, Task<PullRequestReviewComment>>>
@@ -108,7 +131,7 @@
                     pullRequestNumber,
                     It.Is<PullRequestReviewCommentCreate>(
                         create =>
-                        create.Path == addedFilePath && create.Body == body && create.CommitId == "123"
+                        create.Path == modifiedFilePath && create.Body == body && create.CommitId == "123"
                         && create.Position == position));
         }
 
@@ -118,7 +141,7 @@
                 null,
                 commentId,
                 null,
-                addedFilePath,
+                modifiedFilePath,
                 position,
                 null,
                 "1",

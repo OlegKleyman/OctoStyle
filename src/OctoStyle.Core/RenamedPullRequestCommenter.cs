@@ -16,9 +16,7 @@ namespace OctoStyle.Core
 
         }
 
-        public override async Task<IEnumerable<PullRequestReviewComment>> Create(
-            GitHubPullRequestFile file,
-            IEnumerable<GitHubStyleViolation> violations)
+        public override async Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequestFile file, ICodeAnalyzer analyzer, string physicalFilePath)
         {
             if (file == null)
             {

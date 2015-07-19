@@ -40,6 +40,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FileContents.resx</DependentUpon>
     </Compile>
+    <Compile Include="AddedPullRequestCommenterTest.cs" />
     <Compile Include="ModifiedPullRequestCommenterTest.cs" />
     <Compile Include="PathResolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

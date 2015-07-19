@@ -70,7 +70,7 @@
             Assert.That(diff[15].Position, Is.EqualTo(16));
         }
 
-        private static IGitDiffRetriever GetGitHubDiffRetriever()
+        private static IGitHubDiffRetriever GetGitHubDiffRetriever()
         {
             var mockConnection = new Mock<IConnection>();
 

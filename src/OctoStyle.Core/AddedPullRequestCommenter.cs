@@ -1,4 +1,4 @@
-namespace OctoStyle.Core
+﻿namespace OctoStyle.Core
 {
     using System;
     using System.Collections.Generic;
@@ -7,25 +7,26 @@ namespace OctoStyle.Core
 
     using Octokit;
 
-    public class ModifiedPullRequestCommenter : PullRequestCommenter
+    public class AddedPullRequestCommenter : PullRequestCommenter
     {
-        public ModifiedPullRequestCommenter(IPullRequestReviewCommentsClient client, GitRepository repository)
+        public AddedPullRequestCommenter(IPullRequestReviewCommentsClient client, GitRepository repository)
             : base(client, repository)
         {
         }
 
         public override async Task<IEnumerable<PullRequestReviewComment>> Create(
             GitHubPullRequestFile file,
-            IEnumerable<GitHubStyleViolation> violations)
+            ICodeAnalyzer analyzer,
+            string physicalFilePath)
         {
-            if (violations == null)
+            if (analyzer == null)
             {
-                throw new ArgumentNullException("violations");
+                throw new ArgumentNullException("analyzer");
             }
 
             var comments = new List<PullRequestReviewComment>();
 
-            foreach (var violation in violations)
+            foreach (var violation in analyzer.Analyze(physicalFilePath))
             {
                 var message = String.Format(
                     CultureInfo.InvariantCulture,

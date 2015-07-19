@@ -27,7 +27,7 @@
                 GitPullRequestFileStatus.Renamed,
                 1);
 
-            var comment = (await commenter.Create(pullRequestFile, null)).ToList();
+            var comment = (await commenter.Create(pullRequestFile, null, @"C:\repo\TestLibrary\Nested\TestClass2.cs")).ToList();
 
             Assert.That(comment.Count, Is.EqualTo(1));
             Assert.That(comment[0].Path, Is.EqualTo("src/TestLibrary/Nested/TestClass2.cs"));

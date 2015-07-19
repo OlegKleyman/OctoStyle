@@ -9,7 +9,7 @@
 
     using OctoStyle.Core.Borrowed;
 
-    public class GitHubDiffRetriever : IGitDiffRetriever
+    public class GitHubDiffRetriever : IGitHubDiffRetriever
     {
         private readonly Uri baseUri;
 
