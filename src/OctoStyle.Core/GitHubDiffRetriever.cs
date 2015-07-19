@@ -9,13 +9,13 @@
 
     using OctoStyle.Core.Borrowed;
 
-    public class GitDiffRetriever : IGitDiffRetriever
+    public class GitHubDiffRetriever : IGitDiffRetriever
     {
         private readonly Uri baseUri;
 
         public IConnection Connection { get; set; }
 
-        public GitDiffRetriever(IConnection connection, GitRepository repository)
+        public GitHubDiffRetriever(IConnection connection, GitRepository repository)
         {
             if (connection == null)
             {

@@ -37,7 +37,7 @@
     <Compile Include="Borrowed\DiffEntryType.cs" />
     <Compile Include="DiffEntryListExtensions.cs" />
     <Compile Include="EqualGitDiffEntry.cs" />
-    <Compile Include="GitDiffRetriever.cs" />
+    <Compile Include="GitHubDiffRetriever.cs" />
     <Compile Include="GitDiffEntry.cs" />
     <Compile Include="GitDiffEntryFactory.cs" />
     <Compile Include="GitDiffEntryStatus.cs" />

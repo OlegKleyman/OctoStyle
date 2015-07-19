@@ -12,12 +12,12 @@
     using Octokit.Internal;
 
     [TestFixture]
-    public class GitDiffRetrieverTests
+    public class GitHubDiffRetrieverTests
     {
         [Test]
         public async void RetrieveShouldReturnFileContentsByFilePath()
         {
-            var retriever = GetFileContentRetriever();
+            var retriever = GetGitHubDiffRetriever();
 
             var diff = await retriever.RetrieveAsync("src/TestLibrary/TestLibrary.csproj", "test_branch", "master");
 
@@ -70,7 +70,7 @@
             Assert.That(diff[15].Position, Is.EqualTo(16));
         }
 
-        private static IGitDiffRetriever GetFileContentRetriever()
+        private static IGitDiffRetriever GetGitHubDiffRetriever()
         {
             var mockConnection = new Mock<IConnection>();
 
@@ -101,7 +101,7 @@
                     null))
                 .ReturnsAsync(new ApiResponse<RepositoryContent>(mockResponse.Object, GetRepositoryContent(oldContent)));
 
-            return new GitDiffRetriever(mockConnection.Object, new GitRepository("OlegKleyman", "OctoStyleTest"));
+            return new GitHubDiffRetriever(mockConnection.Object, new GitRepository("OlegKleyman", "OctoStyleTest"));
         }
 
         private static RepositoryContent GetRepositoryContent(string content)
