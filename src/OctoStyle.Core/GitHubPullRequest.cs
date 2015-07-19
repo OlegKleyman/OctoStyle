@@ -44,7 +44,9 @@ namespace OctoStyle.Core
                     new GitHubPullRequestFile(
                         file.FileName,
                         this,
-                        (GitPullRequestFileStatus)Enum.Parse(typeof(GitPullRequestFileStatus), file.Status, true))).ToList();
+                        (GitPullRequestFileStatus)Enum.Parse(typeof(GitPullRequestFileStatus), file.Status, true),
+                        file.ContentsUrl,
+                        file.Changes)).ToList();
         }
     }
 }

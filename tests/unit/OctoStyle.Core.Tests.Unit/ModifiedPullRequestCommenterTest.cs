@@ -39,7 +39,10 @@
             var commenter = GetAddedPullRequestCommenter();
             var pullRequestFile = new GitHubPullRequestFile(
                 addedFilePath,
-                new GitHubPullRequest(1, "123", new List<PullRequestFile>()), GitPullRequestFileStatus.Added);
+                new GitHubPullRequest(1, "123", new List<PullRequestFile>()),
+                GitPullRequestFileStatus.Added,
+                new Uri("http://localhost"),
+                0);
 
             var violations = new List<GitHubStyleViolation>
                                  {

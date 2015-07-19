@@ -34,59 +34,23 @@
                 new InMemoryCredentialStore(
                     new Credentials(arguments.Login, arguments.Password)));
 
-            var pullrequestInformationMessage = String.Format(
-                CultureInfo.InvariantCulture,
-                "{0}Owner: {1}, Repository: {2}, Number: {3}",
-                Environment.NewLine,
-                arguments.RepositoryOwner,
-                arguments.Repository,
-                arguments.PullRequestNumber);
-
-            var commits =
-                client.PullRequest.Commits(arguments.RepositoryOwner, arguments.Repository, arguments.PullRequestNumber)
-                    .GetAwaiter()
-                    .GetResult();
-
-            if (commits == null)
-            {
-                throw new InvalidOperationException(
-                    String.Format(
-                        CultureInfo.InvariantCulture,
-                        "Unable to retrieve commits for pull request{0}",
-                        pullrequestInformationMessage));
-            }
-
-            if (commits.Count == 0)
-            {
-                throw new InvalidOperationException(
-                    String.Format(
-                        CultureInfo.InvariantCulture,
-                        "No commits found for pull request{0}",
-                        pullrequestInformationMessage));
-            }
-
-            var files =
-                client.PullRequest.Files(arguments.RepositoryOwner, arguments.Repository, arguments.PullRequestNumber)
-                    .GetAwaiter()
-                    .GetResult();
-
             var pathResolver = new PathResolver(new FileSystemManager());
 
             var commentTasks = new List<Task<IEnumerable<PullRequestReviewComment>>>();
-            var pullRequest = new GitHubPullRequest(arguments.PullRequestNumber, commits.Last().Sha, files);
 
-            foreach (var file in files)
+            var pullRequestRetriever = new PullRequestRetriver(
+                client.PullRequest,
+                new GitRepository(arguments.RepositoryOwner, arguments.Repository));
+
+            var pullRequest = pullRequestRetriever.Retrieve(arguments.PullRequestNumber).GetAwaiter().GetResult();
+            
+            foreach (var file in pullRequest.Files)
             {
-                var pullRequestFile = new GitHubPullRequestFile(
-                    file.FileName,
-                    pullRequest,
-                    (GitPullRequestFileStatus)Enum.Parse(typeof(GitPullRequestFileStatus), file.Status, true));
-
                 if (file.FileName.EndsWith(".cs", true, CultureInfo.InvariantCulture))
                 {
                     var filePath = Path.Combine(arguments.SolutionDirectory, file.FileName).Replace('/', '\\');
 
-                    if (file.Status == "modified")
+                    if (file.Status == GitPullRequestFileStatus.Modified)
                     {
                         var originalFile = client.Repository.Content.GetAllContents(
                             arguments.RepositoryOwner,
@@ -111,7 +75,7 @@
                                     file.FileName));
                         }
 
-                        var modifiedFile = client.Connection.Get<string>(file.ContentsUrl, null, "application/vnd.github.v3.raw+json").GetAwaiter().GetResult().Body;
+                        var modifiedFile = client.Connection.Get<string>(file.ContentUri, null, "application/vnd.github.v3.raw+json").GetAwaiter().GetResult().Body;
 
                         if (modifiedFile == null)
                         {
@@ -147,10 +111,10 @@
                             client.PullRequest.Comment,
                             new GitRepository(arguments.RepositoryOwner, arguments.Repository));
 
-                        commentTasks.Add(commenter.Create(pullRequestFile, accessibleViolations));
+                        commentTasks.Add(commenter.Create(file, accessibleViolations));
 
                     }
-                    else if (file.Status == "added")
+                    else if (file.Status == GitPullRequestFileStatus.Added)
                     {
                         var analyzer = new CodeAnalyzer(pathResolver.GetPath(filePath, "*.csproj"));
 
@@ -162,12 +126,12 @@
 
                         commentTasks.Add(
                             commenter.Create(
-                                pullRequestFile,
+                                file,
                                 violations.Select(
                                     violation =>
                                     new GitHubStyleViolation(violation.Rule.CheckId, violation.Message, violation.Line))));
                     }
-                    else if (file.Status == "renamed")
+                    else if (file.Status == GitPullRequestFileStatus.Renamed)
                     {
                         if (file.Changes > 0)
                         {
@@ -176,10 +140,10 @@
                                 new GitRepository(arguments.RepositoryOwner, arguments.Repository));
 
                             commentTasks.Add(
-                                commenter.Create(pullRequestFile, null));
+                                commenter.Create(file, null));
                         }
                     }
-                    else if (file.Status == "deleted")
+                    else if (file.Status == GitPullRequestFileStatus.Deleted)
                     {
                         //no work to do
                     }

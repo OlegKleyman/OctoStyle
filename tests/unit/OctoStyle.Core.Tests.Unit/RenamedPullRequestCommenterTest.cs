@@ -20,7 +20,7 @@
             var pullRequestFile = new GitHubPullRequestFile(
                 "src/TestLibrary/Nested/TestClass2.cs",
                 new GitHubPullRequest(1, "123", new List<PullRequestFile>()),
-                GitPullRequestFileStatus.Renamed);
+                GitPullRequestFileStatus.Renamed, new Uri("http://localhost"), 0);
 
             var comment = (await commenter.Create(pullRequestFile, null)).ToList();
 

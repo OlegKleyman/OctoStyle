@@ -10,7 +10,16 @@ namespace OctoStyle.Core
 
         public GitPullRequestFileStatus Status { get; private set; }
 
-        public GitHubPullRequestFile(string fileName, GitHubPullRequest pullRequest, GitPullRequestFileStatus status)
+        public Uri ContentUri { get; private set; }
+
+        public int Changes { get; private set; }
+
+        public GitHubPullRequestFile(
+            string fileName,
+            GitHubPullRequest pullRequest,
+            GitPullRequestFileStatus status,
+            Uri contentUri,
+            int changes)
         {
             if (fileName == null)
             {
@@ -21,6 +30,10 @@ namespace OctoStyle.Core
             {
                 throw new ArgumentNullException("pullRequest");
             }
+            if (contentUri == null)
+            {
+                throw new ArgumentNullException("contentUri");
+            }
 
             if (fileName.Length == 0)
             {
@@ -30,6 +43,8 @@ namespace OctoStyle.Core
             this.FileName = fileName;
             this.PullRequest = pullRequest;
             this.Status = status;
+            this.ContentUri = contentUri;
+            this.Changes = changes;
         }
     }
 }
