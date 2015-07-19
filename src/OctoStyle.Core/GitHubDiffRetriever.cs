@@ -37,7 +37,6 @@
 
         public async Task<IReadOnlyList<GitDiffEntry>> RetrieveAsync(string filePath, string newBranch, string originalBranch)
         {
-            
             var newFileEndpoint = new Uri(baseUri, String.Concat(filePath, "?ref=", newBranch));
             var originalFileEndpoint = new Uri(baseUri, String.Concat(filePath, "?ref=", originalBranch));
             var newFileContents = await Connection.Get<RepositoryContent>(newFileEndpoint, null, null);
