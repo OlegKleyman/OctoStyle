@@ -49,11 +49,13 @@
                 {
                     var filePath = Path.Combine(arguments.SolutionDirectory, file.FileName).Replace('/', '\\');
 
+                    var projectPath = pathResolver.GetPath(filePath, "*.csproj");
+
                     if (file.Status == GitPullRequestFileStatus.Modified)
                     {
                         var diffRetriever = new GitHubDiffRetriever(client.Connection, repository);
 
-                        var analyzer = new CodeAnalyzer(pathResolver.GetPath(filePath, "*.csproj"));
+                        var analyzer = new CodeAnalyzer(projectPath);
 
                         var commenter = new ModifiedPullRequestCommenter(client.PullRequest.Comment, repository, diffRetriever);
 
@@ -62,7 +64,7 @@
                     }
                     else if (file.Status == GitPullRequestFileStatus.Added)
                     {
-                        var analyzer = new CodeAnalyzer(pathResolver.GetPath(filePath, "*.csproj"));
+                        var analyzer = new CodeAnalyzer(projectPath);
 
                         var commenter = new AddedPullRequestCommenter(client.PullRequest.Comment, repository);
 
