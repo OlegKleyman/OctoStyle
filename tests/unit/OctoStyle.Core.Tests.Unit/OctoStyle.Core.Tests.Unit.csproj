@@ -43,6 +43,7 @@
     <Compile Include="PathResolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Resources\BomMode.cs" />
+    <Compile Include="PullRequestRetriverTests.cs" />
     <Compile Include="RenamedPullRequestCommenterTest.cs" />
     <Compile Include="StyleCopTests.cs" />
     <None Include="Resources\TestClass2.cs.new" />
