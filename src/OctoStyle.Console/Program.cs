@@ -54,47 +54,13 @@
 
                     if (file.Status == GitPullRequestFileStatus.Modified)
                     {
-                        var originalFile = client.Repository.Content.GetAllContents(
-                            arguments.RepositoryOwner,
-                            arguments.Repository,
-                            file.FileName).GetAwaiter().GetResult();
 
-                        if (originalFile == null || originalFile.Count == 0)
-                        {
-                            throw new InvalidOperationException(
-                                String.Format(
-                                    CultureInfo.InvariantCulture,
-                                    "Unable to retrieve original file for modified file: {0}",
-                                    file.FileName));
-                        }
+                        var diffRetriever = new GitHubDiffRetriever(client.Connection, repository);
 
-                        if (originalFile.Count > 1)
-                        {
-                            throw new InvalidOperationException(
-                                String.Format(
-                                    CultureInfo.InvariantCulture,
-                                    "Retrieving original file returned multiple results. File: {0}",
-                                    file.FileName));
-                        }
-
-                        var modifiedFile = client.Connection.Get<string>(file.ContentUri, null, "application/vnd.github.v3.raw+json").GetAwaiter().GetResult().Body;
-
-                        if (modifiedFile == null)
-                        {
-                            throw new InvalidOperationException(
-                                String.Format(
-                                    CultureInfo.InvariantCulture,
-                                    "Unale to retrieve modified pull request File: {0}",
-                                    file.FileName));
-                        }
-
-                        const char githubNewlineDelimeter = '\n';
                         var diff =
-                            Diff
-                                .CreateDiff(originalFile.First()
-                                    .Content.Split(new[] { githubNewlineDelimeter }, StringSplitOptions.None),
-                                modifiedFile.Split(new[] { githubNewlineDelimeter }, StringSplitOptions.None))
-                                .ToGitDiff(new GitDiffEntryFactory())
+                            diffRetriever.RetrieveAsync(file.FileName, pullRequest.Branches.Branch, pullRequest.Branches.MergeBranch)
+                                .GetAwaiter()
+                                .GetResult()
                                 .OfType<ModificationGitDiffEntry>();
 
                         var analyzer = new CodeAnalyzer(pathResolver.GetPath(filePath, "*.csproj"));
