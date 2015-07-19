@@ -42,6 +42,7 @@
     </Compile>
     <Compile Include="AddedPullRequestCommenterTest.cs" />
     <Compile Include="ModifiedPullRequestCommenterTest.cs" />
+    <Compile Include="NoCommentPullRequestCommenterTests.cs" />
     <Compile Include="PathResolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Resources\BomMode.cs" />
