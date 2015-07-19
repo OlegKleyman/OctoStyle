@@ -38,9 +38,11 @@
 
             var commentTasks = new List<Task<IEnumerable<PullRequestReviewComment>>>();
 
+            var repository = new GitRepository(arguments.RepositoryOwner, arguments.Repository);
+
             var pullRequestRetriever = new PullRequestRetriver(
                 client.PullRequest,
-                new GitRepository(arguments.RepositoryOwner, arguments.Repository));
+                repository);
 
             var pullRequest = pullRequestRetriever.Retrieve(arguments.PullRequestNumber).GetAwaiter().GetResult();
             
@@ -109,7 +111,7 @@
 
                         var commenter = new ModifiedPullRequestCommenter(
                             client.PullRequest.Comment,
-                            new GitRepository(arguments.RepositoryOwner, arguments.Repository));
+                            repository);
 
                         commentTasks.Add(commenter.Create(file, accessibleViolations));
 
@@ -122,7 +124,7 @@
 
                         var commenter = new ModifiedPullRequestCommenter(
                             client.PullRequest.Comment,
-                            new GitRepository(arguments.RepositoryOwner, arguments.Repository));
+                            repository);
 
                         commentTasks.Add(
                             commenter.Create(
@@ -137,7 +139,7 @@
                         {
                             var commenter = new RenamedPullRequestCommenter(
                                 client.PullRequest.Comment,
-                                new GitRepository(arguments.RepositoryOwner, arguments.Repository));
+                                repository);
 
                             commentTasks.Add(
                                 commenter.Create(file, null));
