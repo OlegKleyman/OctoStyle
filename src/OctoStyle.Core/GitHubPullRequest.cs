@@ -12,9 +12,11 @@ namespace OctoStyle.Core
 
         public string LastCommitId { get; private set; }
 
+        public GitHubPullRequestBranches Branches { get; private set; }
+
         public IReadOnlyList<GitHubPullRequestFile> Files { get; private set; }
 
-        public GitHubPullRequest(int number, string lastCommitId, IEnumerable<PullRequestFile> files)
+        public GitHubPullRequest(int number, string lastCommitId, IEnumerable<PullRequestFile> files, GitHubPullRequestBranches branches)
         {
             if (lastCommitId == null)
             {
@@ -24,6 +26,11 @@ namespace OctoStyle.Core
             if (files == null)
             {
                 throw new ArgumentNullException("files");
+            }
+
+            if (branches == null)
+            {
+                throw new ArgumentNullException("branches");
             }
 
             if (lastCommitId.Length == 0)
@@ -38,6 +45,7 @@ namespace OctoStyle.Core
 
             this.Number = number;
             this.LastCommitId = lastCommitId;
+            this.Branches = branches;
             this.Files =
                 files.Select(
                     file =>

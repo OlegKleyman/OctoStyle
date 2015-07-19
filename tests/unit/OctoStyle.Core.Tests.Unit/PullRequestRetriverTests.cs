@@ -38,29 +38,32 @@
 
         private const int secondModifiedChanges = 7;
 
+        private const string pullRequestBranch = "test_branch";
+
+        private const string pullRequestMergeBranch = "master";
+
         [Test]
         public async void RetrieveShouldReturnPullRequest()
         {
             var retriever = GetPullRequestRetriever();
             var pullRequest = await retriever.Retrieve(pullRequestNumber);
 
+            Assert.That(pullRequest.Number, Is.EqualTo(pullRequestNumber));
             Assert.That(pullRequest.LastCommitId, Is.EqualTo("126"));
+            Assert.That(pullRequest.Branches.Branch, Is.EqualTo(pullRequestBranch));
+            Assert.That(pullRequest.Branches.MergeBranch, Is.EqualTo(pullRequestMergeBranch));
             Assert.That(pullRequest.Files.Count, Is.EqualTo(4));
             Assert.That(pullRequest.Files[0].FileName, Is.EqualTo(renamedFileName));
             Assert.That(pullRequest.Files[0].Status, Is.EqualTo(GitPullRequestFileStatus.Renamed));
-            Assert.That(pullRequest.Files[0].ContentUri.AbsoluteUri, Is.EqualTo(renamedContentUrl.AbsoluteUri));
             Assert.That(pullRequest.Files[0].Changes, Is.EqualTo(renamedChanges));
             Assert.That(pullRequest.Files[1].FileName, Is.EqualTo(addedFileName));
             Assert.That(pullRequest.Files[1].Status, Is.EqualTo(GitPullRequestFileStatus.Added));
-            Assert.That(pullRequest.Files[1].ContentUri.AbsoluteUri, Is.EqualTo(addedContentUrl.AbsoluteUri));
             Assert.That(pullRequest.Files[1].Changes, Is.EqualTo(addedChanges));
             Assert.That(pullRequest.Files[2].FileName, Is.EqualTo(firstModifiedFileName));
             Assert.That(pullRequest.Files[2].Status, Is.EqualTo(GitPullRequestFileStatus.Modified));
-            Assert.That(pullRequest.Files[2].ContentUri.AbsoluteUri, Is.EqualTo(firstModifiedContentUrl.AbsoluteUri));
             Assert.That(pullRequest.Files[2].Changes, Is.EqualTo(firstModifiedChanges));
             Assert.That(pullRequest.Files[3].FileName, Is.EqualTo(secondModifiedFileName));
             Assert.That(pullRequest.Files[3].Status, Is.EqualTo(GitPullRequestFileStatus.Modified));
-            Assert.That(pullRequest.Files[3].ContentUri.AbsoluteUri, Is.EqualTo(secondModifiedContentUrl.AbsoluteUri));
             Assert.That(pullRequest.Files[3].Changes, Is.EqualTo(secondModifiedChanges));
         }
 
@@ -89,6 +92,36 @@
 
             client.Setup(requestsClient => requestsClient.Files(repository.Owner, repository.Name, pullRequestNumber))
                 .ReturnsAsync(files);
+
+            client.Setup(requestsClient => requestsClient.Get(repository.Owner, repository.Name, pullRequestNumber))
+                .ReturnsAsync(
+                    new PullRequest(
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        pullRequestNumber,
+                        ItemState.Open,
+                        null,
+                        null,
+                        default(DateTimeOffset),
+                        default(DateTimeOffset),
+                        null,
+                        null,
+                        new GitReference(null, null, pullRequestBranch, null, null, null),
+                        new GitReference(null, null, pullRequestMergeBranch, null, null, null),
+                        null,
+                        null,
+                        true,
+                        null,
+                        null,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0));
 
             return new PullRequestRetriver(client.Object, repository);
         }

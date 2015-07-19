@@ -39,7 +39,11 @@
             var commenter = GetAddedPullRequestCommenter();
             var pullRequestFile = new GitHubPullRequestFile(
                 addedFilePath,
-                new GitHubPullRequest(1, "123", new List<PullRequestFile>()),
+                new GitHubPullRequest(
+                    1,
+                    "123",
+                    new List<PullRequestFile>(),
+                    new GitHubPullRequestBranches("test_branch", "master")),
                 GitPullRequestFileStatus.Added,
                 0);
 

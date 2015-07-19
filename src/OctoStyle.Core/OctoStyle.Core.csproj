@@ -42,6 +42,7 @@
     <Compile Include="GitDiffEntryFactory.cs" />
     <Compile Include="GitDiffEntryStatus.cs" />
     <Compile Include="GitHubPullRequest.cs" />
+    <Compile Include="GitHubPullRequestBranches.cs" />
     <Compile Include="GitHubPullRequestFile.cs" />
     <Compile Include="GitPullRequestFileStatus.cs" />
     <Compile Include="GitRepository.cs" />

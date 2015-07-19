@@ -60,8 +60,9 @@
             }
 
             var files = await client.Files(repository.Owner, repository.Name, number);
+            var pull = await client.Get(repository.Owner, repository.Name, number);
 
-            return new GitHubPullRequest(number, commits.Last().Sha, files);
+            return new GitHubPullRequest(number, commits.Last().Sha, files, new GitHubPullRequestBranches(pull.Head.Ref, pull.Base.Ref));
         }
     }
 }
