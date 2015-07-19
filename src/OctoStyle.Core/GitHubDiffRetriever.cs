@@ -61,12 +61,12 @@
                     String.Format(CultureInfo.InvariantCulture, "Unale to retrieve original file {0}", filePath));
             }
 
-            const char githubNewlineDelimeter = '\n';
-
+            var delimeter = new[] { '\n' };
+            
             var diff =
                 Diff.CreateDiff(
-                    originalFileContents.Body.Content.Split(new[] { githubNewlineDelimeter }, StringSplitOptions.None),
-                    newFileContents.Body.Content.Split(new[] { githubNewlineDelimeter }, StringSplitOptions.None))
+                    originalFileContents.Body.Content.Split(delimeter, StringSplitOptions.None),
+                    newFileContents.Body.Content.Split(delimeter, StringSplitOptions.None))
                     .ToGitDiff(new GitDiffEntryFactory());
 
             return diff;
