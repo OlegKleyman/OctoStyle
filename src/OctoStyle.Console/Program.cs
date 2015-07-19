@@ -78,7 +78,7 @@
                     }
                     else if (file.Status == GitPullRequestFileStatus.Deleted)
                     {
-                        //no work to do
+                        PullRequestCommenter.NoCommentPullRequestCommenter.NoComment.Create(null, null, null);
                     }
                     else
                     {
