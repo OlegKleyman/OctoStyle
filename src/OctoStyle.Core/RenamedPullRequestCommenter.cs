@@ -1,5 +1,6 @@
 namespace OctoStyle.Core
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -9,25 +10,37 @@ namespace OctoStyle.Core
 
     public class RenamedPullRequestCommenter : PullRequestCommenter
     {
-        public RenamedPullRequestCommenter(
-            IPullRequestReviewCommentsClient client,
-            GitRepository repository)
+        public RenamedPullRequestCommenter(IPullRequestReviewCommentsClient client, GitRepository repository)
             : base(client, repository)
         {
 
         }
 
-        public async override Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequestFile file, IEnumerable<GitHubStyleViolation> violations)
+        public override async Task<IEnumerable<PullRequestReviewComment>> Create(
+            GitHubPullRequestFile file,
+            IEnumerable<GitHubStyleViolation> violations)
         {
-            var comment = new PullRequestReviewCommentCreate(
-                "Renamed files not supported.",
-                file.PullRequest.LastCommitId,
-                file.FileName,
-                1);
+            if (file == null)
+            {
+                throw new ArgumentNullException("file");
+            }
 
-            var addedComment = await Create(comment, file.PullRequest.Number);
+            var comments = new List<PullRequestReviewComment>();
 
-            return new List<PullRequestReviewComment> { addedComment };
+            if (file.Changes > 0)
+            {
+                var comment = new PullRequestReviewCommentCreate(
+                    "Renamed files not supported.",
+                    file.PullRequest.LastCommitId,
+                    file.FileName,
+                    1);
+
+                var addedComment = await Create(comment, file.PullRequest.Number);
+
+                comments.Add(addedComment);
+            }
+
+            return comments;
         }
     }
 }

@@ -89,12 +89,9 @@
                     }
                     else if (file.Status == GitPullRequestFileStatus.Renamed)
                     {
-                        if (file.Changes > 0)
-                        {
-                            var commenter = new RenamedPullRequestCommenter(client.PullRequest.Comment, repository);
+                        var commenter = new RenamedPullRequestCommenter(client.PullRequest.Comment, repository);
 
-                            commentTasks.Add(commenter.Create(file, null));
-                        }
+                        commentTasks.Add(commenter.Create(file, null));
                     }
                     else if (file.Status == GitPullRequestFileStatus.Deleted)
                     {

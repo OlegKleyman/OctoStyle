@@ -25,7 +25,7 @@
                     new List<PullRequestFile>(),
                     new GitHubPullRequestBranches("test_branch", "master")),
                 GitPullRequestFileStatus.Renamed,
-                0);
+                1);
 
             var comment = (await commenter.Create(pullRequestFile, null)).ToList();
 
