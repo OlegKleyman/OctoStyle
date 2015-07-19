@@ -28,11 +28,10 @@
                 Console.WriteLine(ex.Message);
                 return;
             }
-            
+
             var client = new GitHubClient(
                 new ProductHeaderValue("OctoStyle"),
-                new InMemoryCredentialStore(
-                    new Credentials(arguments.Login, arguments.Password)));
+                new InMemoryCredentialStore(new Credentials(arguments.Login, arguments.Password)));
 
             var pathResolver = new PathResolver(new FileSystemManager());
 
@@ -40,12 +39,10 @@
 
             var repository = new GitRepository(arguments.RepositoryOwner, arguments.Repository);
 
-            var pullRequestRetriever = new PullRequestRetriver(
-                client.PullRequest,
-                repository);
+            var pullRequestRetriever = new PullRequestRetriver(client.PullRequest, repository);
 
             var pullRequest = pullRequestRetriever.Retrieve(arguments.PullRequestNumber).GetAwaiter().GetResult();
-            
+
             foreach (var file in pullRequest.Files)
             {
                 if (file.FileName.EndsWith(".cs", true, CultureInfo.InvariantCulture))
@@ -57,15 +54,16 @@
                         var diffRetriever = new GitHubDiffRetriever(client.Connection, repository);
 
                         var diff =
-                            diffRetriever.RetrieveAsync(file.FileName, pullRequest.Branches.Branch, pullRequest.Branches.MergeBranch)
+                            diffRetriever.RetrieveAsync(
+                                file.FileName,
+                                pullRequest.Branches.Branch,
+                                pullRequest.Branches.MergeBranch)
                                 .GetAwaiter()
                                 .GetResult()
                                 .OfType<ModificationGitDiffEntry>();
 
                         var analyzer = new CodeAnalyzer(pathResolver.GetPath(filePath, "*.csproj"));
-                        var violations =
-                            analyzer.Analyze(
-                                filePath);
+                        var violations = analyzer.Analyze(filePath);
 
                         var accessibleViolations = diff.Join(
                             violations,
@@ -74,9 +72,7 @@
                             (entry, violation) =>
                             new GitHubStyleViolation(violation.RuleId, violation.Message, entry.Position));
 
-                        var commenter = new ModifiedPullRequestCommenter(
-                            client.PullRequest.Comment,
-                            repository);
+                        var commenter = new ModifiedPullRequestCommenter(client.PullRequest.Comment, repository);
 
                         commentTasks.Add(commenter.Create(file, accessibleViolations));
 
@@ -87,9 +83,7 @@
 
                         var violations = analyzer.Analyze(filePath);
 
-                        var commenter = new ModifiedPullRequestCommenter(
-                            client.PullRequest.Comment,
-                            repository);
+                        var commenter = new ModifiedPullRequestCommenter(client.PullRequest.Comment, repository);
 
                         commentTasks.Add(commenter.Create(file, violations));
                     }
@@ -97,12 +91,9 @@
                     {
                         if (file.Changes > 0)
                         {
-                            var commenter = new RenamedPullRequestCommenter(
-                                client.PullRequest.Comment,
-                                repository);
+                            var commenter = new RenamedPullRequestCommenter(client.PullRequest.Comment, repository);
 
-                            commentTasks.Add(
-                                commenter.Create(file, null));
+                            commentTasks.Add(commenter.Create(file, null));
                         }
                     }
                     else if (file.Status == GitPullRequestFileStatus.Deleted)
