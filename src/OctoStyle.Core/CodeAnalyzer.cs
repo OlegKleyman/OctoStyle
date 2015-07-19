@@ -2,6 +2,7 @@ namespace OctoStyle.Core
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
 
     using StyleCop;
@@ -32,7 +33,7 @@ namespace OctoStyle.Core
             this.violations.Clear();
             var console = new StyleCopConsole(null, false, null, null, true);
             
-            console.Core.Environment.AddSourceCode(this.project, filePath, null);
+            console.Core.Environment.AddSourceCode(this.project, Path.Combine(project.Location, filePath), null);
             console.ViolationEncountered += this.OnViolationEncountered;
 
             console.Start(new[] { this.project }, true);

@@ -12,16 +12,17 @@
         [Test]
         public void AnalyzeShouldReturnAllAnalysisIssues()
         {
-            const string relativeSolutionPath = @"..\..\..\..\..";
-            var solutionDirectory = Path.GetFullPath(relativeSolutionPath);
+            const string relativeProjectPath = @"..\..";
+            var projectDirectory = Path.GetFullPath(relativeProjectPath);
 
-            if (solutionDirectory == null)
+            if (projectDirectory == null)
             {
                 throw new InvalidOperationException("projectPath is null");
             }
 
-            var styleCop = new CodeAnalyzer(solutionDirectory);
-            var violations = styleCop.Analyze(Path.Combine(solutionDirectory, Path.Combine(Directory.GetCurrentDirectory(), @"Resources\TestClass.cs"))).ToList();
+            var styleCop = new CodeAnalyzer(projectDirectory);
+            var violations =
+                styleCop.Analyze(@"Resources\TestClass.cs").ToList();
 
             Assert.That(violations[0].Message, Is.EqualTo("The class must have a documentation header."));
             Assert.That(violations[0].RuleId, Is.EqualTo("SA1600"));
