@@ -18,9 +18,11 @@ namespace OctoStyle.Core
 
         public GitHubPullRequest(int number, string lastCommitId, IEnumerable<PullRequestFile> files, GitHubPullRequestBranches branches)
         {
+            const string lastCommitIdParamName = "lastCommitId";
+
             if (lastCommitId == null)
             {
-                throw new ArgumentNullException("lastCommitId");
+                throw new ArgumentNullException(lastCommitIdParamName);
             }
 
             if (files == null)
@@ -35,7 +37,7 @@ namespace OctoStyle.Core
 
             if (lastCommitId.Length == 0)
             {
-                throw new ArgumentException("Cannot be empty", "lastCommitId");
+                throw new ArgumentException("Cannot be empty", lastCommitIdParamName);
             }
 
             if (number < 1)
