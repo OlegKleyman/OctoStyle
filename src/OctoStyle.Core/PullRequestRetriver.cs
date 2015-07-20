@@ -40,16 +40,7 @@
                 number);
 
             var commits = await client.Commits(repository.Owner, repository.Name, number);
-
-            if (commits == null)
-            {
-                throw new InvalidOperationException(
-                    String.Format(
-                        CultureInfo.InvariantCulture,
-                        "Unable to retrieve commits for pull request{0}",
-                        pullrequestInformationMessage));
-            }
-
+            
             if (commits.Count == 0)
             {
                 throw new InvalidOperationException(
