@@ -6,8 +6,6 @@ namespace OctoStyle.Core
 
     using Octokit;
 
-    using StyleCop;
-
     public abstract class PullRequestCommenter
     {
         private readonly IPullRequestReviewCommentsClient client;
