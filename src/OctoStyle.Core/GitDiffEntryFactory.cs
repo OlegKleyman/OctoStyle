@@ -10,6 +10,11 @@
     {
         public IReadOnlyList<GitDiffEntry> Get(DiffEntry<string> entry, int position)
         {
+            if (entry == null)
+            {
+                throw new ArgumentNullException("entry");
+            }
+
             var gitDiff = new List<GitDiffEntry>();
 
             switch (entry.EntryType)
