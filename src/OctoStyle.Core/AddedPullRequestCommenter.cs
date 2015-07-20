@@ -19,6 +19,11 @@
             ICodeAnalyzer analyzer,
             string physicalFilePath)
         {
+            if (file == null)
+            {
+                throw new ArgumentNullException("file");
+            }
+
             if (analyzer == null)
             {
                 throw new ArgumentNullException("analyzer");
