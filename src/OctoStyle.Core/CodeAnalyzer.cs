@@ -30,18 +30,6 @@ namespace OctoStyle.Core
 
         public IEnumerable<GitHubStyleViolation> Analyze(string filePath)
         {
-            const string filePathparamName = "filePath";
-
-            if (filePath == null)
-            {
-                throw new ArgumentNullException(filePathparamName);
-            }
-
-            if (filePath.Length == 0)
-            {
-                throw new ArgumentException("Cannot be empty", filePathparamName);
-            }
-
             this.violations.Clear();
             var console = new StyleCopConsole(null, false, null, null, true);
             
