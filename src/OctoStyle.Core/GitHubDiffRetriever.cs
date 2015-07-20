@@ -42,24 +42,6 @@
             var newFileContents = await Connection.Get<RepositoryContent>(newFileEndpoint, null, null);
             var originalFileContents = await Connection.Get<RepositoryContent>(originalFileEndpoint, null, null);
 
-            if (newFileContents.Body == null)
-            {
-                const string filePathParamName = "filePath";
-
-                throw new ArgumentOutOfRangeException(
-                    filePathParamName,
-                    String.Format(CultureInfo.InvariantCulture, "Unale to retrieve new file {0}", filePath));
-            }
-
-            if (originalFileContents.Body == null)
-            {
-                const string filePathParamName = "filePath";
-
-                throw new ArgumentOutOfRangeException(
-                    filePathParamName,
-                    String.Format(CultureInfo.InvariantCulture, "Unale to retrieve original file {0}", filePath));
-            }
-
             var delimeter = new[] { '\n' };
             
             var diff =
