@@ -1,6 +1,7 @@
 ﻿namespace OctoStyle.Console.Tests.Integration.FeatureSteps
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -10,12 +11,15 @@
     using Octokit;
     using Octokit.Internal;
 
+    using OctoStyle.Core;
+
     using TechTalk.SpecFlow;
 
     [Binding]
     public class OctoStyleSteps : Steps
     {
         [BeforeFeature("octoStyle")]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstant)]
         public static void BeforeFeature()
         {
             const string loginKey = "OCTOSTYLE_LOGIN";
@@ -66,6 +70,7 @@
         }
 
         [When(@"I run the OctoStyle")]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstant)]
         public void WhenIRunTheOctoStyle()
         {
             const string relativeSolutionDirectory = @"..\..\..\OctoStyleTest";

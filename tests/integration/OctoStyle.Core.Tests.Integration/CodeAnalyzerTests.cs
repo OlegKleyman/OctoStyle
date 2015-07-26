@@ -1,6 +1,7 @@
 ﻿namespace OctoStyle.Core.Tests.Integration
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
 
@@ -10,6 +11,7 @@
     public class CodeAnalyzerTests
     {
         [Test]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstant)]
         public void AnalyzeShouldReturnAllAnalysisIssues()
         {
             const string relativeSolutionPath = @"..\..\..\..\..";

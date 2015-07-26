@@ -1,5 +1,4 @@
-﻿//
-// Copyright (C) 2009  Thomas Bluemel <thomasb@reactsoft.com>
+﻿// Copyright (C) 2009  Thomas Bluemel <thomasb@reactsoft.com>
 // 
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -34,40 +33,40 @@ namespace OctoStyle.Core.Borrowed
         ///     Creates a list of diff entries that represent the differences between arr1 and arr2.
         /// </summary>
         /// <typeparam name="T">Class that represents the unit to compare</typeparam>
-        /// <param name="arr1">Array of units.</param>
-        /// <param name="arr2">Array of units.</param>
+        /// <param name="original">Array of units.</param>
+        /// <param name="modified">Array of units.</param>
         /// <returns>List of DiffEntry classes.</returns>
-        public static IReadOnlyList<DiffEntry<T>> CreateDiff<T>(T[] arr1, T[] arr2) where T : IComparable
+        public static IReadOnlyList<DiffEntry<T>> CreateDiff<T>(T[] original, T[] modified) where T : IComparable
         {
             var start = 0;
             var end = 0;
 
             // Strip off the beginning and end, if it's equal
-            while (start < Math.Min(arr1.Length, arr2.Length))
+            while (start < Math.Min(original.Length, modified.Length))
             {
-                if (arr1[start].CompareTo(arr2[start]) != 0)
+                if (original[start].CompareTo(modified[start]) != 0)
                 {
                     break;
                 }
                 start++;
             }
 
-            if (start == arr1.Length && start == arr2.Length)
+            if (start == original.Length && start == modified.Length)
             {
                 return new List<DiffEntry<T>>().AsReadOnly();
             }
 
-            for (var i = 0; i < Math.Min(arr1.Length, arr2.Length) - start; i++)
+            for (var i = 0; i < Math.Min(original.Length, modified.Length) - start; i++)
             {
-                if (arr1[arr1.Length - i - 1].CompareTo(arr2[arr2.Length - i - 1]) != 0)
+                if (original[original.Length - i - 1].CompareTo(modified[modified.Length - i - 1]) != 0)
                 {
                     break;
                 }
                 end++;
             }
 
-            var lines1Cnt = arr1.Length - start - end;
-            var lines2Cnt = arr2.Length - start - end;
+            var lines1Cnt = original.Length - start - end;
+            var lines2Cnt = modified.Length - start - end;
 
             var lcs = new int[lines1Cnt, lines2Cnt];
 
@@ -79,7 +78,7 @@ namespace OctoStyle.Core.Borrowed
                     var iVal = i + start;
                     var jVal = j + start;
 
-                    if (arr1[iVal].CompareTo(arr2[jVal]) != 0)
+                    if (original[iVal].CompareTo(modified[jVal]) != 0)
                     {
                         if (i == 0 && j == 0)
                         {
@@ -125,7 +124,7 @@ namespace OctoStyle.Core.Borrowed
                 var i = data[0];
                 var j = data[1];
 
-                if (i >= 0 && j >= 0 && arr1[i + start].CompareTo(arr2[j + start]) == 0)
+                if (i >= 0 && j >= 0 && original[i + start].CompareTo(modified[j + start]) == 0)
                 {
                     stck.Push(new int[2] { i - 1, j - 1 });
                     if (lastEqual != null)
@@ -143,13 +142,13 @@ namespace OctoStyle.Core.Borrowed
                     if (j >= 0 && (i <= 0 || j == 0 || lcs[i, j - 1] >= lcs[i - 1, j]))
                     {
                         stck.Push(new int[2] { i, j - 1 });
-                        diffList.Add(new DiffEntry<T>(DiffEntryType.Add, arr2[j + start], j + start + 1));
+                        diffList.Add(new DiffEntry<T>(DiffEntryType.Add, modified[j + start], j + start + 1));
                         lastEqual = null;
                     }
                     else if (i >= 0 && (j <= 0 || i == 0 || lcs[i, j - 1] < lcs[i - 1, j]))
                     {
                         stck.Push(new int[2] { i - 1, j });
-                        diffList.Add(new DiffEntry<T>(DiffEntryType.Remove, arr1[i + start], i + start + 1));
+                        diffList.Add(new DiffEntry<T>(DiffEntryType.Remove, original[i + start], i + start + 1));
                         lastEqual = null;
                     }
                 }
@@ -173,7 +172,7 @@ namespace OctoStyle.Core.Borrowed
 
                 var lastEntry = diffList.Last();
 
-                var lastLineDifference = arr2.Length - lastEntry.LineNumber;
+                var lastLineDifference = modified.Length - lastEntry.LineNumber;
 
                 if (lastLineDifference > 0)
                 {

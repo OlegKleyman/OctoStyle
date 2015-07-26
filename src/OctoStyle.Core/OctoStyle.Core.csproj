@@ -64,6 +64,7 @@
     <Compile Include="PullRequestRetriver.cs" />
     <Compile Include="RenamedPullRequestCommenter.cs" />
     <Compile Include="GitHubStyleViolation.cs" />
+    <Compile Include="StyleCopConstants.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Octokit">

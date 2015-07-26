@@ -57,7 +57,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OctoStyle.feature</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">		
+		<ExcludeFromStyleCop>true</ExcludeFromStyleCop>
+	</Compile>
     <Compile Include="FeatureContextExtended.cs" />
     <Compile Include="FeatureSteps\OctoStyleSteps.cs" />
     <Compile Include="ScenarioContextExtended.cs" />
@@ -74,6 +76,10 @@
     <ProjectReference Include="..\..\..\src\OctoStyle.Console\OctoStyle.Console.csproj">
       <Project>{35948f68-a753-47be-94d5-db8a11a3db19}</Project>
       <Name>OctoStyle.Console</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\OctoStyle.Core\OctoStyle.Core.csproj">
+      <Project>{EA9E7DD6-21B0-4C12-8907-8495BB41B190}</Project>
+      <Name>OctoStyle.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -22,9 +22,9 @@ namespace OctoStyle.Core.Borrowed
     using System;
 
     /// <summary>
-    ///     Represents a record in a unified diff
+    ///     Represents a record in a unified diff.
     /// </summary>
-    /// <typeparam name="T">Type that will be diffed</typeparam>
+    /// <typeparam name="T">Type that will be diffed.</typeparam>
     public class DiffEntry<T>
     {
         /// <summary>
@@ -39,6 +39,23 @@ namespace OctoStyle.Core.Borrowed
         private readonly T obj;
 
         private int count;
+
+        #endregion
+
+        #region Constructors
+
+        public DiffEntry(DiffEntryType entryType, T obj, int lineNumber)
+        {
+            this.LineNumber = lineNumber;
+            this.entryType = entryType;
+            this.obj = obj;
+        }
+
+        internal DiffEntry()
+        {
+            this.entryType = DiffEntryType.Equal;
+            this.count = 1;
+        }
 
         #endregion
 
@@ -89,23 +106,6 @@ namespace OctoStyle.Core.Borrowed
             {
                 this.count = value;
             }
-        }
-
-        #endregion
-
-        #region Constructors
-
-        public DiffEntry(DiffEntryType entryType, T obj, int lineNumber)
-        {
-            this.LineNumber = lineNumber;
-            this.entryType = entryType;
-            this.obj = obj;
-        }
-
-        internal DiffEntry()
-        {
-            this.entryType = DiffEntryType.Equal;
-            this.count = 1;
         }
 
         #endregion

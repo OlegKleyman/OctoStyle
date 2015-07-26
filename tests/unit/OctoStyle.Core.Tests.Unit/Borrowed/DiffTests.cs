@@ -40,7 +40,7 @@
             Assert.That(diff[6].Count, Is.EqualTo(1));
             Assert.That(diff[7].LineNumber, Is.EqualTo(13));
             Assert.That(diff[7].EntryType, Is.EqualTo(DiffEntryType.Remove));
-            Assert.That(diff[7].Object, Is.EqualTo(""));
+            Assert.That(diff[7].Object, Is.EqualTo(String.Empty));
             Assert.That(diff[8].LineNumber, Is.EqualTo(10));
             Assert.That(diff[8].EntryType, Is.EqualTo(DiffEntryType.Add));
             Assert.That(diff[8].Object, Is.EqualTo("                var TestVar = 3;"));

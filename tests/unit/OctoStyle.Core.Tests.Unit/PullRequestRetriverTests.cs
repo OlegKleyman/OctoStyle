@@ -12,35 +12,60 @@
     [TestFixture]
     public class PullRequestRetriverTests
     {
-        private static readonly string firstModifiedFileName = "src/TestLibrary/TestClass.cs";
+        private const string FirstModifiedFileName = "src/TestLibrary/TestClass.cs";
 
-        private static readonly Uri renamedContentUrl = new Uri("http://321");
+        private const int PullRequestNumber = 1;
 
-        private static readonly Uri addedContentUrl = new Uri("http://421");
+        private const string RenamedFileName = "src/TestLibrary/Nested/TestClass2.cs";
 
-        private static readonly Uri firstModifiedContentUrl = new Uri("http://521");
+        private const string AddedFileName = "src/TestLibrary/Nested/TestClass3.cs";
 
-        private static readonly Uri secondModifiedContentUrl = new Uri("http://621");
+        private const string SecondModifiedFileName = "src/TestLibrary/TestLibrary.csproj";
 
-        private const int pullRequestNumber = 1;
+        private const int RenamedChanges = 9;
 
-        private const string renamedFileName = "src/TestLibrary/Nested/TestClass2.cs";
+        private const int AddedChanges = 12;
 
-        private const string addedFileName = "src/TestLibrary/Nested/TestClass3.cs";
+        private const int FirstModifiedChanges = 8;
 
-        private const string secondModifiedFileName = "src/TestLibrary/TestLibrary.csproj";
+        private const int SecondModifiedChanges = 7;
 
-        private const int renamedChanges = 9;
+        private const string PullRequestBranch = "test_branch";
 
-        private const int addedChanges = 12;
+        private const string PullRequestMergeBranch = "master";
 
-        private const int firstModifiedChanges = 8;
+        private static readonly Uri RenamedContentUrl = new Uri("http://321");
 
-        private const int secondModifiedChanges = 7;
+        private static readonly Uri AddedContentUrl = new Uri("http://421");
 
-        private const string pullRequestBranch = "test_branch";
+        private static readonly Uri FirstModifiedContentUrl = new Uri("http://521");
 
-        private const string pullRequestMergeBranch = "master";
+        private static readonly Uri SecondModifiedContentUrl = new Uri("http://621");
+
+        [Test]
+        public async void RetrieveShouldReturnPullRequest()
+        {
+            var retriever = GetPullRequestRetriever();
+            var pullRequest = await retriever.Retrieve(PullRequestNumber);
+
+            Assert.That(pullRequest.Number, Is.EqualTo(PullRequestNumber));
+            Assert.That(pullRequest.LastCommitId, Is.EqualTo("126"));
+            Assert.That(pullRequest.Branches.Branch, Is.EqualTo(PullRequestBranch));
+            Assert.That(pullRequest.Branches.MergeBranch, Is.EqualTo(PullRequestMergeBranch));
+            Assert.That(pullRequest.Files.Count, Is.EqualTo(4));
+            Assert.That(pullRequest.Files[0].FileName, Is.EqualTo(RenamedFileName));
+            Assert.That(pullRequest.Files[0].Status, Is.EqualTo(GitPullRequestFileStatus.Renamed));
+            Assert.That(pullRequest.Files[0].Changes, Is.EqualTo(RenamedChanges));
+            Assert.That(pullRequest.Files[1].FileName, Is.EqualTo(AddedFileName));
+            Assert.That(pullRequest.Files[1].Status, Is.EqualTo(GitPullRequestFileStatus.Added));
+            Assert.That(pullRequest.Files[1].Changes, Is.EqualTo(AddedChanges));
+            Assert.That(pullRequest.Files[2].FileName, Is.EqualTo(FirstModifiedFileName));
+            Assert.That(pullRequest.Files[2].Status, Is.EqualTo(GitPullRequestFileStatus.Modified));
+            Assert.That(pullRequest.Files[2].Changes, Is.EqualTo(FirstModifiedChanges));
+            Assert.That(pullRequest.Files[3].FileName, Is.EqualTo(SecondModifiedFileName));
+            Assert.That(pullRequest.Files[3].Status, Is.EqualTo(GitPullRequestFileStatus.Modified));
+            Assert.That(pullRequest.Files[3].Changes, Is.EqualTo(SecondModifiedChanges));
+        }
 
         private static IPullRequestRetriever GetPullRequestRetriever()
         {
@@ -55,41 +80,41 @@
                                   GetPullRequestCommit("125"),
                                   GetPullRequestCommit("126")
                               };
-            client.Setup(requestsClient => requestsClient.Commits(repository.Owner, repository.Name, pullRequestNumber))
+            client.Setup(requestsClient => requestsClient.Commits(repository.Owner, repository.Name, PullRequestNumber))
                 .ReturnsAsync(commits);
 
             var files = new List<PullRequestFile>
                             {
                                 GetPullRequestFile(
                                     "321",
-                                    renamedFileName,
+                                    RenamedFileName,
                                     "renamed",
-                                    renamedContentUrl,
-                                    renamedChanges),
+                                    RenamedContentUrl,
+                                    RenamedChanges),
                                 GetPullRequestFile(
                                     "421",
-                                    addedFileName,
+                                    AddedFileName,
                                     "added",
-                                    addedContentUrl,
-                                    addedChanges),
+                                    AddedContentUrl,
+                                    AddedChanges),
                                 GetPullRequestFile(
                                     "521",
-                                    firstModifiedFileName,
+                                    FirstModifiedFileName,
                                     "modified",
-                                    firstModifiedContentUrl,
-                                    firstModifiedChanges),
+                                    FirstModifiedContentUrl,
+                                    FirstModifiedChanges),
                                 GetPullRequestFile(
                                     "621",
-                                    secondModifiedFileName,
+                                    SecondModifiedFileName,
                                     "modified",
-                                    secondModifiedContentUrl,
-                                    secondModifiedChanges)
+                                    SecondModifiedContentUrl,
+                                    SecondModifiedChanges)
                             };
 
-            client.Setup(requestsClient => requestsClient.Files(repository.Owner, repository.Name, pullRequestNumber))
+            client.Setup(requestsClient => requestsClient.Files(repository.Owner, repository.Name, PullRequestNumber))
                 .ReturnsAsync(files);
 
-            client.Setup(requestsClient => requestsClient.Get(repository.Owner, repository.Name, pullRequestNumber))
+            client.Setup(requestsClient => requestsClient.Get(repository.Owner, repository.Name, PullRequestNumber))
                 .ReturnsAsync(
                     new PullRequest(
                         null,
@@ -98,7 +123,7 @@
                         null,
                         null,
                         null,
-                        pullRequestNumber,
+                        PullRequestNumber,
                         ItemState.Open,
                         null,
                         null,
@@ -106,8 +131,8 @@
                         default(DateTimeOffset),
                         null,
                         null,
-                        new GitReference(null, null, pullRequestBranch, null, null, null),
-                        new GitReference(null, null, pullRequestMergeBranch, null, null, null),
+                        new GitReference(null, null, PullRequestBranch, null, null, null),
+                        new GitReference(null, null, PullRequestMergeBranch, null, null, null),
                         null,
                         null,
                         true,
@@ -135,31 +160,6 @@
         private static PullRequestCommit GetPullRequestCommit(string sha)
         {
             return new PullRequestCommit(null, null, null, null, null, new List<GitReference>(), sha, null);
-        }
-
-        [Test]
-        public async void RetrieveShouldReturnPullRequest()
-        {
-            var retriever = GetPullRequestRetriever();
-            var pullRequest = await retriever.Retrieve(pullRequestNumber);
-
-            Assert.That(pullRequest.Number, Is.EqualTo(pullRequestNumber));
-            Assert.That(pullRequest.LastCommitId, Is.EqualTo("126"));
-            Assert.That(pullRequest.Branches.Branch, Is.EqualTo(pullRequestBranch));
-            Assert.That(pullRequest.Branches.MergeBranch, Is.EqualTo(pullRequestMergeBranch));
-            Assert.That(pullRequest.Files.Count, Is.EqualTo(4));
-            Assert.That(pullRequest.Files[0].FileName, Is.EqualTo(renamedFileName));
-            Assert.That(pullRequest.Files[0].Status, Is.EqualTo(GitPullRequestFileStatus.Renamed));
-            Assert.That(pullRequest.Files[0].Changes, Is.EqualTo(renamedChanges));
-            Assert.That(pullRequest.Files[1].FileName, Is.EqualTo(addedFileName));
-            Assert.That(pullRequest.Files[1].Status, Is.EqualTo(GitPullRequestFileStatus.Added));
-            Assert.That(pullRequest.Files[1].Changes, Is.EqualTo(addedChanges));
-            Assert.That(pullRequest.Files[2].FileName, Is.EqualTo(firstModifiedFileName));
-            Assert.That(pullRequest.Files[2].Status, Is.EqualTo(GitPullRequestFileStatus.Modified));
-            Assert.That(pullRequest.Files[2].Changes, Is.EqualTo(firstModifiedChanges));
-            Assert.That(pullRequest.Files[3].FileName, Is.EqualTo(secondModifiedFileName));
-            Assert.That(pullRequest.Files[3].Status, Is.EqualTo(GitPullRequestFileStatus.Modified));
-            Assert.That(pullRequest.Files[3].Changes, Is.EqualTo(secondModifiedChanges));
         }
     }
 }

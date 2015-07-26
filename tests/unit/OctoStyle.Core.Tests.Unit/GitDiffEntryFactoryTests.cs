@@ -7,11 +7,6 @@
     [TestFixture]
     public class GitDiffEntryFactoryTests
     {
-        private GitDiffEntryFactory GetGitDiffEntryFactory()
-        {
-            return new GitDiffEntryFactory();
-        }
-
         [Test]
         public void GetEntryShouldReturnEqualGitDiffEntry()
         {
@@ -69,6 +64,11 @@
             var modifiedEntry = (ModificationGitDiffEntry)result[0];
             Assert.That(modifiedEntry.LineNumber, Is.EqualTo(4));
             Assert.That(modifiedEntry.Status, Is.EqualTo(GitDiffEntryStatus.Removed));
+        }
+
+        private GitDiffEntryFactory GetGitDiffEntryFactory()
+        {
+            return new GitDiffEntryFactory();
         }
     }
 }

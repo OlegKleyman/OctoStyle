@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
@@ -15,51 +16,108 @@
     [TestFixture]
     public class AddedPullRequestCommenterTest
     {
-        private const int noFileHeaderCommentId = 1;
+        private const int NoFileHeaderCommentId = 1;
 
-        private const string addedFilePath = "src/TestLibrary/Nested/TestClass3.cs";
+        private const string AddedFilePath = "src/TestLibrary/Nested/TestClass3.cs";
 
-        private const int pullRequestNumber = 1;
+        private const int PullRequestNumber = 1;
 
-        private const string noFileHeaderMessage =
+        private const string NoFileHeaderMessage =
             "SA1633 - The file has no header, the header Xml is invalid, or the header is not located at the top of the file.";
 
-        private const int noFileHeaderPosition = 1;
+        private const int NoFileHeaderPosition = 1;
 
-        private const int allDirectivesInNamespaceCommentId = 2;
+        private const int AllDirectivesInNamespaceCommentId = 2;
 
-        private const int allDirectivesInNamespacePosition = 1;
+        private const int AllDirectivesInNamespacePosition = 1;
 
-        private const string allDirectivesInNamespaceMessage =
+        private const string AllDirectivesInNamespaceMessage =
             "SA1200 - All using directives must be placed inside of the namespace.";
 
-        private const string classMustHaveDocumentationHeaderMessage =
+        private const string ClassMustHaveDocumentationHeaderMessage =
             "SA1600 - The class must have a documentation header.";
 
-        private const int classMustHaveDocumentationHeaderCommentId = 3;
+        private const int ClassMustHaveDocumentationHeaderCommentId = 3;
 
-        private const int classMustHaveDocumentationHeaderPosition = 9;
+        private const int ClassMustHaveDocumentationHeaderPosition = 9;
+
+        [Test]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstant)]
+        public async void CreateShouldCreateComment()
+        {
+            var commenter = GetAddedPullRequestCommenter();
+            var pullRequestFile = new GitHubPullRequestFile(
+                AddedFilePath,
+                new GitHubPullRequest(
+                    1,
+                    "123",
+                    new List<PullRequestFile>(),
+                    new GitHubPullRequestBranches("test_branch", "master")),
+                GitPullRequestFileStatus.Added,
+                0);
+
+            var violations = new List<GitHubStyleViolation>
+                                 {
+                                     new GitHubStyleViolation(
+                                         "SA1633",
+                                         "The file has no header, the header Xml is invalid, or the header is not located at the top of the file.",
+                                         NoFileHeaderPosition),
+                                     new GitHubStyleViolation(
+                                         "SA1200",
+                                         "All using directives must be placed inside of the namespace.",
+                                         AllDirectivesInNamespacePosition),
+                                     new GitHubStyleViolation(
+                                         "SA1600",
+                                         "The class must have a documentation header.",
+                                         ClassMustHaveDocumentationHeaderPosition)
+                                 };
+            var mockAnalyzer = new Mock<ICodeAnalyzer>();
+
+            const string addedPhysicalFilePath = @"C:\repo\TestLibrary\Nested\TestClass3.cs";
+
+            mockAnalyzer.Setup(analyzer => analyzer.Analyze(addedPhysicalFilePath)).Returns(violations);
+
+            var comments =
+                (await commenter.Create(pullRequestFile, mockAnalyzer.Object, addedPhysicalFilePath)).ToList();
+
+            Assert.That(comments.Count, Is.EqualTo(3));
+
+            Assert.That(comments[0].Path, Is.EqualTo(AddedFilePath));
+            Assert.That(comments[0].Body, Is.EqualTo(NoFileHeaderMessage));
+            Assert.That(comments[0].Id, Is.EqualTo(NoFileHeaderCommentId));
+            Assert.That(comments[0].Position, Is.EqualTo(NoFileHeaderPosition));
+
+            Assert.That(comments[1].Path, Is.EqualTo(AddedFilePath));
+            Assert.That(comments[1].Body, Is.EqualTo(AllDirectivesInNamespaceMessage));
+            Assert.That(comments[1].Id, Is.EqualTo(AllDirectivesInNamespaceCommentId));
+            Assert.That(comments[1].Position, Is.EqualTo(AllDirectivesInNamespacePosition));
+
+            Assert.That(comments[2].Path, Is.EqualTo(AddedFilePath));
+            Assert.That(comments[2].Body, Is.EqualTo(ClassMustHaveDocumentationHeaderMessage));
+            Assert.That(comments[2].Id, Is.EqualTo(ClassMustHaveDocumentationHeaderCommentId));
+            Assert.That(comments[2].Position, Is.EqualTo(ClassMustHaveDocumentationHeaderPosition));
+        }
 
         private static AddedPullRequestCommenter GetAddedPullRequestCommenter()
         {
             var pullRequestCommentClient = new Mock<IPullRequestReviewCommentsClient>();
 
-            pullRequestCommentClient.Setup(GetCreateMethodMock(noFileHeaderMessage, noFileHeaderPosition))
-                .ReturnsAsync(GetComment(noFileHeaderPosition, noFileHeaderMessage, noFileHeaderCommentId));
+            pullRequestCommentClient.Setup(GetCreateMethodMock(NoFileHeaderMessage, NoFileHeaderPosition))
+                .ReturnsAsync(GetComment(NoFileHeaderPosition, NoFileHeaderMessage, NoFileHeaderCommentId));
             pullRequestCommentClient.Setup(
-                GetCreateMethodMock(allDirectivesInNamespaceMessage, allDirectivesInNamespacePosition))
+                GetCreateMethodMock(AllDirectivesInNamespaceMessage, AllDirectivesInNamespacePosition))
                 .ReturnsAsync(
                     GetComment(
-                        allDirectivesInNamespacePosition,
-                        allDirectivesInNamespaceMessage,
-                        allDirectivesInNamespaceCommentId));
+                        AllDirectivesInNamespacePosition,
+                        AllDirectivesInNamespaceMessage,
+                        AllDirectivesInNamespaceCommentId));
             pullRequestCommentClient.Setup(
-                GetCreateMethodMock(classMustHaveDocumentationHeaderMessage, classMustHaveDocumentationHeaderPosition))
+                GetCreateMethodMock(ClassMustHaveDocumentationHeaderMessage, ClassMustHaveDocumentationHeaderPosition))
                 .ReturnsAsync(
                     GetComment(
-                        classMustHaveDocumentationHeaderPosition,
-                        classMustHaveDocumentationHeaderMessage,
-                        classMustHaveDocumentationHeaderCommentId));
+                        ClassMustHaveDocumentationHeaderPosition,
+                        ClassMustHaveDocumentationHeaderMessage,
+                        ClassMustHaveDocumentationHeaderCommentId));
 
             return new AddedPullRequestCommenter(
                 pullRequestCommentClient.Object,
@@ -74,10 +132,10 @@
                 client.Create(
                     "OlegKleyman",
                     "OctoStyle",
-                    pullRequestNumber,
+                    PullRequestNumber,
                     It.Is<PullRequestReviewCommentCreate>(
                         create =>
-                        create.Path == addedFilePath && create.Body == body && create.CommitId == "123"
+                        create.Path == AddedFilePath && create.Body == body && create.CommitId == "123"
                         && create.Position == position));
         }
 
@@ -87,7 +145,7 @@
                 null,
                 commentId,
                 null,
-                addedFilePath,
+                AddedFilePath,
                 position,
                 null,
                 "1",
@@ -98,62 +156,6 @@
                 default(DateTimeOffset),
                 null,
                 null);
-        }
-
-        [Test]
-        public async void CreateShouldCreateComment()
-        {
-            var commenter = GetAddedPullRequestCommenter();
-            var pullRequestFile = new GitHubPullRequestFile(
-                addedFilePath,
-                new GitHubPullRequest(
-                    1,
-                    "123",
-                    new List<PullRequestFile>(),
-                    new GitHubPullRequestBranches("test_branch", "master")),
-                GitPullRequestFileStatus.Added,
-                0);
-
-            var violations = new List<GitHubStyleViolation>
-                                 {
-                                     new GitHubStyleViolation(
-                                         "SA1633",
-                                         "The file has no header, the header Xml is invalid, or the header is not located at the top of the file.",
-                                         noFileHeaderPosition),
-                                     new GitHubStyleViolation(
-                                         "SA1200",
-                                         "All using directives must be placed inside of the namespace.",
-                                         allDirectivesInNamespacePosition),
-                                     new GitHubStyleViolation(
-                                         "SA1600",
-                                         "The class must have a documentation header.",
-                                         classMustHaveDocumentationHeaderPosition)
-                                 };
-            var mockAnalyzer = new Mock<ICodeAnalyzer>();
-
-            const string addedPhysicalFilePath = @"C:\repo\TestLibrary\Nested\TestClass3.cs";
-
-            mockAnalyzer.Setup(analyzer => analyzer.Analyze(addedPhysicalFilePath)).Returns(violations);
-
-            var comments =
-                (await commenter.Create(pullRequestFile, mockAnalyzer.Object, addedPhysicalFilePath)).ToList();
-
-            Assert.That(comments.Count, Is.EqualTo(3));
-
-            Assert.That(comments[0].Path, Is.EqualTo(addedFilePath));
-            Assert.That(comments[0].Body, Is.EqualTo(noFileHeaderMessage));
-            Assert.That(comments[0].Id, Is.EqualTo(noFileHeaderCommentId));
-            Assert.That(comments[0].Position, Is.EqualTo(noFileHeaderPosition));
-
-            Assert.That(comments[1].Path, Is.EqualTo(addedFilePath));
-            Assert.That(comments[1].Body, Is.EqualTo(allDirectivesInNamespaceMessage));
-            Assert.That(comments[1].Id, Is.EqualTo(allDirectivesInNamespaceCommentId));
-            Assert.That(comments[1].Position, Is.EqualTo(allDirectivesInNamespacePosition));
-
-            Assert.That(comments[2].Path, Is.EqualTo(addedFilePath));
-            Assert.That(comments[2].Body, Is.EqualTo(classMustHaveDocumentationHeaderMessage));
-            Assert.That(comments[2].Id, Is.EqualTo(classMustHaveDocumentationHeaderCommentId));
-            Assert.That(comments[2].Position, Is.EqualTo(classMustHaveDocumentationHeaderPosition));
         }
     }
 }

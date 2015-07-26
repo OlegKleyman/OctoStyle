@@ -47,6 +47,7 @@
 
                 return this.context.Get<int>(PullRequestNumberKey);
             }
+
             set
             {
                 this.context.Set(value, PullRequestNumberKey);
@@ -64,6 +65,7 @@
 
                 return this.context.Get<IEnumerable<PullRequestReviewComment>>(CreatedCommentsKey);
             }
+
             set
             {
                 this.context.Set(value, CreatedCommentsKey);

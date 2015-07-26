@@ -53,6 +53,7 @@
 
                 return this.context.Get<string>(RepositoryOwnerKey);
             }
+
             set
             {
                 this.context.Set(value, RepositoryOwnerKey);
@@ -70,6 +71,7 @@
 
                 return this.context.Get<string>(RepositoryKey);
             }
+
             set
             {
                 this.context.Set(value, RepositoryKey);
@@ -87,6 +89,7 @@
 
                 return this.context.Get<string>(GitLoginKey);
             }
+
             set
             {
                 this.context.Set(value, GitLoginKey);
@@ -104,6 +107,7 @@
 
                 return this.context.Get<string>(GitPasswordKey);
             }
+
             set
             {
                 this.context.Set(value, GitPasswordKey);
@@ -121,6 +125,7 @@
 
                 return this.context.Get<GitHubClient>(GitClientKey);
             }
+
             set
             {
                 this.context.Set(value, GitClientKey);

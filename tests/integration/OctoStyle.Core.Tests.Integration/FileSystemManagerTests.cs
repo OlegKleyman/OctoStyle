@@ -40,11 +40,6 @@
             Assert.That(manager.IsDirectory(path), Is.EqualTo(expected));
         }
 
-        private FileSystemManager GetFileSystemManager()
-        {
-            return new FileSystemManager();
-        }
-
         [Test]
         [TestCaseSource("GetFilesShouldReturnFilesInDirectoryCases")]
         public void GetFilesShouldReturnFilesInDirectory(
@@ -61,6 +56,11 @@
             {
                 Assert.That(files[i], Is.EqualTo(expectedFiles[i]));
             }
+        }
+
+        private FileSystemManager GetFileSystemManager()
+        {
+            return new FileSystemManager();
         }
     }
 }

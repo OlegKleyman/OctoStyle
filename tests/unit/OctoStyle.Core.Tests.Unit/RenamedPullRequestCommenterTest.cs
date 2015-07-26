@@ -13,6 +13,30 @@
     [TestFixture]
     public class RenamedPullRequestCommenterTest
     {
+        [Test]
+        public async void CreateShouldCreateComment()
+        {
+            PullRequestCommenter commenter = this.GetRenamedPullRequestCommenter();
+            var pullRequestFile = new GitHubPullRequestFile(
+                "src/TestLibrary/Nested/TestClass2.cs",
+                new GitHubPullRequest(
+                    1,
+                    "123",
+                    new List<PullRequestFile>(),
+                    new GitHubPullRequestBranches("test_branch", "master")),
+                GitPullRequestFileStatus.Renamed,
+                1);
+
+            var comment =
+                (await commenter.Create(pullRequestFile, null, @"C:\repo\TestLibrary\Nested\TestClass2.cs")).ToList();
+
+            Assert.That(comment.Count, Is.EqualTo(1));
+            Assert.That(comment[0].Path, Is.EqualTo("src/TestLibrary/Nested/TestClass2.cs"));
+            Assert.That(comment[0].Body, Is.EqualTo("Renamed files not supported."));
+            Assert.That(comment[0].Id, Is.EqualTo(1));
+            Assert.That(comment[0].Position, Is.EqualTo(1));
+        }
+
         private RenamedPullRequestCommenter GetRenamedPullRequestCommenter()
         {
             var pullRequestCommentClient = new Mock<IPullRequestReviewCommentsClient>();
@@ -47,30 +71,6 @@
             return new RenamedPullRequestCommenter(
                 pullRequestCommentClient.Object,
                 new GitRepository("OlegKleyman", "OctoStyle"));
-        }
-
-        [Test]
-        public async void CreateShouldCreateComment()
-        {
-            PullRequestCommenter commenter = this.GetRenamedPullRequestCommenter();
-            var pullRequestFile = new GitHubPullRequestFile(
-                "src/TestLibrary/Nested/TestClass2.cs",
-                new GitHubPullRequest(
-                    1,
-                    "123",
-                    new List<PullRequestFile>(),
-                    new GitHubPullRequestBranches("test_branch", "master")),
-                GitPullRequestFileStatus.Renamed,
-                1);
-
-            var comment =
-                (await commenter.Create(pullRequestFile, null, @"C:\repo\TestLibrary\Nested\TestClass2.cs")).ToList();
-
-            Assert.That(comment.Count, Is.EqualTo(1));
-            Assert.That(comment[0].Path, Is.EqualTo("src/TestLibrary/Nested/TestClass2.cs"));
-            Assert.That(comment[0].Body, Is.EqualTo("Renamed files not supported."));
-            Assert.That(comment[0].Id, Is.EqualTo(1));
-            Assert.That(comment[0].Position, Is.EqualTo(1));
         }
     }
 }

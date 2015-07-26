@@ -13,58 +13,6 @@
     [TestFixture]
     public class GitHubDiffRetrieverTests
     {
-        private static IGitHubDiffRetriever GetGitHubDiffRetriever()
-        {
-            var mockConnection = new Mock<IConnection>();
-
-            var mockResponse = new Mock<IResponse>();
-
-            var newContent = Convert.ToBase64String(Encoding.UTF8.GetBytes(FileContents.TestLibraryCsprojNew));
-            var oldContent = Convert.ToBase64String(Encoding.UTF8.GetBytes(FileContents.TestLibraryCsprojOld));
-
-            mockConnection.Setup(
-                connection =>
-                connection.Get<RepositoryContent>(
-                    It.Is<Uri>(
-                        uri =>
-                        uri.AbsoluteUri
-                        == "https://api.github.com/repos/OlegKleyman/OctoStyleTest/contents/src/TestLibrary/TestLibrary.csproj?ref=test_branch"),
-                    null,
-                    null))
-                .ReturnsAsync(new ApiResponse<RepositoryContent>(mockResponse.Object, GetRepositoryContent(newContent)));
-
-            mockConnection.Setup(
-                connection =>
-                connection.Get<RepositoryContent>(
-                    It.Is<Uri>(
-                        uri =>
-                        uri.AbsoluteUri
-                        == "https://api.github.com/repos/OlegKleyman/OctoStyleTest/contents/src/TestLibrary/TestLibrary.csproj?ref=master"),
-                    null,
-                    null))
-                .ReturnsAsync(new ApiResponse<RepositoryContent>(mockResponse.Object, GetRepositoryContent(oldContent)));
-
-            return new GitHubDiffRetriever(mockConnection.Object, new GitRepository("OlegKleyman", "OctoStyleTest"));
-        }
-
-        private static RepositoryContent GetRepositoryContent(string content)
-        {
-            return new RepositoryContent(
-                null,
-                null,
-                null,
-                0,
-                ContentType.File,
-                null,
-                null,
-                null,
-                null,
-                null,
-                content,
-                null,
-                null);
-        }
-
         [Test]
         public async void RetrieveShouldReturnFileContentsByFilePath()
         {
@@ -119,6 +67,58 @@
             Assert.That(diff[14].Position, Is.EqualTo(15));
             Assert.That(diff[15], Is.TypeOf<EqualGitDiffEntry>());
             Assert.That(diff[15].Position, Is.EqualTo(16));
+        }
+
+        private static IGitHubDiffRetriever GetGitHubDiffRetriever()
+        {
+            var mockConnection = new Mock<IConnection>();
+
+            var mockResponse = new Mock<IResponse>();
+
+            var newContent = Convert.ToBase64String(Encoding.UTF8.GetBytes(FileContents.TestLibraryCsprojNew));
+            var oldContent = Convert.ToBase64String(Encoding.UTF8.GetBytes(FileContents.TestLibraryCsprojOld));
+
+            mockConnection.Setup(
+                connection =>
+                connection.Get<RepositoryContent>(
+                    It.Is<Uri>(
+                        uri =>
+                        uri.AbsoluteUri
+                        == "https://api.github.com/repos/OlegKleyman/OctoStyleTest/contents/src/TestLibrary/TestLibrary.csproj?ref=test_branch"),
+                    null,
+                    null))
+                .ReturnsAsync(new ApiResponse<RepositoryContent>(mockResponse.Object, GetRepositoryContent(newContent)));
+
+            mockConnection.Setup(
+                connection =>
+                connection.Get<RepositoryContent>(
+                    It.Is<Uri>(
+                        uri =>
+                        uri.AbsoluteUri
+                        == "https://api.github.com/repos/OlegKleyman/OctoStyleTest/contents/src/TestLibrary/TestLibrary.csproj?ref=master"),
+                    null,
+                    null))
+                .ReturnsAsync(new ApiResponse<RepositoryContent>(mockResponse.Object, GetRepositoryContent(oldContent)));
+
+            return new GitHubDiffRetriever(mockConnection.Object, new GitRepository("OlegKleyman", "OctoStyleTest"));
+        }
+
+        private static RepositoryContent GetRepositoryContent(string content)
+        {
+            return new RepositoryContent(
+                null,
+                null,
+                null,
+                0,
+                ContentType.File,
+                null,
+                null,
+                null,
+                null,
+                null,
+                content,
+                null,
+                null);
         }
     }
 }

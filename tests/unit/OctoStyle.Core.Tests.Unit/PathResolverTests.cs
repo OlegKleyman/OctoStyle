@@ -7,7 +7,7 @@
     [TestFixture]
     public class PathResolverTests
     {
-        private readonly string ProjectFileFilter = "*.csproj";
+        private const string ProjectFileFilter = "*.csproj";
 
         private const string GetPathShouldReturnPathInitialFilePath =
             @"C:\testPath\innerDirectory1\innerDirectory2\someFile.cs";
@@ -25,7 +25,7 @@
         public void GetPathShouldReturnPath(string initialPath, string expectedPath)
         {
             IPathResolver resolver = this.GetPathResolver();
-            var path = resolver.GetPath(initialPath, this.ProjectFileFilter);
+            var path = resolver.GetPath(initialPath, ProjectFileFilter);
             Assert.That(path, Is.EqualTo(expectedPath));
         }
 
@@ -34,16 +34,16 @@
             var mockFileSystemManager = new Mock<IFileSystemManager>();
 
             mockFileSystemManager.Setup(
-                manager => manager.GetFiles(GetPathShouldReturnPathInitialFilePath, this.ProjectFileFilter))
+                manager => manager.GetFiles(GetPathShouldReturnPathInitialFilePath, ProjectFileFilter))
                 .Returns(new string[] { });
             mockFileSystemManager.Setup(
                 manager =>
-                manager.GetFiles(GetPathShouldReturnPathInitialOuterMostDirectoryPath, this.ProjectFileFilter))
+                manager.GetFiles(GetPathShouldReturnPathInitialOuterMostDirectoryPath, ProjectFileFilter))
                 .Returns(new string[] { });
             mockFileSystemManager.Setup(
-                manager => manager.GetFiles(GetPathShouldReturnPathInitialMiddleDirectoryPath, this.ProjectFileFilter))
+                manager => manager.GetFiles(GetPathShouldReturnPathInitialMiddleDirectoryPath, ProjectFileFilter))
                 .Returns(new string[] { });
-            mockFileSystemManager.Setup(manager => manager.GetFiles(ProjectPath, this.ProjectFileFilter))
+            mockFileSystemManager.Setup(manager => manager.GetFiles(ProjectPath, ProjectFileFilter))
                 .Returns(new[] { "test.csproj" });
 
             mockFileSystemManager.Setup(manager => manager.IsDirectory(GetPathShouldReturnPathInitialFilePath))
