@@ -33,7 +33,7 @@
 
             foreach (var violation in analyzer.Analyze(physicalFilePath))
             {
-                var message = String.Format(
+                var message = string.Format(
                     CultureInfo.InvariantCulture,
                     "{0} - {1}",
                     violation.RuleId,
@@ -45,7 +45,7 @@
                     file.FileName,
                     violation.Position);
 
-                comments.Add(await Create(comment, file.PullRequest.Number));
+                comments.Add(await this.Create(comment, file.PullRequest.Number));
             }
 
             return comments;

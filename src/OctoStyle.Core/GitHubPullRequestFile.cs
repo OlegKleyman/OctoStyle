@@ -4,15 +4,11 @@ namespace OctoStyle.Core
 
     public class GitHubPullRequestFile
     {
-        public string FileName { get; private set; }
-
-        public GitHubPullRequest PullRequest { get; private set; }
-
-        public GitPullRequestFileStatus Status { get; private set; }
-
-        public int Changes { get; private set; }
-
-        public GitHubPullRequestFile(string fileName, GitHubPullRequest pullRequest, GitPullRequestFileStatus status, int changes)
+        public GitHubPullRequestFile(
+            string fileName,
+            GitHubPullRequest pullRequest,
+            GitPullRequestFileStatus status,
+            int changes)
         {
             if (fileName == null)
             {
@@ -34,5 +30,13 @@ namespace OctoStyle.Core
             this.Status = status;
             this.Changes = changes;
         }
+
+        public string FileName { get; private set; }
+
+        public GitHubPullRequest PullRequest { get; private set; }
+
+        public GitPullRequestFileStatus Status { get; private set; }
+
+        public int Changes { get; private set; }
     }
 }

@@ -8,7 +8,9 @@ namespace OctoStyle.Core
 
     public static class DiffEntryListExtensions
     {
-        public static IReadOnlyList<GitDiffEntry> ToGitDiff(this IEnumerable<DiffEntry<string>> diff, IGitDiffEntryFactory factory)
+        public static IReadOnlyList<GitDiffEntry> ToGitDiff(
+            this IEnumerable<DiffEntry<string>> diff,
+            IGitDiffEntryFactory factory)
         {
             if (diff == null)
             {
@@ -26,11 +28,11 @@ namespace OctoStyle.Core
             foreach (var entry in diff)
             {
                 var entries = factory.Get(entry, position);
-                
+
                 if (entries == null)
                 {
                     throw new InvalidOperationException(
-                        String.Format(
+                        string.Format(
                             CultureInfo.InvariantCulture,
                             "Unable to retrieve git diff entry for Type: {0}, Line Number: {1}, Position: {2}",
                             entry.EntryType,

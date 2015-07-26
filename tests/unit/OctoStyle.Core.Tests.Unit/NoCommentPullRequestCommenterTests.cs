@@ -7,6 +7,11 @@
     [TestFixture]
     public class NoCommentPullRequestCommenterTests
     {
+        private static PullRequestCommenter GetNoCommentPullRequestCommenter()
+        {
+            return PullRequestCommenter.NoCommentPullRequestCommenter.NoComment;
+        }
+
         [Test]
         public async void CreateShouldReturnEmptyPullRequestComment()
         {
@@ -15,11 +20,6 @@
 
             Assert.That(comments, Is.Not.Null);
             Assert.That(comments.Any(), Is.False);
-        }
-
-        private static PullRequestCommenter GetNoCommentPullRequestCommenter()
-        {
-            return PullRequestCommenter.NoCommentPullRequestCommenter.NoComment;
         }
     }
 }

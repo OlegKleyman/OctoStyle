@@ -11,19 +11,12 @@
     {
         private const string PullRequestNumberKey = "PULL_REQUEST_NUMBER";
 
-        private static readonly ScenarioContextExtended CurrentContext = new ScenarioContextExtended(ScenarioContext.Current);
+        private const string CreatedCommentsKey = "CREATED_COMMENTS";
 
-        public static ScenarioContextExtended Current
-        {
-            get
-            {
-                return CurrentContext;
-            }
-        }
+        private static readonly ScenarioContextExtended CurrentContext =
+            new ScenarioContextExtended(ScenarioContext.Current);
 
         private readonly ScenarioContext context;
-
-        private const string CreatedCommentsKey = "CREATED_COMMENTS";
 
         public ScenarioContextExtended(ScenarioContext context)
         {
@@ -33,6 +26,14 @@
             }
 
             this.context = context;
+        }
+
+        public static ScenarioContextExtended Current
+        {
+            get
+            {
+                return CurrentContext;
+            }
         }
 
         public int PullRequestNumber

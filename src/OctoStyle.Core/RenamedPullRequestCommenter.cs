@@ -6,17 +6,17 @@ namespace OctoStyle.Core
 
     using Octokit;
 
-    using StyleCop;
-
     public class RenamedPullRequestCommenter : PullRequestCommenter
     {
         public RenamedPullRequestCommenter(IPullRequestReviewCommentsClient client, GitRepository repository)
             : base(client, repository)
         {
-
         }
 
-        public override async Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequestFile file, ICodeAnalyzer analyzer, string physicalFilePath)
+        public override async Task<IEnumerable<PullRequestReviewComment>> Create(
+            GitHubPullRequestFile file,
+            ICodeAnalyzer analyzer,
+            string physicalFilePath)
         {
             if (file == null)
             {
@@ -33,7 +33,7 @@ namespace OctoStyle.Core
                     file.FileName,
                     1);
 
-                var addedComment = await Create(comment, file.PullRequest.Number);
+                var addedComment = await this.Create(comment, file.PullRequest.Number);
 
                 comments.Add(addedComment);
             }

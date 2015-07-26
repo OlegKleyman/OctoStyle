@@ -9,23 +9,20 @@
 
     public class FeatureContextExtended
     {
-        private static readonly FeatureContextExtended CurrentContext = new FeatureContextExtended(FeatureContext.Current);
-
-        private readonly FeatureContext context;
-
         private const string GitClientKey = "GIT_CLIENT";
+
         private const string RepositoryKey = "REPOSITORY";
+
         private const string RepositoryOwnerKey = "REPOSITORY_OWNER";
+
         private const string GitLoginKey = "GIT_LOGIN";
+
         private const string GitPasswordKey = "GIT_PASSWORD";
 
-        public static FeatureContextExtended Current
-        {
-            get
-            {
-                return CurrentContext;
-            }
-        }
+        private static readonly FeatureContextExtended CurrentContext =
+            new FeatureContextExtended(FeatureContext.Current);
+
+        private readonly FeatureContext context;
 
         public FeatureContextExtended(FeatureContext context)
         {
@@ -35,6 +32,14 @@
             }
 
             this.context = context;
+        }
+
+        public static FeatureContextExtended Current
+        {
+            get
+            {
+                return CurrentContext;
+            }
         }
 
         public string RepositoryOwner

@@ -42,7 +42,7 @@ namespace OctoStyle.Core
             }
 
             var diff =
-                diffRetriever.RetrieveAsync(
+                this.diffRetriever.RetrieveAsync(
                     file.FileName,
                     file.PullRequest.Branches.Branch,
                     file.PullRequest.Branches.MergeBranch).GetAwaiter().GetResult().OfType<ModificationGitDiffEntry>();
@@ -59,7 +59,7 @@ namespace OctoStyle.Core
 
             foreach (var violation in accessibleViolations)
             {
-                var message = String.Format(
+                var message = string.Format(
                     CultureInfo.InvariantCulture,
                     "{0} - {1}",
                     violation.RuleId,
@@ -71,7 +71,7 @@ namespace OctoStyle.Core
                     file.FileName,
                     violation.Position);
 
-                comments.Add(await Create(comment, file.PullRequest.Number));
+                comments.Add(await this.Create(comment, file.PullRequest.Number));
             }
 
             return comments;

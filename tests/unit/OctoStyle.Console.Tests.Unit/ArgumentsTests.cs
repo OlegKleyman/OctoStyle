@@ -11,7 +11,8 @@
         [Test]
         public void ParseShouldReturnArguments()
         {
-            var arguments = Arguments.Parse(@"-l TestUser -p testpass -d C:\test -o OlegKleyman -r OctoStyleTest -pr 1".Split(' '));
+            var arguments =
+                Arguments.Parse(@"-l TestUser -p testpass -d C:\test -o OlegKleyman -r OctoStyleTest -pr 1".Split(' '));
 
             Assert.That(arguments.Login, Is.EqualTo("TestUser"));
             Assert.That(arguments.Password, Is.EqualTo("testpass"));
@@ -24,11 +25,11 @@
         [Test]
         public void ParseShouldThrowArgumentExceptionWithHelpMessageWhenArgumentsAreMissing()
         {
-            var ex = Assert.Throws<ArgumentException>(() => Arguments.Parse(new[] { String.Empty }));
+            var ex = Assert.Throws<ArgumentException>(() => Arguments.Parse(new[] { string.Empty }));
             Assert.That(
                 ex.Message,
                 Is.EqualTo(
-                    String.Format(
+                    string.Format(
                         CultureInfo.InvariantCulture,
                         "{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}",
                         Environment.NewLine,

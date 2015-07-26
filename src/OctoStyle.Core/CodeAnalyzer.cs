@@ -2,15 +2,15 @@ namespace OctoStyle.Core
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
 
     using StyleCop;
 
     public class CodeAnalyzer : ICodeAnalyzer
     {
-        private readonly Queue<Violation> violations;
         private readonly CodeProject project;
+
+        private readonly Queue<Violation> violations;
 
         public CodeAnalyzer(string projectPath)
         {
@@ -19,7 +19,7 @@ namespace OctoStyle.Core
                 throw new ArgumentNullException("projectPath");
             }
 
-            if (projectPath == String.Empty)
+            if (projectPath == string.Empty)
             {
                 throw new ArgumentException("Cannot be empty.", "projectPath");
             }
@@ -32,7 +32,7 @@ namespace OctoStyle.Core
         {
             this.violations.Clear();
             var console = new StyleCopConsole(null, false, null, null, true);
-            
+
             console.Core.Environment.AddSourceCode(this.project, filePath, null);
             console.ViolationEncountered += this.OnViolationEncountered;
 

@@ -8,7 +8,13 @@
 
     public class Arguments
     {
-        private Arguments(string login, string password, string solutionDirectory, string repositoryOwner, string repository, int pullRequestNumber)
+        private Arguments(
+            string login,
+            string password,
+            string solutionDirectory,
+            string repositoryOwner,
+            string repository,
+            int pullRequestNumber)
         {
             if (login == null)
             {
@@ -37,27 +43,27 @@
 
             const string cannotBeEmptyMessage = "Cannot be empty";
 
-            if (login == String.Empty)
+            if (login == string.Empty)
             {
                 throw new ArgumentException(cannotBeEmptyMessage, "login");
             }
 
-            if (password == String.Empty)
+            if (password == string.Empty)
             {
                 throw new ArgumentException(cannotBeEmptyMessage, "password");
             }
 
-            if (solutionDirectory == String.Empty)
+            if (solutionDirectory == string.Empty)
             {
                 throw new ArgumentException(cannotBeEmptyMessage, "solutionDirectory");
             }
 
-            if (repositoryOwner == String.Empty)
+            if (repositoryOwner == string.Empty)
             {
                 throw new ArgumentException(cannotBeEmptyMessage, "repositoryOwner");
             }
 
-            if (repository == String.Empty)
+            if (repository == string.Empty)
             {
                 throw new ArgumentException(cannotBeEmptyMessage, "repository");
             }
@@ -71,9 +77,13 @@
         }
 
         public string SolutionDirectory { get; private set; }
+
         public string RepositoryOwner { get; private set; }
+
         public string Repository { get; private set; }
+
         public int PullRequestNumber { get; private set; }
+
         public string Login { get; private set; }
 
         public string Password { get; set; }
@@ -92,24 +102,27 @@
             var repository = default(string);
             var pullRequestNumber = default(int);
 
-            var options = new OptionSet()
-                .Add("l=", l => login = l)
-                .Add("p=", p => password = p)
-                .Add("d=", d => solutionDirectory = d)
-                .Add("o=", o => repositoryOwner = o)
-                .Add("r=", r => repository = r)
-                .Add("pr=",
-                    pu =>
-                    {
-                        if (!int.TryParse(
-                            pu,
-                            NumberStyles.Integer,
-                            CultureInfo.InvariantCulture,
-                            out pullRequestNumber))
-                        {
-                            throw new ArgumentException("pu must be an integer referencing an active pull request");
-                        }
-                    });
+            var options =
+                new OptionSet().Add("l=", l => login = l)
+                    .Add("p=", p => password = p)
+                    .Add("d=", d => solutionDirectory = d)
+                    .Add("o=", o => repositoryOwner = o)
+                    .Add("r=", r => repository = r)
+                    .Add(
+                        "pr=",
+                        pu =>
+                            {
+                                if (
+                                    !int.TryParse(
+                                        pu,
+                                        NumberStyles.Integer,
+                                        CultureInfo.InvariantCulture,
+                                        out pullRequestNumber))
+                                {
+                                    throw new ArgumentException(
+                                        "pu must be an integer referencing an active pull request");
+                                }
+                            });
             options.Parse(args);
 
             try
@@ -118,7 +131,7 @@
             }
             catch (ArgumentException ex)
             {
-                var helpMessage = String.Format(
+                var helpMessage = string.Format(
                     CultureInfo.InvariantCulture,
                     "{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}",
                     Environment.NewLine,

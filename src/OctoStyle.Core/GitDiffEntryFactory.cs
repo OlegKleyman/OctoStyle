@@ -33,7 +33,7 @@
                     break;
                 default:
                     throw new InvalidOperationException(
-                        String.Format(
+                        string.Format(
                             CultureInfo.InvariantCulture,
                             "Unable to convert DiffEntry of type {0} to GitDiff",
                             entry.EntryType));

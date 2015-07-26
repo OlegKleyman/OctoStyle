@@ -24,13 +24,14 @@ namespace OctoStyle.Core.Borrowed
     using System.Linq;
 
     /// <summary>
-    /// Used for finding a unified diff between two arrays of IComparable objects
+    ///     Used for finding a unified diff between two arrays of IComparable objects
     /// </summary>
     public static class Diff
     {
         #region Public static methods
+
         /// <summary>
-        /// Creates a list of diff entries that represent the differences between arr1 and arr2.
+        ///     Creates a list of diff entries that represent the differences between arr1 and arr2.
         /// </summary>
         /// <typeparam name="T">Class that represents the unit to compare</typeparam>
         /// <param name="arr1">Array of units.</param>
@@ -38,39 +39,45 @@ namespace OctoStyle.Core.Borrowed
         /// <returns>List of DiffEntry classes.</returns>
         public static IReadOnlyList<DiffEntry<T>> CreateDiff<T>(T[] arr1, T[] arr2) where T : IComparable
         {
-            int start = 0;
-            int end = 0;
+            var start = 0;
+            var end = 0;
 
             // Strip off the beginning and end, if it's equal
             while (start < Math.Min(arr1.Length, arr2.Length))
             {
                 if (arr1[start].CompareTo(arr2[start]) != 0)
+                {
                     break;
+                }
                 start++;
             }
 
             if (start == arr1.Length && start == arr2.Length)
+            {
                 return new List<DiffEntry<T>>().AsReadOnly();
+            }
 
-            for (int i = 0; i < Math.Min(arr1.Length, arr2.Length) - start; i++)
+            for (var i = 0; i < Math.Min(arr1.Length, arr2.Length) - start; i++)
             {
                 if (arr1[arr1.Length - i - 1].CompareTo(arr2[arr2.Length - i - 1]) != 0)
+                {
                     break;
+                }
                 end++;
             }
 
-            int lines1Cnt = arr1.Length - start - end;
-            int lines2Cnt = arr2.Length - start - end;
+            var lines1Cnt = arr1.Length - start - end;
+            var lines2Cnt = arr2.Length - start - end;
 
-            int[,] lcs = new int[lines1Cnt, lines2Cnt];
+            var lcs = new int[lines1Cnt, lines2Cnt];
 
             // Calculate longest common sequence
-            for (int i = 0; i < lines1Cnt; i++)
+            for (var i = 0; i < lines1Cnt; i++)
             {
-                for (int j = 0; j < lines2Cnt; j++)
+                for (var j = 0; j < lines2Cnt; j++)
                 {
-                    int iVal = i + start;
-                    int jVal = j + start;
+                    var iVal = i + start;
+                    var jVal = j + start;
 
                     if (arr1[iVal].CompareTo(arr2[jVal]) != 0)
                     {
@@ -106,17 +113,17 @@ namespace OctoStyle.Core.Borrowed
             }
 
             // Build the list of differences
-            Stack<int[]> stck = new Stack<int[]>();
-            List<DiffEntry<T>> diffList = new List<DiffEntry<T>>();
+            var stck = new Stack<int[]>();
+            var diffList = new List<DiffEntry<T>>();
             DiffEntry<T> lastEqual = null;
 
             stck.Push(new int[2] { lines1Cnt - 1, lines2Cnt - 1 });
             do
             {
-                int[] data = stck.Pop();
+                var data = stck.Pop();
 
-                int i = data[0];
-                int j = data[1];
+                var i = data[0];
+                var j = data[1];
 
                 if (i >= 0 && j >= 0 && arr1[i + start].CompareTo(arr2[j + start]) == 0)
                 {
@@ -146,10 +153,11 @@ namespace OctoStyle.Core.Borrowed
                         lastEqual = null;
                     }
                 }
-            } while (stck.Count > 0);
+            }
+            while (stck.Count > 0);
 
             diffList.Reverse();
-            
+
             if (diffList.Count > 0)
             {
                 const int maxEqualPadding = 3;
@@ -157,8 +165,8 @@ namespace OctoStyle.Core.Borrowed
                 {
                     var lineDifference = diffList[0].LineNumber == maxEqualPadding
                                              ? 2
-                                             : diffList[0].LineNumber - Math.Abs(diffList[0].LineNumber - maxEqualPadding);
-
+                                             : diffList[0].LineNumber
+                                               - Math.Abs(diffList[0].LineNumber - maxEqualPadding);
 
                     diffList.Insert(0, new DiffEntry<T> { Count = lineDifference });
                 }
@@ -172,7 +180,7 @@ namespace OctoStyle.Core.Borrowed
                     diffList.Add(new DiffEntry<T> { Count = Math.Min(lastLineDifference, maxEqualPadding) });
                 }
             }
-            
+
             return diffList.AsReadOnly();
         }
 

@@ -12,7 +12,9 @@ namespace OctoStyle.Core
 
         private readonly GitRepository repository;
 
-        private PullRequestCommenter() { }
+        private PullRequestCommenter()
+        {
+        }
 
         protected PullRequestCommenter(IPullRequestReviewCommentsClient client, GitRepository repository)
         {
@@ -29,21 +31,26 @@ namespace OctoStyle.Core
             this.client = client;
             this.repository = repository;
         }
-        
-        public abstract Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequestFile file, ICodeAnalyzer analyzer, string physicalFilePath);
 
-        protected async Task<PullRequestReviewComment> Create(PullRequestReviewCommentCreate comment, int pullRequestNumber)
+        public abstract Task<IEnumerable<PullRequestReviewComment>> Create(
+            GitHubPullRequestFile file,
+            ICodeAnalyzer analyzer,
+            string physicalFilePath);
+
+        protected async Task<PullRequestReviewComment> Create(
+            PullRequestReviewCommentCreate comment,
+            int pullRequestNumber)
         {
-            return await client.Create(repository.Owner, repository.Name, pullRequestNumber, comment);
+            return await this.client.Create(this.repository.Owner, this.repository.Name, pullRequestNumber, comment);
         }
 
         public class NoCommentPullRequestCommenter : PullRequestCommenter
         {
+            private static readonly NoCommentPullRequestCommenter commenter = new NoCommentPullRequestCommenter();
+
             private NoCommentPullRequestCommenter()
             {
             }
-
-            private static readonly NoCommentPullRequestCommenter commenter = new NoCommentPullRequestCommenter();
 
             public static PullRequestCommenter NoComment
             {
@@ -53,7 +60,10 @@ namespace OctoStyle.Core
                 }
             }
 
-            public override Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequestFile file, ICodeAnalyzer analyzer, string physicalFilePath)
+            public override Task<IEnumerable<PullRequestReviewComment>> Create(
+                GitHubPullRequestFile file,
+                ICodeAnalyzer analyzer,
+                string physicalFilePath)
             {
                 var task = new Task<IEnumerable<PullRequestReviewComment>>(() => new List<PullRequestReviewComment>());
                 task.RunSynchronously();

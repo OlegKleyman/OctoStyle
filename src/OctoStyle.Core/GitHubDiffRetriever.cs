@@ -13,8 +13,6 @@
     {
         private readonly Uri baseUri;
 
-        public IConnection Connection { get; set; }
-
         public GitHubDiffRetriever(IConnection connection, GitRepository repository)
         {
             if (connection == null)
@@ -30,20 +28,27 @@
             this.Connection = connection;
             this.baseUri =
                 new Uri(
-                    String.Format(
+                    string.Format(
                         CultureInfo.InvariantCulture,
-                        "https://api.github.com/repos/{0}/{1}/contents/", repository.Owner, repository.Name));
+                        "https://api.github.com/repos/{0}/{1}/contents/",
+                        repository.Owner,
+                        repository.Name));
         }
 
-        public async Task<IReadOnlyList<GitDiffEntry>> RetrieveAsync(string filePath, string newBranch, string originalBranch)
+        public IConnection Connection { get; set; }
+
+        public async Task<IReadOnlyList<GitDiffEntry>> RetrieveAsync(
+            string filePath,
+            string newBranch,
+            string originalBranch)
         {
-            var newFileEndpoint = new Uri(baseUri, String.Concat(filePath, "?ref=", newBranch));
-            var originalFileEndpoint = new Uri(baseUri, String.Concat(filePath, "?ref=", originalBranch));
-            var newFileContents = await Connection.Get<RepositoryContent>(newFileEndpoint, null, null);
-            var originalFileContents = await Connection.Get<RepositoryContent>(originalFileEndpoint, null, null);
+            var newFileEndpoint = new Uri(this.baseUri, string.Concat(filePath, "?ref=", newBranch));
+            var originalFileEndpoint = new Uri(this.baseUri, string.Concat(filePath, "?ref=", originalBranch));
+            var newFileContents = await this.Connection.Get<RepositoryContent>(newFileEndpoint, null, null);
+            var originalFileContents = await this.Connection.Get<RepositoryContent>(originalFileEndpoint, null, null);
 
             var delimeter = new[] { '\n' };
-            
+
             var diff =
                 Diff.CreateDiff(
                     originalFileContents.Body.Content.Split(delimeter, StringSplitOptions.None),

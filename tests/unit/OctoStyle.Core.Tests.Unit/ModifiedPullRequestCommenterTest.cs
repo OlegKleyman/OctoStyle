@@ -33,6 +33,81 @@
         private const string mustBeFollowedByBlankLineMessage =
             "SA1513 - Statements or elements wrapped in curly brackets must be followed by a blank line.";
 
+        private static ModifiedPullRequestCommenter GetAddedPullRequestCommenter()
+        {
+            var pullRequestCommentClient = new Mock<IPullRequestReviewCommentsClient>();
+
+            pullRequestCommentClient.Setup(
+                GetCreateMethodMock(noMethodDocumentationHeaderMessage, noMethodDocumentationHeaderPosition))
+                .ReturnsAsync(
+                    GetComment(
+                        noMethodDocumentationHeaderPosition,
+                        noMethodDocumentationHeaderMessage,
+                        noMethodDocumentationHeaderCommentId));
+            pullRequestCommentClient.Setup(
+                GetCreateMethodMock(mustBeFollowedByBlankLineMessage, mustBeFollowedByBlankLinePosition))
+                .ReturnsAsync(
+                    GetComment(
+                        mustBeFollowedByBlankLinePosition,
+                        mustBeFollowedByBlankLineMessage,
+                        mustBeFollowedByBlankLineCommentId));
+
+            var diffRetriever = new Mock<IGitHubDiffRetriever>();
+            var diff = new List<GitDiffEntry>
+                           {
+                               new ModificationGitDiffEntry(4, GitDiffEntryStatus.New, 20),
+                               new ModificationGitDiffEntry(5, GitDiffEntryStatus.New, 21),
+                               new ModificationGitDiffEntry(6, GitDiffEntryStatus.New, 22),
+                               new ModificationGitDiffEntry(7, GitDiffEntryStatus.New, 23),
+                               new ModificationGitDiffEntry(8, GitDiffEntryStatus.New, 24),
+                               new ModificationGitDiffEntry(9, GitDiffEntryStatus.New, 25),
+                               new ModificationGitDiffEntry(10, GitDiffEntryStatus.New, 26),
+                               new ModificationGitDiffEntry(11, GitDiffEntryStatus.New, 27)
+                           };
+
+            diffRetriever.Setup(retriever => retriever.RetrieveAsync(modifiedFilePath, "test_branch", "master"))
+                .ReturnsAsync(diff);
+
+            return new ModifiedPullRequestCommenter(
+                pullRequestCommentClient.Object,
+                new GitRepository("OlegKleyman", "OctoStyle"),
+                diffRetriever.Object);
+        }
+
+        private static Expression<Func<IPullRequestReviewCommentsClient, Task<PullRequestReviewComment>>>
+            GetCreateMethodMock(string body, int position)
+        {
+            return
+                client =>
+                client.Create(
+                    "OlegKleyman",
+                    "OctoStyle",
+                    pullRequestNumber,
+                    It.Is<PullRequestReviewCommentCreate>(
+                        create =>
+                        create.Path == modifiedFilePath && create.Body == body && create.CommitId == "123"
+                        && create.Position == position));
+        }
+
+        private static PullRequestReviewComment GetComment(int position, string message, int commentId)
+        {
+            return new PullRequestReviewComment(
+                null,
+                commentId,
+                null,
+                modifiedFilePath,
+                position,
+                null,
+                "1",
+                null,
+                null,
+                message,
+                default(DateTimeOffset),
+                default(DateTimeOffset),
+                null,
+                null);
+        }
+
         [Test]
         public async void CreateShouldCreateComment()
         {
@@ -77,81 +152,6 @@
             Assert.That(comments[1].Body, Is.EqualTo(mustBeFollowedByBlankLineMessage));
             Assert.That(comments[1].Id, Is.EqualTo(mustBeFollowedByBlankLineCommentId));
             Assert.That(comments[1].Position, Is.EqualTo(mustBeFollowedByBlankLinePosition));
-        }
-
-        private static ModifiedPullRequestCommenter GetAddedPullRequestCommenter()
-        {
-            var pullRequestCommentClient = new Mock<IPullRequestReviewCommentsClient>();
-
-            pullRequestCommentClient.Setup(
-                GetCreateMethodMock(noMethodDocumentationHeaderMessage, noMethodDocumentationHeaderPosition))
-                .ReturnsAsync(
-                    GetComment(
-                        noMethodDocumentationHeaderPosition,
-                        noMethodDocumentationHeaderMessage,
-                        noMethodDocumentationHeaderCommentId));
-            pullRequestCommentClient.Setup(
-                GetCreateMethodMock(mustBeFollowedByBlankLineMessage, mustBeFollowedByBlankLinePosition))
-                .ReturnsAsync(
-                    GetComment(
-                        mustBeFollowedByBlankLinePosition,
-                        mustBeFollowedByBlankLineMessage,
-                        mustBeFollowedByBlankLineCommentId));
-
-            var diffRetriever = new Mock<IGitHubDiffRetriever>();
-            var diff = new List<GitDiffEntry>
-                           {
-                               new ModificationGitDiffEntry(4, GitDiffEntryStatus.New,  20),
-                               new ModificationGitDiffEntry(5, GitDiffEntryStatus.New,  21),
-                               new ModificationGitDiffEntry(6, GitDiffEntryStatus.New,  22),
-                               new ModificationGitDiffEntry(7, GitDiffEntryStatus.New,  23),
-                               new ModificationGitDiffEntry(8, GitDiffEntryStatus.New,  24),
-                               new ModificationGitDiffEntry(9, GitDiffEntryStatus.New,  25),
-                               new ModificationGitDiffEntry(10, GitDiffEntryStatus.New,  26),
-                               new ModificationGitDiffEntry(11, GitDiffEntryStatus.New,  27)
-                           };
-
-            diffRetriever.Setup(retriever => retriever.RetrieveAsync(modifiedFilePath, "test_branch", "master"))
-                .ReturnsAsync(diff);
-
-            return new ModifiedPullRequestCommenter(
-                pullRequestCommentClient.Object,
-                new GitRepository("OlegKleyman", "OctoStyle"),
-                diffRetriever.Object);
-        }
-
-        private static Expression<Func<IPullRequestReviewCommentsClient, Task<PullRequestReviewComment>>>
-            GetCreateMethodMock(string body, int position)
-        {
-            return
-                client =>
-                client.Create(
-                    "OlegKleyman",
-                    "OctoStyle",
-                    pullRequestNumber,
-                    It.Is<PullRequestReviewCommentCreate>(
-                        create =>
-                        create.Path == modifiedFilePath && create.Body == body && create.CommitId == "123"
-                        && create.Position == position));
-        }
-
-        private static PullRequestReviewComment GetComment(int position, string message, int commentId)
-        {
-            return new PullRequestReviewComment(
-                null,
-                commentId,
-                null,
-                modifiedFilePath,
-                position,
-                null,
-                "1",
-                null,
-                null,
-                message,
-                default(DateTimeOffset),
-                default(DateTimeOffset),
-                null,
-                null);
         }
     }
 }

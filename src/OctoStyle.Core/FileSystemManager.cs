@@ -1,6 +1,5 @@
 ﻿namespace OctoStyle.Core
 {
-    using System;
     using System.IO;
 
     public class FileSystemManager : IFileSystemManager
@@ -11,7 +10,7 @@
         /// <param name="targetDirectory"> The directory to investigate files in. </param>
         /// <param name="fileFilter"> The filter of the files to be retrieved. </param>
         /// <returns>
-        ///     A <see cref="System.String"/> array of file paths.
+        ///     A <see cref="System.String" /> array of file paths.
         /// </returns>
         public string[] GetFiles(string targetDirectory, string fileFilter)
         {

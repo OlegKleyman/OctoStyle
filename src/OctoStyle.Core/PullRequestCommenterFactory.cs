@@ -11,8 +11,6 @@ namespace OctoStyle.Core
 
         private readonly GitRepository repository;
 
-        public IGitHubDiffRetriever DiffRetriever { get; set; }
-
         public PullRequestCommenterFactory(
             IPullRequestReviewCommentsClient client,
             GitRepository repository,
@@ -34,6 +32,8 @@ namespace OctoStyle.Core
             this.DiffRetriever = diffRetriever;
         }
 
+        public IGitHubDiffRetriever DiffRetriever { get; set; }
+
         public PullRequestCommenter Get(GitPullRequestFileStatus status)
         {
             PullRequestCommenter commenter;
@@ -41,25 +41,25 @@ namespace OctoStyle.Core
             switch (status)
             {
                 case GitPullRequestFileStatus.Added:
-                    commenter = new AddedPullRequestCommenter(client, repository);
+                    commenter = new AddedPullRequestCommenter(this.client, this.repository);
                     break;
                 case GitPullRequestFileStatus.Deleted:
                     commenter = PullRequestCommenter.NoCommentPullRequestCommenter.NoComment;
                     break;
                 case GitPullRequestFileStatus.Modified:
-                    if (DiffRetriever == null)
+                    if (this.DiffRetriever == null)
                     {
                         throw new InvalidOperationException("DiffRetriever is null");
                     }
 
-                    commenter = new ModifiedPullRequestCommenter(client, repository, this.DiffRetriever);
+                    commenter = new ModifiedPullRequestCommenter(this.client, this.repository, this.DiffRetriever);
                     break;
                 case GitPullRequestFileStatus.Renamed:
-                    commenter = new RenamedPullRequestCommenter(client, repository);
+                    commenter = new RenamedPullRequestCommenter(this.client, this.repository);
                     break;
                 default:
                     throw new ArgumentException(
-                        String.Format(CultureInfo.InvariantCulture, "Unknown status: {0}", status),
+                        string.Format(CultureInfo.InvariantCulture, "Unknown status: {0}", status),
                         "status");
             }
 

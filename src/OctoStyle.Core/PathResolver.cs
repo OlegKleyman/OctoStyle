@@ -21,7 +21,7 @@
 
         public string GetPath(string initialPath, string fileFilter)
         {
-            if (manager.IsDirectory(initialPath) && manager.GetFiles(initialPath, fileFilter).Any())
+            if (this.manager.IsDirectory(initialPath) && this.manager.GetFiles(initialPath, fileFilter).Any())
             {
                 return initialPath;
             }
@@ -31,10 +31,10 @@
             if (directoryName == null)
             {
                 throw new InvalidOperationException(
-                    String.Format(CultureInfo.InvariantCulture, "Directory name of {0} was not found", initialPath));
+                    string.Format(CultureInfo.InvariantCulture, "Directory name of {0} was not found", initialPath));
             }
 
-            return GetPath(directoryName, fileFilter);
+            return this.GetPath(directoryName, fileFilter);
         }
     }
 }

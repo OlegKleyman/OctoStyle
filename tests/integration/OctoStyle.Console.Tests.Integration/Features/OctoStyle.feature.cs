@@ -9,13 +9,16 @@
 //      the code is regenerated.
 //  </auto-generated>
 // ------------------------------------------------------------------------------
+
 #region Designer generated code
+
+
 #pragma warning disable
+
 namespace OctoStyle.Console.Tests.Integration.Features
 {
     using TechTalk.SpecFlow;
-    
-    
+
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
@@ -23,70 +26,80 @@ namespace OctoStyle.Console.Tests.Integration.Features
     [NUnit.Framework.CategoryAttribute("octoStyle")]
     public partial class OctoStyleFeature
     {
-        
+        [NUnit.Framework.SetUpAttribute()]
+        public virtual void TestInitialize()
+        {
+        }
+
+        [NUnit.Framework.TearDownAttribute()]
+        public virtual void ScenarioTearDown()
+        {
+            testRunner.OnScenarioEnd();
+        }
+
         private static TechTalk.SpecFlow.ITestRunner testRunner;
-        
-#line 1 "OctoStyle.feature"
-#line hidden
-        
+
         [NUnit.Framework.TestFixtureSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "OctoStyle", "As a user I want to run the OctoStyle\r\napplication and have it comment on any sty" +
-                    "le cop\r\nissues it finds on a pull request", ProgrammingLanguage.CSharp, new string[] {
-                        "octoStyle"});
+            var featureInfo = new TechTalk.SpecFlow.FeatureInfo(
+                new System.Globalization.CultureInfo("en-US"),
+                "OctoStyle",
+                "As a user I want to run the OctoStyle\r\napplication and have it comment on any sty"
+                + "le cop\r\nissues it finds on a pull request",
+                ProgrammingLanguage.CSharp,
+                new string[] { "octoStyle" });
             testRunner.OnFeatureStart(featureInfo);
         }
-        
+
         [NUnit.Framework.TestFixtureTearDownAttribute()]
         public virtual void FeatureTearDown()
         {
             testRunner.OnFeatureEnd();
             testRunner = null;
         }
-        
-        [NUnit.Framework.SetUpAttribute()]
-        public virtual void TestInitialize()
-        {
-        }
-        
-        [NUnit.Framework.TearDownAttribute()]
-        public virtual void ScenarioTearDown()
-        {
-            testRunner.OnScenarioEnd();
-        }
-        
+
         public virtual void ScenarioSetup(TechTalk.SpecFlow.ScenarioInfo scenarioInfo)
         {
             testRunner.OnScenarioStart(scenarioInfo);
         }
-        
+
         public virtual void ScenarioCleanup()
         {
             testRunner.CollectScenarioErrors();
         }
-        
+
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Pull request with issues")]
         [NUnit.Framework.CategoryAttribute("pullRequest")]
         public virtual void PullRequestWithIssues()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Pull request with issues", new string[] {
-                        "pullRequest"});
+            var scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo(
+                "Pull request with issues",
+                new string[] { "pullRequest" });
 #line 8
-this.ScenarioSetup(scenarioInfo);
+            this.ScenarioSetup(scenarioInfo);
 #line 9
- testRunner.Given("I have a pull request with stylistic problems", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+            testRunner.Given(
+                "I have a pull request with stylistic problems",
+                ((string)(null)),
+                ((TechTalk.SpecFlow.Table)(null)),
+                "Given ");
 #line 10
- testRunner.When("I run the OctoStyle", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+            testRunner.When("I run the OctoStyle", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 11
- testRunner.Then("there should be comments on the pull request on the lines of the found violations" +
-                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+            testRunner.Then(
+                "there should be comments on the pull request on the lines of the found violations" + "",
+                ((string)(null)),
+                ((TechTalk.SpecFlow.Table)(null)),
+                "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
     }
 }
+
 #pragma warning restore
+
 #endregion

@@ -4,10 +4,6 @@ namespace OctoStyle.Core
 
     public class GitRepository
     {
-        public string Owner { get; private set; }
-
-        public string Name { get; private set; }
-
         public GitRepository(string owner, string name)
         {
             if (owner == null)
@@ -31,9 +27,13 @@ namespace OctoStyle.Core
             {
                 throw new ArgumentException(cannotBeEmptyMessage, "name");
             }
-            
+
             this.Owner = owner;
             this.Name = name;
         }
+
+        public string Owner { get; private set; }
+
+        public string Name { get; private set; }
     }
 }

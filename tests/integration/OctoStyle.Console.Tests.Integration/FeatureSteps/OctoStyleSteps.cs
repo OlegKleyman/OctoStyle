@@ -24,14 +24,16 @@
             var login = Environment.GetEnvironmentVariable(loginKey);
             var password = Environment.GetEnvironmentVariable(passwordKey);
 
-            if (String.IsNullOrEmpty(login))
+            if (string.IsNullOrEmpty(login))
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "{0} enviroment variable is missing.", loginKey));
+                throw new InvalidOperationException(
+                    string.Format(CultureInfo.InvariantCulture, "{0} enviroment variable is missing.", loginKey));
             }
 
-            if (String.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(password))
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.InvariantCulture, "{0} enviroment variable is missing.", passwordKey));
+                throw new InvalidOperationException(
+                    string.Format(CultureInfo.InvariantCulture, "{0} enviroment variable is missing.", passwordKey));
             }
 
             FeatureContextExtended.Current.GitLogin = login;
@@ -67,7 +69,7 @@
         public void WhenIRunTheOctoStyle()
         {
             const string relativeSolutionDirectory = @"..\..\..\OctoStyleTest";
-            var arguments = String.Format(
+            var arguments = string.Format(
                 CultureInfo.InvariantCulture,
                 "-l {0} -p {1} -d {2} -o {3} -r {4} -pr {5}",
                 FeatureContextExtended.Current.GitLogin,
@@ -76,7 +78,7 @@
                 FeatureContextExtended.Current.RepositoryOwner,
                 FeatureContextExtended.Current.Repository,
                 ScenarioContextExtended.Current.PullRequestNumber);
-            
+
             Program.Main(arguments.Split(' '));
 
             ScenarioContextExtended.Current.CreatedComments =
@@ -88,10 +90,11 @@
         {
             var client = FeatureContextExtended.Current.GitClient;
 
-            var comments = client.PullRequest.Comment.GetAll(
-                FeatureContextExtended.Current.RepositoryOwner,
-                FeatureContextExtended.Current.Repository,
-                ScenarioContextExtended.Current.PullRequestNumber).GetAwaiter().GetResult();
+            var comments =
+                client.PullRequest.Comment.GetAll(
+                    FeatureContextExtended.Current.RepositoryOwner,
+                    FeatureContextExtended.Current.Repository,
+                    ScenarioContextExtended.Current.PullRequestNumber).GetAwaiter().GetResult();
 
             var testClassComments =
                 comments.Where(
@@ -105,7 +108,7 @@
                 comments.Where(comment => (comment.Path.EndsWith("TestClass3.cs") && comment.Position <= 9)).ToList();
 
             Assert.That(testClassComments.Count, Is.GreaterThanOrEqualTo(2));
-            
+
             Assert.That(
                 testClassComments.Any(
                     comment =>
@@ -122,9 +125,7 @@
 
             Assert.That(
                 testClass2Comments.Any(
-                    comment =>
-                    comment.Body
-                    == "Renamed files not supported." && comment.Position == 1));
+                    comment => comment.Body == "Renamed files not supported." && comment.Position == 1));
 
             Assert.That(testClass3Comments.Count, Is.GreaterThanOrEqualTo(8));
 
@@ -132,49 +133,48 @@
                 testClass3Comments.Any(
                     comment =>
                     comment.Body
-                    == "SA1633 - The file has no header, the header Xml is invalid, or the header is not located at the top of the file." && comment.Position == 1));
-            
-            Assert.That(
-                testClass3Comments.Any(
-                    comment =>
-                    comment.Body
-                    == "SA1200 - All using directives must be placed inside of the namespace." && comment.Position == 1));
+                    == "SA1633 - The file has no header, the header Xml is invalid, or the header is not located at the top of the file."
+                    && comment.Position == 1));
 
             Assert.That(
                 testClass3Comments.Any(
                     comment =>
-                    comment.Body
-                    == "SA1200 - All using directives must be placed inside of the namespace." && comment.Position == 2));
+                    comment.Body == "SA1200 - All using directives must be placed inside of the namespace."
+                    && comment.Position == 1));
 
             Assert.That(
                 testClass3Comments.Any(
                     comment =>
-                    comment.Body
-                    == "SA1200 - All using directives must be placed inside of the namespace." && comment.Position == 3));
+                    comment.Body == "SA1200 - All using directives must be placed inside of the namespace."
+                    && comment.Position == 2));
 
             Assert.That(
                 testClass3Comments.Any(
                     comment =>
-                    comment.Body
-                    == "SA1200 - All using directives must be placed inside of the namespace." && comment.Position == 4));
+                    comment.Body == "SA1200 - All using directives must be placed inside of the namespace."
+                    && comment.Position == 3));
 
             Assert.That(
                 testClass3Comments.Any(
                     comment =>
-                    comment.Body
-                    == "SA1200 - All using directives must be placed inside of the namespace." && comment.Position == 5));
+                    comment.Body == "SA1200 - All using directives must be placed inside of the namespace."
+                    && comment.Position == 4));
 
             Assert.That(
                 testClass3Comments.Any(
                     comment =>
-                    comment.Body
-                    == "SA1600 - The class must have a documentation header." && comment.Position == 9));
+                    comment.Body == "SA1200 - All using directives must be placed inside of the namespace."
+                    && comment.Position == 5));
 
             Assert.That(
                 testClass3Comments.Any(
                     comment =>
-                    comment.Body
-                    == "SA1400 - The class must have an access modifier." && comment.Position == 9));
+                    comment.Body == "SA1600 - The class must have a documentation header." && comment.Position == 9));
+
+            Assert.That(
+                testClass3Comments.Any(
+                    comment =>
+                    comment.Body == "SA1400 - The class must have an access modifier." && comment.Position == 9));
         }
     }
 }

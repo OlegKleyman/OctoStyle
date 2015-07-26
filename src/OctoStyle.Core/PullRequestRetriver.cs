@@ -31,29 +31,33 @@
 
         public async Task<GitHubPullRequest> Retrieve(int number)
         {
-            var pullrequestInformationMessage = String.Format(
+            var pullrequestInformationMessage = string.Format(
                 CultureInfo.InvariantCulture,
                 "{0}Owner: {1}, Repository: {2}, Number: {3}",
                 Environment.NewLine,
-                repository.Owner,
-                repository.Name,
+                this.repository.Owner,
+                this.repository.Name,
                 number);
 
-            var commits = await client.Commits(repository.Owner, repository.Name, number);
-            
+            var commits = await this.client.Commits(this.repository.Owner, this.repository.Name, number);
+
             if (commits.Count == 0)
             {
                 throw new InvalidOperationException(
-                    String.Format(
+                    string.Format(
                         CultureInfo.InvariantCulture,
                         "No commits found for pull request{0}",
                         pullrequestInformationMessage));
             }
 
-            var files = await client.Files(repository.Owner, repository.Name, number);
-            var pull = await client.Get(repository.Owner, repository.Name, number);
+            var files = await this.client.Files(this.repository.Owner, this.repository.Name, number);
+            var pull = await this.client.Get(this.repository.Owner, this.repository.Name, number);
 
-            return new GitHubPullRequest(number, commits.Last().Sha, files, new GitHubPullRequestBranches(pull.Head.Ref, pull.Base.Ref));
+            return new GitHubPullRequest(
+                number,
+                commits.Last().Sha,
+                files,
+                new GitHubPullRequestBranches(pull.Head.Ref, pull.Base.Ref));
         }
     }
 }

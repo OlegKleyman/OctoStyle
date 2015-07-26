@@ -29,7 +29,10 @@
             var commentsClient = new Mock<IPullRequestReviewCommentsClient>();
             var diffRetriever = new Mock<IGitHubDiffRetriever>();
 
-            return new PullRequestCommenterFactory(commentsClient.Object, new GitRepository("OlegKleyman", "OctoStyleTest"), diffRetriever.Object);
+            return new PullRequestCommenterFactory(
+                commentsClient.Object,
+                new GitRepository("OlegKleyman", "OctoStyleTest"),
+                diffRetriever.Object);
         }
     }
 }

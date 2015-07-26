@@ -8,15 +8,11 @@ namespace OctoStyle.Core
 
     public class GitHubPullRequest
     {
-        public int Number { get; private set; }
-
-        public string LastCommitId { get; private set; }
-
-        public GitHubPullRequestBranches Branches { get; private set; }
-
-        public IReadOnlyList<GitHubPullRequestFile> Files { get; private set; }
-
-        public GitHubPullRequest(int number, string lastCommitId, IEnumerable<PullRequestFile> files, GitHubPullRequestBranches branches)
+        public GitHubPullRequest(
+            int number,
+            string lastCommitId,
+            IEnumerable<PullRequestFile> files,
+            GitHubPullRequestBranches branches)
         {
             const string lastCommitIdParamName = "lastCommitId";
 
@@ -57,5 +53,13 @@ namespace OctoStyle.Core
                         (GitPullRequestFileStatus)Enum.Parse(typeof(GitPullRequestFileStatus), file.Status, true),
                         file.Changes)).ToList();
         }
+
+        public int Number { get; private set; }
+
+        public string LastCommitId { get; private set; }
+
+        public GitHubPullRequestBranches Branches { get; private set; }
+
+        public IReadOnlyList<GitHubPullRequestFile> Files { get; private set; }
     }
 }

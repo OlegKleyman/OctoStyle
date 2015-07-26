@@ -4,10 +4,6 @@ namespace OctoStyle.Core
 
     public class GitHubPullRequestBranches
     {
-        public string Branch { get; set; }
-
-        public string MergeBranch { get; set; }
-
         public GitHubPullRequestBranches(string branch, string mergeBranch)
         {
             const string branchParamName = "branch";
@@ -34,9 +30,13 @@ namespace OctoStyle.Core
             {
                 throw new ArgumentException(cannotBeEmptyMessage, mergeBranchParamName);
             }
-            
+
             this.Branch = branch;
             this.MergeBranch = mergeBranch;
         }
+
+        public string Branch { get; set; }
+
+        public string MergeBranch { get; set; }
     }
 }
