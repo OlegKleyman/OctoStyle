@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0F9BB33A-FF1F-4618-8EE7-40681F90BF0C}"
+	ProjectSection(SolutionItems) = preProject
+		tests\Settings.StyleCop = tests\Settings.StyleCop
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{25EC794C-A39E-4420-B2FA-F670CB4530AC}"
 EndProject
@@ -24,6 +27,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctoStyle.Core.Tests.Integration", "tests\integration\OctoStyle.Core.Tests.Integration\OctoStyle.Core.Tests.Integration.csproj", "{C0572B35-76AD-41D3-B9F6-FCCDD8FF4F29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctoStyle.Console.Tests.Unit", "tests\unit\OctoStyle.Console.Tests.Unit\OctoStyle.Console.Tests.Unit.csproj", "{48AD8B56-6A37-44BE-B60E-2DEF9C767B19}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1573292F-9FB4-4B67-B583-81D63784B2DC}"
+	ProjectSection(SolutionItems) = preProject
+		Settings.StyleCop = Settings.StyleCop
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
