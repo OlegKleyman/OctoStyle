@@ -30,8 +30,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctoStyle.Console.Tests.Uni
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1573292F-9FB4-4B67-B583-81D63784B2DC}"
 	ProjectSection(SolutionItems) = preProject
-		Settings.StyleCop = Settings.StyleCop
+		src\Settings.StyleCop = src\Settings.StyleCop
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test projects", "test projects", "{1792394C-CF0F-4D64-86A7-BBB58218CA4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLibrary", "tests\integration\OctoStyleTest\src\TestLibrary\TestLibrary.csproj", "{656DA2BC-D049-4D25-B476-82B55F0B5FAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +67,10 @@ Global
 		{48AD8B56-6A37-44BE-B60E-2DEF9C767B19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48AD8B56-6A37-44BE-B60E-2DEF9C767B19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48AD8B56-6A37-44BE-B60E-2DEF9C767B19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{656DA2BC-D049-4D25-B476-82B55F0B5FAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{656DA2BC-D049-4D25-B476-82B55F0B5FAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{656DA2BC-D049-4D25-B476-82B55F0B5FAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{656DA2BC-D049-4D25-B476-82B55F0B5FAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,5 +84,7 @@ Global
 		{FDAE2EC3-0A09-45F8-9989-ED5931A7D7E7} = {6568C5DF-0251-4D9B-992C-4802B74FB8C3}
 		{C0572B35-76AD-41D3-B9F6-FCCDD8FF4F29} = {6568C5DF-0251-4D9B-992C-4802B74FB8C3}
 		{48AD8B56-6A37-44BE-B60E-2DEF9C767B19} = {25EC794C-A39E-4420-B2FA-F670CB4530AC}
+		{1792394C-CF0F-4D64-86A7-BBB58218CA4A} = {6568C5DF-0251-4D9B-992C-4802B74FB8C3}
+		{656DA2BC-D049-4D25-B476-82B55F0B5FAF} = {1792394C-CF0F-4D64-86A7-BBB58218CA4A}
 	EndGlobalSection
 EndGlobal
