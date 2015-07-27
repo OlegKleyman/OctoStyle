@@ -1,5 +1,4 @@
-﻿//
-// Copyright (C) 2009  Thomas Bluemel <thomasb@reactsoft.com>
+﻿// Copyright (C) 2009  Thomas Bluemel <thomasb@reactsoft.com>
 // 
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -27,11 +26,6 @@ namespace OctoStyle.Core.Borrowed
     /// <typeparam name="T">Type that will be diffed.</typeparam>
     public class DiffEntry<T>
     {
-        /// <summary>
-        ///     Gets the line number of the record
-        /// </summary>
-        public int LineNumber { get; private set; }
-
         #region Fields
 
         private readonly DiffEntryType entryType;
@@ -44,6 +38,12 @@ namespace OctoStyle.Core.Borrowed
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DiffEntry{T}"/> class.
+        /// </summary>
+        /// <param name="entryType">The <see cref="DiffEntryType"/> of the entry.</param>
+        /// <param name="obj">The <see cref="T"/> entry.</param>
+        /// <param name="lineNumber">The line number of the entry.</param>
         public DiffEntry(DiffEntryType entryType, T obj, int lineNumber)
         {
             this.LineNumber = lineNumber;
@@ -62,8 +62,15 @@ namespace OctoStyle.Core.Borrowed
         #region Properties
 
         /// <summary>
+        ///     Gets the line number of the record.
+        /// </summary>
+        /// <value>Gets the value of <see cref="LineNumber"/>.</value>
+        public int LineNumber { get; private set; }
+
+        /// <summary>
         ///     Gets the type of this entry.
         /// </summary>
+        /// <value>Gets the value of <see cref="entryType"/>.</value>
         public DiffEntryType EntryType
         {
             get
@@ -75,6 +82,7 @@ namespace OctoStyle.Core.Borrowed
         /// <summary>
         ///     Gets the associated object for Add/Remove entries.
         /// </summary>
+        /// <value>Gets the value of <see cref="obj"/></value>
         public T Object
         {
             get
@@ -89,8 +97,9 @@ namespace OctoStyle.Core.Borrowed
         }
 
         /// <summary>
-        ///     Gets the number of Equal entries.
+        ///     Gets or sets the number of Equal entries.
         /// </summary>
+        /// <value>Gets or sets <see cref="count"/>.</value>
         public int Count
         {
             get
@@ -102,6 +111,7 @@ namespace OctoStyle.Core.Borrowed
 
                 return this.count;
             }
+
             set
             {
                 this.count = value;

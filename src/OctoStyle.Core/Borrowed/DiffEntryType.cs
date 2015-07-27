@@ -1,5 +1,4 @@
-﻿//
-// Copyright (C) 2009  Thomas Bluemel <thomasb@reactsoft.com>
+﻿// Copyright (C) 2009  Thomas Bluemel <thomasb@reactsoft.com>
 // 
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -25,12 +24,12 @@ namespace OctoStyle.Core.Borrowed
     public enum DiffEntryType
     {
         /// <summary>
-        ///     Represents a deleted record
+        ///     Represents a deleted record.
         /// </summary>
         Remove,
 
         /// <summary>
-        ///     Represents an added record
+        ///     Represents an added record.
         /// </summary>
         Add,
 

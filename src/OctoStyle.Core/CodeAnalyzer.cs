@@ -6,12 +6,21 @@ namespace OctoStyle.Core
 
     using StyleCop;
 
+    /// <summary>
+    /// Represents a style cop code analyzer.
+    /// </summary>
     public class CodeAnalyzer : ICodeAnalyzer
     {
         private readonly CodeProject project;
 
         private readonly Queue<Violation> violations;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CodeAnalyzer"/> class.
+        /// </summary>
+        /// <param name="projectPath">The path of the project to analyze.</param>
+        /// <exception cref="ArgumentException">The projectPath argument is an empty string.</exception>
+        /// <exception cref="ArgumentNullException">The projectPath argument is an empty string.</exception>
         public CodeAnalyzer(string projectPath)
         {
             if (projectPath == null)
@@ -28,6 +37,13 @@ namespace OctoStyle.Core
             this.project = new CodeProject(0, projectPath, new Configuration(null));
         }
 
+        /// <summary>
+        /// Analyzes a code project.
+        /// </summary>
+        /// <param name="filePath">The code project file path.</param>
+        /// <returns>
+        /// A <see cref="IEnumerable{T}"/> of <see cref="GitHubStyleViolation"/> containing violations found with the code.
+        /// </returns>
         public IEnumerable<GitHubStyleViolation> Analyze(string filePath)
         {
             this.violations.Clear();

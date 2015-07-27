@@ -20,22 +20,24 @@ namespace OctoStyle.Core.Borrowed
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     /// <summary>
-    ///     Used for finding a unified diff between two arrays of IComparable objects
+    ///     Used for finding a unified diff between two arrays of IComparable objects.
     /// </summary>
     public static class Diff
     {
         #region Public static methods
 
         /// <summary>
-        ///     Creates a list of diff entries that represent the differences between arr1 and arr2.
+        ///     Creates a list of diff entries that represent the differences between the original and modified arrays.
         /// </summary>
-        /// <typeparam name="T">Class that represents the unit to compare</typeparam>
-        /// <param name="original">Array of units.</param>
-        /// <param name="modified">Array of units.</param>
+        /// <typeparam name="T">Class that represents the unit to compare.</typeparam>
+        /// <param name="original">The original <see cref="T"/> <see cref="Array"/> of units.</param>
+        /// <param name="modified">The modified <see cref="T"/> <see cref="Array"/> of units.</param>
         /// <returns>List of DiffEntry classes.</returns>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstant)]
         public static IReadOnlyList<DiffEntry<T>> CreateDiff<T>(T[] original, T[] modified) where T : IComparable
         {
             var start = 0;
@@ -48,6 +50,7 @@ namespace OctoStyle.Core.Borrowed
                 {
                     break;
                 }
+
                 start++;
             }
 
@@ -62,6 +65,7 @@ namespace OctoStyle.Core.Borrowed
                 {
                     break;
                 }
+
                 end++;
             }
 
@@ -75,10 +79,10 @@ namespace OctoStyle.Core.Borrowed
             {
                 for (var j = 0; j < lines2Cnt; j++)
                 {
-                    var iVal = i + start;
-                    var jVal = j + start;
+                    var originalValue = i + start;
+                    var modifiedValue = j + start;
 
-                    if (original[iVal].CompareTo(modified[jVal]) != 0)
+                    if (original[originalValue].CompareTo(modified[modifiedValue]) != 0)
                     {
                         if (i == 0 && j == 0)
                         {
