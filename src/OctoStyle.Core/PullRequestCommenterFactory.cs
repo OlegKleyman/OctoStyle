@@ -9,11 +9,11 @@ namespace OctoStyle.Core
     {
         private readonly IPullRequestReviewCommentsClient client;
 
-        private readonly GitRepository repository;
+        private readonly GitHubRepository repository;
 
         public PullRequestCommenterFactory(
             IPullRequestReviewCommentsClient client,
-            GitRepository repository,
+            GitHubRepository repository,
             IGitHubDiffRetriever diffRetriever)
         {
             if (client == null)

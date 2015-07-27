@@ -9,7 +9,7 @@
 
     public class AddedPullRequestCommenter : PullRequestCommenter
     {
-        public AddedPullRequestCommenter(IPullRequestReviewCommentsClient client, GitRepository repository)
+        public AddedPullRequestCommenter(IPullRequestReviewCommentsClient client, GitHubRepository repository)
             : base(client, repository)
         {
         }

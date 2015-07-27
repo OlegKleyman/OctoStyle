@@ -70,7 +70,7 @@
 
             return new RenamedPullRequestCommenter(
                 pullRequestCommentClient.Object,
-                new GitRepository("OlegKleyman", "OctoStyle"));
+                new GitHubRepository("OlegKleyman", "OctoStyle"));
         }
     }
 }

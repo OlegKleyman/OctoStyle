@@ -118,7 +118,7 @@
 
             return new ModifiedPullRequestCommenter(
                 pullRequestCommentClient.Object,
-                new GitRepository("OlegKleyman", "OctoStyle"),
+                new GitHubRepository("OlegKleyman", "OctoStyle"),
                 diffRetriever.Object);
         }
 

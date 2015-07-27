@@ -14,7 +14,7 @@ namespace OctoStyle.Core
 
         public ModifiedPullRequestCommenter(
             IPullRequestReviewCommentsClient client,
-            GitRepository repository,
+            GitHubRepository repository,
             IGitHubDiffRetriever diffRetriever)
             : base(client, repository)
         {

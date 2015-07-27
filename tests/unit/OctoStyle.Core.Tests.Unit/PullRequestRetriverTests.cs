@@ -71,7 +71,7 @@
         {
             var client = new Mock<IPullRequestsClient>();
 
-            var repository = new GitRepository("OlegKleyman", "OctoStyle");
+            var repository = new GitHubRepository("OlegKleyman", "OctoStyle");
 
             var commits = new List<PullRequestCommit>
                               {

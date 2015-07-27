@@ -100,7 +100,7 @@
                     null))
                 .ReturnsAsync(new ApiResponse<RepositoryContent>(mockResponse.Object, GetRepositoryContent(oldContent)));
 
-            return new GitHubDiffRetriever(mockConnection.Object, new GitRepository("OlegKleyman", "OctoStyleTest"));
+            return new GitHubDiffRetriever(mockConnection.Object, new GitHubRepository("OlegKleyman", "OctoStyleTest"));
         }
 
         private static RepositoryContent GetRepositoryContent(string content)

@@ -13,7 +13,7 @@
     {
         private readonly Uri baseUri;
 
-        public GitHubDiffRetriever(IConnection connection, GitRepository repository)
+        public GitHubDiffRetriever(IConnection connection, GitHubRepository repository)
         {
             if (connection == null)
             {

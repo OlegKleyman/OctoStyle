@@ -8,7 +8,7 @@ namespace OctoStyle.Core
 
     public class RenamedPullRequestCommenter : PullRequestCommenter
     {
-        public RenamedPullRequestCommenter(IPullRequestReviewCommentsClient client, GitRepository repository)
+        public RenamedPullRequestCommenter(IPullRequestReviewCommentsClient client, GitHubRepository repository)
             : base(client, repository)
         {
         }

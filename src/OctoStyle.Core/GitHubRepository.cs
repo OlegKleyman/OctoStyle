@@ -2,9 +2,9 @@ namespace OctoStyle.Core
 {
     using System;
 
-    public class GitRepository
+    public class GitHubRepository
     {
-        public GitRepository(string owner, string name)
+        public GitHubRepository(string owner, string name)
         {
             if (owner == null)
             {

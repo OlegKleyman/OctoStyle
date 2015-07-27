@@ -38,7 +38,7 @@
 
             var pathResolver = new PathResolver(new FileSystemManager());
 
-            var repository = new GitRepository(arguments.RepositoryOwner, arguments.Repository);
+            var repository = new GitHubRepository(arguments.RepositoryOwner, arguments.Repository);
 
             var pullRequestRetriever = new PullRequestRetriver(client.PullRequest, repository);
 

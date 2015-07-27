@@ -1,5 +1,8 @@
 ﻿namespace OctoStyle.Core
 {
+    /// <summary>
+    /// Represents a file system interface.
+    /// </summary>
     public interface IFileSystemManager
     {
         /// <summary>
@@ -12,6 +15,11 @@
         /// </returns>
         string[] GetFiles(string targetDirectory, string fileFilter);
 
+        /// <summary>
+        /// Finds whether a given path is a directory.
+        /// </summary>
+        /// <param name="path">The path to analyze.</param>
+        /// <returns>True if the path is a directory.</returns>
         bool IsDirectory(string path);
     }
 }

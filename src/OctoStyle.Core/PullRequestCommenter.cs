@@ -6,17 +6,25 @@ namespace OctoStyle.Core
 
     using Octokit;
 
+    /// <summary>
+    /// Represents a pull request commenter.
+    /// </summary>
     public abstract class PullRequestCommenter
     {
         private readonly IPullRequestReviewCommentsClient client;
 
-        private readonly GitRepository repository;
+        private readonly GitHubRepository repository;
 
         private PullRequestCommenter()
         {
         }
 
-        protected PullRequestCommenter(IPullRequestReviewCommentsClient client, GitRepository repository)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PullRequestCommenter"/> class.
+        /// </summary>
+        /// <param name="client">The <see cref="IPullRequestReviewCommentsClient"/> to use for making comments.</param>
+        /// <param name="repository">The <see cref="GitHubRepository"/> containing the pull request to comment on.</param>
+        protected PullRequestCommenter(IPullRequestReviewCommentsClient client, GitHubRepository repository)
         {
             if (client == null)
             {
@@ -32,11 +40,29 @@ namespace OctoStyle.Core
             this.repository = repository;
         }
 
+        /// <summary>
+        /// Creates a pull request comment.
+        /// </summary>
+        /// <param name="file">The <see cref="GitHubPullRequestFile"/> to comment on.</param>
+        /// <param name="analyzer">The <see cref="ICodeAnalyzer"/> to use for finding violations.</param>
+        /// <param name="physicalFilePath">The physical path of the file stored locally.</param>
+        /// <returns>
+        /// A <see cref="Task{TResult}"/> of <see cref="IEnumerable{T}"/> of <see cref="PullRequestReviewComment"/> representing the commenting operation.
+        /// </returns>
         public abstract Task<IEnumerable<PullRequestReviewComment>> Create(
             GitHubPullRequestFile file,
             ICodeAnalyzer analyzer,
             string physicalFilePath);
 
+        /// <summary>
+        /// Creates a pull request comment.
+        /// </summary>
+        /// <param name="comment">The <see cref="PullRequestReviewCommentCreate"/> to create.</param>
+        /// <param name="pullRequestNumber">The GitHub pull request number.</param>
+        /// <returns>
+        /// A <see cref="Task{TResult}"/> of <see cref="PullRequestReviewComment"/> representing the commenting
+        /// operation.
+        /// </returns>
         protected async Task<PullRequestReviewComment> Create(
             PullRequestReviewCommentCreate comment,
             int pullRequestNumber)
@@ -44,6 +70,9 @@ namespace OctoStyle.Core
             return await this.client.Create(this.repository.Owner, this.repository.Name, pullRequestNumber, comment);
         }
 
+        /// <summary>
+        /// Represents a dumb commenter.
+        /// </summary>
         public class NoCommentPullRequestCommenter : PullRequestCommenter
         {
             private static readonly NoCommentPullRequestCommenter commenter = new NoCommentPullRequestCommenter();
@@ -52,6 +81,9 @@ namespace OctoStyle.Core
             {
             }
 
+            /// <summary>
+            /// Gets a <see cref="PullRequestCommenter"/>.
+            /// </summary>
             public static PullRequestCommenter NoComment
             {
                 get
@@ -60,6 +92,20 @@ namespace OctoStyle.Core
                 }
             }
 
+            /// <summary>
+            /// Does not do anything.
+            /// </summary>
+            /// <param name="file">The <see cref="GitHubPullRequestFile"/> to comment on.</param>
+            /// <param name="analyzer">The <see cref="ICodeAnalyzer"/> to use for finding violations.</param>
+            /// <param name="physicalFilePath">The physical path of the file stored locally.</param>
+            /// <returns>
+            /// A <see cref="Task{TResult}"/> of <see cref="IEnumerable{T}"/> of <see cref="PullRequestReviewComment"/>
+            /// representing the commenting operation.
+            /// </returns>
+            /// <remarks>
+            /// The result of <see cref="Task{TResult}"/> of <see cref="IEnumerable{T}"/> of <see cref="PullRequestReviewComment"/>
+            /// will always be an empty enumeration.
+            /// </remarks>
             public override Task<IEnumerable<PullRequestReviewComment>> Create(
                 GitHubPullRequestFile file,
                 ICodeAnalyzer analyzer,

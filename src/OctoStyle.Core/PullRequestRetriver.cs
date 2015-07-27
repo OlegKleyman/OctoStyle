@@ -11,9 +11,9 @@
     {
         private readonly IPullRequestsClient client;
 
-        private readonly GitRepository repository;
+        private readonly GitHubRepository repository;
 
-        public PullRequestRetriver(IPullRequestsClient client, GitRepository repository)
+        public PullRequestRetriver(IPullRequestsClient client, GitHubRepository repository)
         {
             if (client == null)
             {

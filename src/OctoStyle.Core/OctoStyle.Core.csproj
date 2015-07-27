@@ -47,7 +47,7 @@
     <Compile Include="GitHubPullRequestBranches.cs" />
     <Compile Include="GitHubPullRequestFile.cs" />
     <Compile Include="GitPullRequestFileStatus.cs" />
-    <Compile Include="GitRepository.cs" />
+    <Compile Include="GitHubRepository.cs" />
     <Compile Include="ICodeAnalyzer.cs" />
     <Compile Include="IGitHubDiffRetriever.cs" />
     <Compile Include="IFileSystemManager.cs" />

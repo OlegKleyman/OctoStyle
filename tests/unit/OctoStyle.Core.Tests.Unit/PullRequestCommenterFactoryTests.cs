@@ -31,7 +31,7 @@
 
             return new PullRequestCommenterFactory(
                 commentsClient.Object,
-                new GitRepository("OlegKleyman", "OctoStyleTest"),
+                new GitHubRepository("OlegKleyman", "OctoStyleTest"),
                 diffRetriever.Object);
         }
     }

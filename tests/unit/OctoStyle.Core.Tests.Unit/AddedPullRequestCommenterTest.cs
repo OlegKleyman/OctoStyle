@@ -121,7 +121,7 @@
 
             return new AddedPullRequestCommenter(
                 pullRequestCommentClient.Object,
-                new GitRepository("OlegKleyman", "OctoStyle"));
+                new GitHubRepository("OlegKleyman", "OctoStyle"));
         }
 
         private static Expression<Func<IPullRequestReviewCommentsClient, Task<PullRequestReviewComment>>>
