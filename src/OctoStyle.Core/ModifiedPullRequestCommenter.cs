@@ -26,6 +26,16 @@ namespace OctoStyle.Core
             this.diffRetriever = diffRetriever;
         }
 
+        /// <summary>
+        /// Creates a pull request comment.
+        /// </summary>
+        /// <param name="file">The <see cref="GitHubPullRequestFile"/> to comment on.</param>
+        /// <param name="analyzer">The <see cref="ICodeAnalyzer"/> to use for finding violations.</param>
+        /// <param name="physicalFilePath">The physical path of the file stored locally.</param>
+        /// <returns>
+        /// A <see cref="Task{TResult}"/> of <see cref="IEnumerable{T}"/> of <see cref="PullRequestReviewComment"/>
+        /// representing the commenting operation.
+        /// </returns>
         public override async Task<IEnumerable<PullRequestReviewComment>> Create(
             GitHubPullRequestFile file,
             ICodeAnalyzer analyzer,
@@ -52,8 +62,8 @@ namespace OctoStyle.Core
             var accessibleViolations = diff.Join(
                 violations,
                 entry => entry.LineNumber,
-                violation => violation.Position,
-                (entry, violation) => new GitHubStyleViolation(violation.RuleId, violation.Message, entry.Position));
+                violation => violation.LineNumber,
+                (entry, violation) => new { violation.RuleId, violation.Message, entry.Position });
 
             var comments = new List<PullRequestReviewComment>();
 

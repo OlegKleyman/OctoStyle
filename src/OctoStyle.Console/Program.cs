@@ -42,7 +42,7 @@
 
             var pullRequestRetriever = new PullRequestRetriver(client.PullRequest, repository);
 
-            var pullRequest = pullRequestRetriever.Retrieve(arguments.PullRequestNumber).GetAwaiter().GetResult();
+            var pullRequest = pullRequestRetriever.RetrieveAsync(arguments.PullRequestNumber).GetAwaiter().GetResult();
 
             foreach (var file in pullRequest.Files)
             {

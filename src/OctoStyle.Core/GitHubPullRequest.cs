@@ -2,12 +2,25 @@ namespace OctoStyle.Core
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     using Octokit;
 
+    /// <summary>
+    /// Represents a GitHub pull request.
+    /// </summary>
     public class GitHubPullRequest
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GitHubPullRequest"/> class.
+        /// </summary>
+        /// <param name="number">The pull request number.</param>
+        /// <param name="lastCommitId">The last commit hash of the pull request.</param>
+        /// <param name="files">The <see cref="IEnumerable{T}"/> of <see cref="PullRequestFile"/>
+        /// containing files in the pull request.</param>
+        /// <param name="branches">The <see cref="GitHubPullRequestBranches"/> the branches associated with the pull request.</param>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstant)]
         public GitHubPullRequest(
             int number,
             string lastCommitId,
@@ -50,16 +63,32 @@ namespace OctoStyle.Core
                     new GitHubPullRequestFile(
                         file.FileName,
                         this,
-                        (GitPullRequestFileStatus)Enum.Parse(typeof(GitPullRequestFileStatus), file.Status, true),
+                        (GitHubPullRequestFileStatus)Enum.Parse(typeof(GitHubPullRequestFileStatus), file.Status, true),
                         file.Changes)).ToList();
         }
 
+        /// <summary>
+        /// Gets <see cref="Number"/>.
+        /// </summary>
+        /// <value>The pull request number.</value>
         public int Number { get; private set; }
 
+        /// <summary>
+        /// Gets the <see cref="LastCommitId"/>
+        /// </summary>
+        /// <value>The last commit ID in the pull request.</value>
         public string LastCommitId { get; private set; }
 
+        /// <summary>
+        /// Gets <see cref="Branches"/>.
+        /// </summary>
+        /// <value>The <see cref="GitHubPullRequestBranches"/> the branches associated with the pull request.</value>
         public GitHubPullRequestBranches Branches { get; private set; }
 
+        /// <summary>
+        /// Gets <see cref="Files"/>
+        /// </summary>
+        /// <value>The <see cref="IEnumerable{T}"/> of <see cref="PullRequestFile"/> containing files in the pull request.</value>
         public IReadOnlyList<GitHubPullRequestFile> Files { get; private set; }
     }
 }

@@ -61,7 +61,7 @@
                     message,
                     file.PullRequest.LastCommitId,
                     file.FileName,
-                    violation.Position);
+                    violation.LineNumber);
 
                 comments.Add(await this.Create(comment, file.PullRequest.Number));
             }

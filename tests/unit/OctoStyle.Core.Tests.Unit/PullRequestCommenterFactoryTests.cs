@@ -11,11 +11,11 @@
     [TestFixture]
     public class PullRequestCommenterFactoryTests
     {
-        [TestCase(GitPullRequestFileStatus.Modified, typeof(ModifiedPullRequestCommenter))]
-        [TestCase(GitPullRequestFileStatus.Deleted, typeof(PullRequestCommenter.NoCommentPullRequestCommenter))]
-        [TestCase(GitPullRequestFileStatus.Added, typeof(AddedPullRequestCommenter))]
-        [TestCase(GitPullRequestFileStatus.Renamed, typeof(RenamedPullRequestCommenter))]
-        public void GetShouldReturnPullRequestCommenterObject(GitPullRequestFileStatus status, Type expectedType)
+        [TestCase(GitHubPullRequestFileStatus.Modified, typeof(ModifiedPullRequestCommenter))]
+        [TestCase(GitHubPullRequestFileStatus.Deleted, typeof(PullRequestCommenter.NoCommentPullRequestCommenter))]
+        [TestCase(GitHubPullRequestFileStatus.Added, typeof(AddedPullRequestCommenter))]
+        [TestCase(GitHubPullRequestFileStatus.Renamed, typeof(RenamedPullRequestCommenter))]
+        public void GetShouldReturnPullRequestCommenterObject(GitHubPullRequestFileStatus status, Type expectedType)
         {
             var factory = GetPullRequestCommenterFactory();
 

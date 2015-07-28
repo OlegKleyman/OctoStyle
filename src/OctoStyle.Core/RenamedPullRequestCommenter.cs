@@ -13,6 +13,16 @@ namespace OctoStyle.Core
         {
         }
 
+        /// <summary>
+        /// Creates a pull request comment.
+        /// </summary>
+        /// <param name="file">The <see cref="GitHubPullRequestFile"/> to comment on.</param>
+        /// <param name="analyzer">The <see cref="ICodeAnalyzer"/> to use for finding violations.</param>
+        /// <param name="physicalFilePath">The physical path of the file stored locally.</param>
+        /// <returns>
+        /// A <see cref="Task{TResult}"/> of <see cref="IEnumerable{T}"/> of <see cref="PullRequestReviewComment"/>
+        /// representing the commenting operation.
+        /// </returns>
         public override async Task<IEnumerable<PullRequestReviewComment>> Create(
             GitHubPullRequestFile file,
             ICodeAnalyzer analyzer,

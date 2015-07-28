@@ -46,7 +46,7 @@
                     "123",
                     new List<PullRequestFile>(),
                     new GitHubPullRequestBranches("test_branch", "master")),
-                GitPullRequestFileStatus.Added,
+                GitHubPullRequestFileStatus.Added,
                 0);
 
             var violations = new List<GitHubStyleViolation>

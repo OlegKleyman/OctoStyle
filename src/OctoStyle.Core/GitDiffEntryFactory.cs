@@ -6,8 +6,17 @@
 
     using OctoStyle.Core.Borrowed;
 
+    /// <summary>
+    /// Represents a git diff entry factory.
+    /// </summary>
     public class GitDiffEntryFactory : IGitDiffEntryFactory
     {
+        /// <summary>
+        /// Gets git diff entries.
+        /// </summary>
+        /// <param name="entry">The <see cref="DiffEntry{T}"/> of <see cref="string"/> to build from.</param>
+        /// <param name="position">The position the diff entry exists in a git diff.</param>
+        /// <returns><see cref="IReadOnlyList{T}"/> of <see cref="GitDiffEntry"/>.</returns>
         public IReadOnlyList<GitDiffEntry> Get(DiffEntry<string> entry, int position)
         {
             if (entry == null)
@@ -24,6 +33,7 @@
                     {
                         gitDiff.Add(new EqualGitDiffEntry(position++));
                     }
+
                     break;
                 case DiffEntryType.Add:
                     gitDiff.Add(new ModificationGitDiffEntry(position++, GitDiffEntryStatus.New, entry.LineNumber));

@@ -24,7 +24,7 @@
                     "123",
                     new List<PullRequestFile>(),
                     new GitHubPullRequestBranches("test_branch", "master")),
-                GitPullRequestFileStatus.Renamed,
+                GitHubPullRequestFileStatus.Renamed,
                 1);
 
             var comment =

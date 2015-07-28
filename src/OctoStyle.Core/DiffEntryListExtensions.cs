@@ -6,8 +6,21 @@ namespace OctoStyle.Core
 
     using OctoStyle.Core.Borrowed;
 
+    /// <summary>
+    /// Contains extension methods for <see cref="IEnumerable{T}"/> of <see cref="DiffEntry{T}"/> of <see cref="string"/>.
+    /// </summary>
     public static class DiffEntryListExtensions
     {
+        /// <summary>
+        /// Gets a <see cref="GitDiffEntry"/> representation of <see cref="IEnumerable{T}"/> of <see cref="DiffEntry{T}"/>
+        /// of <see cref="string"/>.
+        /// </summary>
+        /// <param name="diff">A <see cref="IEnumerable{T}"/> of <see cref="DiffEntry{T}"/> of <see cref="string"/> to
+        /// use as a template to build from.</param>
+        /// <param name="factory">The <see cref="IGitDiffEntryFactory"/> to use when retrieving <see cref="GitDiffEntry"/>
+        /// objects.</param>
+        /// <returns>A <see cref="IEnumerable{T}"/> of <see cref="GitDiffEntry"/> representation of the <paramref name="diff"/>
+        /// parameter.</returns>
         public static IReadOnlyList<GitDiffEntry> ToGitDiff(
             this IEnumerable<DiffEntry<string>> diff,
             IGitDiffEntryFactory factory)

@@ -46,7 +46,7 @@
         public async void RetrieveShouldReturnPullRequest()
         {
             var retriever = GetPullRequestRetriever();
-            var pullRequest = await retriever.Retrieve(PullRequestNumber);
+            var pullRequest = await retriever.RetrieveAsync(PullRequestNumber);
 
             Assert.That(pullRequest.Number, Is.EqualTo(PullRequestNumber));
             Assert.That(pullRequest.LastCommitId, Is.EqualTo("126"));
@@ -54,16 +54,16 @@
             Assert.That(pullRequest.Branches.MergeBranch, Is.EqualTo(PullRequestMergeBranch));
             Assert.That(pullRequest.Files.Count, Is.EqualTo(4));
             Assert.That(pullRequest.Files[0].FileName, Is.EqualTo(RenamedFileName));
-            Assert.That(pullRequest.Files[0].Status, Is.EqualTo(GitPullRequestFileStatus.Renamed));
+            Assert.That(pullRequest.Files[0].Status, Is.EqualTo(GitHubPullRequestFileStatus.Renamed));
             Assert.That(pullRequest.Files[0].Changes, Is.EqualTo(RenamedChanges));
             Assert.That(pullRequest.Files[1].FileName, Is.EqualTo(AddedFileName));
-            Assert.That(pullRequest.Files[1].Status, Is.EqualTo(GitPullRequestFileStatus.Added));
+            Assert.That(pullRequest.Files[1].Status, Is.EqualTo(GitHubPullRequestFileStatus.Added));
             Assert.That(pullRequest.Files[1].Changes, Is.EqualTo(AddedChanges));
             Assert.That(pullRequest.Files[2].FileName, Is.EqualTo(FirstModifiedFileName));
-            Assert.That(pullRequest.Files[2].Status, Is.EqualTo(GitPullRequestFileStatus.Modified));
+            Assert.That(pullRequest.Files[2].Status, Is.EqualTo(GitHubPullRequestFileStatus.Modified));
             Assert.That(pullRequest.Files[2].Changes, Is.EqualTo(FirstModifiedChanges));
             Assert.That(pullRequest.Files[3].FileName, Is.EqualTo(SecondModifiedFileName));
-            Assert.That(pullRequest.Files[3].Status, Is.EqualTo(GitPullRequestFileStatus.Modified));
+            Assert.That(pullRequest.Files[3].Status, Is.EqualTo(GitHubPullRequestFileStatus.Modified));
             Assert.That(pullRequest.Files[3].Changes, Is.EqualTo(SecondModifiedChanges));
         }
 

@@ -34,19 +34,24 @@ namespace OctoStyle.Core
 
         public IGitHubDiffRetriever DiffRetriever { get; set; }
 
-        public PullRequestCommenter Get(GitPullRequestFileStatus status)
+        /// <summary>
+        /// Gets a <see cref="PullRequestCommenter"/>.
+        /// </summary>
+        /// <param name="status">The target <see cref="GitHubPullRequestFileStatus"/> of file to comment on.</param>
+        /// <returns>A <see cref="PullRequestCommenter"/>.</returns>
+        public PullRequestCommenter Get(GitHubPullRequestFileStatus status)
         {
             PullRequestCommenter commenter;
 
             switch (status)
             {
-                case GitPullRequestFileStatus.Added:
+                case GitHubPullRequestFileStatus.Added:
                     commenter = new AddedPullRequestCommenter(this.client, this.repository);
                     break;
-                case GitPullRequestFileStatus.Deleted:
+                case GitHubPullRequestFileStatus.Deleted:
                     commenter = PullRequestCommenter.NoCommentPullRequestCommenter.NoComment;
                     break;
-                case GitPullRequestFileStatus.Modified:
+                case GitHubPullRequestFileStatus.Modified:
                     if (this.DiffRetriever == null)
                     {
                         throw new InvalidOperationException("DiffRetriever is null");
@@ -54,7 +59,7 @@ namespace OctoStyle.Core
 
                     commenter = new ModifiedPullRequestCommenter(this.client, this.repository, this.DiffRetriever);
                     break;
-                case GitPullRequestFileStatus.Renamed:
+                case GitHubPullRequestFileStatus.Renamed:
                     commenter = new RenamedPullRequestCommenter(this.client, this.repository);
                     break;
                 default:

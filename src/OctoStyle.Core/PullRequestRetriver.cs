@@ -29,7 +29,12 @@
             this.repository = repository;
         }
 
-        public async Task<GitHubPullRequest> Retrieve(int number)
+        /// <summary>
+        /// Retrieves a pull request.
+        /// </summary>
+        /// <param name="number">The pull request number.</param>
+        /// <returns>A <see cref="Task{TResult}"/> of <see cref="GitHubPullRequest"/> representing the retrieval operation.</returns>
+        public async Task<GitHubPullRequest> RetrieveAsync(int number)
         {
             var pullrequestInformationMessage = string.Format(
                 CultureInfo.InvariantCulture,

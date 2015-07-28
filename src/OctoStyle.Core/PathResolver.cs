@@ -19,6 +19,12 @@
             this.manager = manager;
         }
 
+        /// <summary>
+        /// Gets the path which contains a file that matches the fileFilter argument going up from the initialPath location.
+        /// </summary>
+        /// <param name="initialPath">The initial path to start looking in.</param>
+        /// <param name="fileFilter">The file filter to use to find the path.</param>
+        /// <returns>The directory path which contains a file that matches the fileFilter argument.</returns>
         public string GetPath(string initialPath, string fileFilter)
         {
             if (this.manager.IsDirectory(initialPath) && this.manager.GetFiles(initialPath, fileFilter).Any())
