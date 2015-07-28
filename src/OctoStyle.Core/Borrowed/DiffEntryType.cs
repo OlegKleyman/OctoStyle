@@ -19,7 +19,7 @@
 namespace OctoStyle.Core.Borrowed
 {
     /// <summary>
-    ///     Represents a diff record type
+    ///     Represents a diff record type.
     /// </summary>
     public enum DiffEntryType
     {

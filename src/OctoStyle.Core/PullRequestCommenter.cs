@@ -84,6 +84,9 @@ namespace OctoStyle.Core
             /// <summary>
             /// Gets a <see cref="PullRequestCommenter"/>.
             /// </summary>
+            /// <value>
+            /// Gets the singleton instance of the <see cref="PullRequestCommenter.NoCommentPullRequestCommenter"/> for the application domain.
+            /// </value>
             public static PullRequestCommenter NoComment
             {
                 get

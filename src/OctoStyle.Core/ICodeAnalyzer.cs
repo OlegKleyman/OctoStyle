@@ -3,7 +3,7 @@ namespace OctoStyle.Core
     using System.Collections.Generic;
 
     /// <summary>
-    /// Represents a code analyzer
+    /// Represents a code analyzer.
     /// </summary>
     public interface ICodeAnalyzer
     {

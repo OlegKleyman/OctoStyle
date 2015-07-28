@@ -30,6 +30,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctoStyle.Console.Tests.Uni
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1573292F-9FB4-4B67-B583-81D63784B2DC}"
 	ProjectSection(SolutionItems) = preProject
+		CodeAnalysisDictionary.xml = CodeAnalysisDictionary.xml
 		src\Settings.StyleCop = src\Settings.StyleCop
 	EndProjectSection
 EndProject
