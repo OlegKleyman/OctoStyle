@@ -19,7 +19,7 @@
 
         private static PullRequestCommenter GetNoCommentPullRequestCommenter()
         {
-            return PullRequestCommenter.NoCommentPullRequestCommenter.NoComment;
+            return PullRequestCommenter.NoComment;
         }
     }
 }

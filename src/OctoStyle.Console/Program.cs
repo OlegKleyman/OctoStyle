@@ -59,7 +59,7 @@
 
             var repository = new GitHubRepository(arguments.RepositoryOwner, arguments.Repository);
 
-            var pullRequestRetriever = new PullRequestRetriver(client.PullRequest, repository);
+            var pullRequestRetriever = new PullRequestRetriever(client.PullRequest, repository);
 
             var pullRequest = pullRequestRetriever.RetrieveAsync(arguments.PullRequestNumber).GetAwaiter().GetResult();
 

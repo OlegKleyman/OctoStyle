@@ -10,18 +10,18 @@
     /// <summary>
     /// Represents a pull request retriever.
     /// </summary>
-    public class PullRequestRetriver : IPullRequestRetriever
+    public class PullRequestRetriever : IPullRequestRetriever
     {
         private readonly IPullRequestsClient client;
 
         private readonly GitHubRepository repository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PullRequestRetriver"/> class.
+        /// Initializes a new instance of the <see cref="PullRequestRetriever"/> class.
         /// </summary>
         /// <param name="client">The <see cref="IPullRequestsClient"/> to use for interfacing with GitHub.</param>
         /// <param name="repository">The <see cref="GitHubRepository"/> containing the pull request to comment on.</param>
-        public PullRequestRetriver(IPullRequestsClient client, GitHubRepository repository)
+        public PullRequestRetriever(IPullRequestsClient client, GitHubRepository repository)
         {
             if (client == null)
             {

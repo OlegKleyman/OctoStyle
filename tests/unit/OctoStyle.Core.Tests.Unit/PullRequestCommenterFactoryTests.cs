@@ -12,7 +12,6 @@
     public class PullRequestCommenterFactoryTests
     {
         [TestCase(GitHubPullRequestFileStatus.Modified, typeof(ModifiedPullRequestCommenter))]
-        [TestCase(GitHubPullRequestFileStatus.Deleted, typeof(PullRequestCommenter.NoCommentPullRequestCommenter))]
         [TestCase(GitHubPullRequestFileStatus.Added, typeof(AddedPullRequestCommenter))]
         [TestCase(GitHubPullRequestFileStatus.Renamed, typeof(RenamedPullRequestCommenter))]
         public void GetShouldReturnPullRequestCommenterObject(GitHubPullRequestFileStatus status, Type expectedType)

@@ -67,7 +67,7 @@
     <Compile Include="CodeAnalyzer.cs" />
     <Compile Include="PullRequestCommenter.cs" />
     <Compile Include="PullRequestCommenterFactory.cs" />
-    <Compile Include="PullRequestRetriver.cs" />
+    <Compile Include="PullRequestRetriever.cs" />
     <Compile Include="RenamedPullRequestCommenter.cs" />
     <Compile Include="GitHubStyleViolation.cs" />
     <Compile Include="StyleCopConstants.cs" />

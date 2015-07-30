@@ -144,7 +144,7 @@
                         0,
                         0));
 
-            return new PullRequestRetriver(client.Object, repository);
+            return new PullRequestRetriever(client.Object, repository);
         }
 
         private static PullRequestFile GetPullRequestFile(

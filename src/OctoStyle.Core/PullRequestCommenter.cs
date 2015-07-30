@@ -15,6 +15,8 @@ namespace OctoStyle.Core
 
         private readonly GitHubRepository repository;
 
+        private static readonly NoCommentPullRequestCommenter Commenter = new NoCommentPullRequestCommenter();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PullRequestCommenter"/> class.
         /// </summary>
@@ -71,31 +73,26 @@ namespace OctoStyle.Core
             return await this.client.Create(this.repository.Owner, this.repository.Name, pullRequestNumber, comment);
         }
 
+
+        /// <summary>
+        /// Gets a <see cref="PullRequestCommenter"/>.
+        /// </summary>
+        /// <value>
+        /// Gets the singleton instance of the <see cref="PullRequestCommenter.NoCommentPullRequestCommenter"/> for the application domain.
+        /// </value>
+        public static PullRequestCommenter NoComment
+        {
+            get
+            {
+                return Commenter;
+            }
+        }
+
         /// <summary>
         /// Represents a dumb commenter.
         /// </summary>
-        public class NoCommentPullRequestCommenter : PullRequestCommenter
+        private class NoCommentPullRequestCommenter : PullRequestCommenter
         {
-            private static readonly NoCommentPullRequestCommenter Commenter = new NoCommentPullRequestCommenter();
-
-            private NoCommentPullRequestCommenter()
-            {
-            }
-
-            /// <summary>
-            /// Gets a <see cref="PullRequestCommenter"/>.
-            /// </summary>
-            /// <value>
-            /// Gets the singleton instance of the <see cref="PullRequestCommenter.NoCommentPullRequestCommenter"/> for the application domain.
-            /// </value>
-            public static PullRequestCommenter NoComment
-            {
-                get
-                {
-                    return Commenter;
-                }
-            }
-
             /// <summary>
             /// Does not do anything.
             /// </summary>
