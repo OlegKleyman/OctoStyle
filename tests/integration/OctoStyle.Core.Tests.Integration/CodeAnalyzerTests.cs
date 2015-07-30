@@ -17,6 +17,7 @@
         {
             const string relativeSolutionPath = @"..\..";
             var projectPath = Path.GetFullPath(relativeSolutionPath);
+            Console.WriteLine(projectPath);
 
             if (projectPath == null)
             {
