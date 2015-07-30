@@ -86,8 +86,7 @@
 
             Program.Main(arguments.Split(' '));
 
-            ScenarioContextExtended.Current.CreatedComments =
-                Program.CommentTasks.SelectMany(task => task.GetAwaiter().GetResult());
+            ScenarioContextExtended.Current.CreatedComments = Program.CommentTasks;
         }
 
         [Then(@"there should be comments on the pull request on the lines of the found violations")]

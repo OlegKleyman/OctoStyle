@@ -50,27 +50,27 @@
 
             const string cannotBeEmptyMessage = "Cannot be empty";
 
-            if (login == string.Empty)
+            if (login.Length == 0)
             {
                 throw new ArgumentException(cannotBeEmptyMessage, "login");
             }
 
-            if (password == string.Empty)
+            if (password.Length == 0)
             {
                 throw new ArgumentException(cannotBeEmptyMessage, "password");
             }
 
-            if (solutionDirectory == string.Empty)
+            if (solutionDirectory.Length == 0)
             {
                 throw new ArgumentException(cannotBeEmptyMessage, "solutionDirectory");
             }
 
-            if (repositoryOwner == string.Empty)
+            if (repositoryOwner.Length == 0)
             {
                 throw new ArgumentException(cannotBeEmptyMessage, "repositoryOwner");
             }
 
-            if (repository == string.Empty)
+            if (repository.Length == 0)
             {
                 throw new ArgumentException(cannotBeEmptyMessage, "repository");
             }

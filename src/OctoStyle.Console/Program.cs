@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Octokit;
@@ -12,9 +13,9 @@
     using OctoStyle.Core;
 
     /// <summary>
-    /// Represents the main class for the application.
+    /// Contains application interface members.
     /// </summary>
-    public class Program
+    public static class Program
     {
         private static readonly Lazy<List<Task<IEnumerable<PullRequestReviewComment>>>> Comments =
             new Lazy<List<Task<IEnumerable<PullRequestReviewComment>>>>(() => new List<Task<IEnumerable<PullRequestReviewComment>>>());
@@ -23,11 +24,11 @@
         /// Gets <see cref="CommentTasks"/>.
         /// </summary>
         /// <value>The pull request comments made during the <see cref="Main"/> method run.</value>
-        public static IEnumerable<Task<IEnumerable<PullRequestReviewComment>>> CommentTasks
+        public static IEnumerable<PullRequestReviewComment> CommentTasks
         {
             get
             {
-                return Comments.Value;
+                return Comments.Value.SelectMany(task => task.GetAwaiter().GetResult());
             }
         }
 
@@ -65,7 +66,7 @@
 
             foreach (var file in pullRequest.Files)
             {
-                if (file.FileName.EndsWith(".cs", true, CultureInfo.InvariantCulture))
+                if (file.FileName.EndsWith(".cs", StringComparison.OrdinalIgnoreCase))
                 {
                     var filePath = Path.Combine(arguments.SolutionDirectory, file.FileName);
 
