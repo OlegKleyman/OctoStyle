@@ -39,6 +39,6 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: CLSCompliant(true)]
+[assembly: CLSCompliant(false)]
 [assembly: InternalsVisibleTo("OctoStyle.Core.Tests.Unit")]
 [assembly: InternalsVisibleTo("OctoStyle.Core.Tests.Integration")]
