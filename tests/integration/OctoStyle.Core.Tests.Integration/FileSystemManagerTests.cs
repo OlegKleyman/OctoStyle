@@ -3,7 +3,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class FileSystemManagerTests
+    public static class FileSystemManagerTests
     {
         private static readonly object[] GetFilesShouldReturnFilesInDirectoryCases =
             {
@@ -33,21 +33,21 @@
 
         [TestCase(@"FileSystemManagerFiles\TestDirectory\TestFile.txt", false)]
         [TestCase(@"FileSystemManagerFiles\TestDirectory", true)]
-        public void IsDirectoryShouldReturnWhetherPathIsDiretory(string path, bool expected)
+        public static void IsDirectoryShouldReturnWhetherPathIsDirectory(string path, bool expected)
         {
-            var manager = this.GetFileSystemManager();
+            var manager = GetFileSystemManager();
 
             Assert.That(manager.IsDirectory(path), Is.EqualTo(expected));
         }
 
         [Test]
         [TestCaseSource("GetFilesShouldReturnFilesInDirectoryCases")]
-        public void GetFilesShouldReturnFilesInDirectory(
+        public static void GetFilesShouldReturnFilesInDirectory(
             string directoryPath,
             string fileFilter,
             string[] expectedFiles)
         {
-            var manager = this.GetFileSystemManager();
+            var manager = GetFileSystemManager();
             var files = manager.GetFiles(directoryPath, fileFilter);
 
             Assert.That(files.Length, Is.EqualTo(expectedFiles.Length));
@@ -58,7 +58,7 @@
             }
         }
 
-        private FileSystemManager GetFileSystemManager()
+        private static FileSystemManager GetFileSystemManager()
         {
             return new FileSystemManager();
         }

@@ -2,24 +2,29 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
 
     using NUnit.Framework;
 
     [TestFixture]
-    public class CodeAnalyzerTests
+    public static class CodeAnalyzerTests
     {
         [Test]
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
-        public void AnalyzeShouldReturnAllAnalysisIssues()
+        public static void AnalyzeShouldReturnAllAnalysisIssues()
         {
             const string relativeSolutionPath = @"..\..\..\..\..";
             var solutionDirectory = Path.GetFullPath(relativeSolutionPath);
 
             if (solutionDirectory == null)
             {
-                throw new InvalidOperationException("projectPath is null");
+                throw new InvalidOperationException(
+                    String.Format(
+                        CultureInfo.InvariantCulture,
+                        "Unable to retrieve solution directory off relative path: {0}",
+                        relativeSolutionPath));
             }
 
             var styleCop = new CodeAnalyzer(solutionDirectory);
