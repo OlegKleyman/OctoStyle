@@ -13,6 +13,8 @@
 
         private const string CreatedCommentsKey = "CREATED_COMMENTS";
 
+        private const string PropertyWasNotSetMessage = "Property was not set.";
+
         private static readonly ScenarioContextExtended CurrentContext =
             new ScenarioContextExtended(ScenarioContext.Current);
 
@@ -42,7 +44,7 @@
             {
                 if (!this.context.ContainsKey(PullRequestNumberKey))
                 {
-                    throw new KeyNotFoundException(PullRequestNumberKey);
+                    throw new InvalidOperationException(PropertyWasNotSetMessage);
                 }
 
                 return this.context.Get<int>(PullRequestNumberKey);
@@ -60,7 +62,7 @@
             {
                 if (!this.context.ContainsKey(CreatedCommentsKey))
                 {
-                    throw new KeyNotFoundException(CreatedCommentsKey);
+                    throw new InvalidOperationException(PropertyWasNotSetMessage);
                 }
 
                 return this.context.Get<IEnumerable<PullRequestReviewComment>>(CreatedCommentsKey);

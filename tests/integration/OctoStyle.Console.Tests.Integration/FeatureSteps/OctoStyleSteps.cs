@@ -31,13 +31,13 @@
             if (string.IsNullOrEmpty(login))
             {
                 throw new InvalidOperationException(
-                    string.Format(CultureInfo.InvariantCulture, "{0} enviroment variable is missing.", loginKey));
+                    string.Format(CultureInfo.InvariantCulture, "{0} environment variable is missing.", loginKey));
             }
 
             if (string.IsNullOrEmpty(password))
             {
                 throw new InvalidOperationException(
-                    string.Format(CultureInfo.InvariantCulture, "{0} enviroment variable is missing.", passwordKey));
+                    string.Format(CultureInfo.InvariantCulture, "{0} environment variable is missing.", passwordKey));
             }
 
             FeatureContextExtended.Current.GitLogin = login;
@@ -50,7 +50,7 @@
         }
 
         [AfterScenario("pullRequest")]
-        public void CleanUpComments()
+        public static void CleanUpComments()
         {
             var client = FeatureContextExtended.Current.GitClient;
 
@@ -64,14 +64,14 @@
         }
 
         [Given(@"I have a pull request with stylistic problems")]
-        public void GivenIHaveAPullRequestWithStylisticProblems()
+        public static void GivenIHaveAPullRequestWithStylisticProblems()
         {
             ScenarioContextExtended.Current.PullRequestNumber = 1;
         }
 
         [When(@"I run the OctoStyle")]
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
-        public void WhenIRunTheOctoStyle()
+        public static void WhenIrunTheOctoStyle()
         {
             const string relativeSolutionDirectory = @"..\..\..\OctoStyleTest";
             var arguments = string.Format(
@@ -90,7 +90,7 @@
         }
 
         [Then(@"there should be comments on the pull request on the lines of the found violations")]
-        public void ThenThereShouldBeCommentsOnThePullRequestOnTheLinesOfTheFoundViolations()
+        public static void ThenThereShouldBeCommentsOnThePullRequestOnTheLinesOfTheFoundViolations()
         {
             var client = FeatureContextExtended.Current.GitClient;
 
@@ -102,14 +102,14 @@
 
             var testClassComments =
                 comments.Where(
-                    comment => (comment.Path.EndsWith("TestClass.cs") && comment.Position >= 5 && comment.Position <= 9))
+                    comment => (comment.Path.EndsWith("TestClass.cs", StringComparison.Ordinal) && comment.Position >= 5 && comment.Position <= 9))
                     .ToList();
 
             var testClass2Comments =
-                comments.Where(comment => (comment.Path.EndsWith("TestClass2.cs") && comment.Position == 1)).ToList();
+                comments.Where(comment => (comment.Path.EndsWith("TestClass2.cs", StringComparison.Ordinal) && comment.Position == 1)).ToList();
 
             var testClass3Comments =
-                comments.Where(comment => (comment.Path.EndsWith("TestClass3.cs") && comment.Position <= 9)).ToList();
+                comments.Where(comment => (comment.Path.EndsWith("TestClass3.cs", StringComparison.Ordinal) && comment.Position <= 9)).ToList();
 
             Assert.That(testClassComments.Count, Is.GreaterThanOrEqualTo(2));
 

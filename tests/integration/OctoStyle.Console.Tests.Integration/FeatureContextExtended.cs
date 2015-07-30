@@ -19,6 +19,8 @@
 
         private const string GitPasswordKey = "GIT_PASSWORD";
 
+        private const string PropertyWasNotSetMessage = "Property was not set.";
+
         private static readonly FeatureContextExtended CurrentContext =
             new FeatureContextExtended(FeatureContext.Current);
 
@@ -48,7 +50,7 @@
             {
                 if (!this.context.ContainsKey(RepositoryOwnerKey))
                 {
-                    throw new KeyNotFoundException(RepositoryOwnerKey);
+                    throw new InvalidOperationException(PropertyWasNotSetMessage);
                 }
 
                 return this.context.Get<string>(RepositoryOwnerKey);
@@ -66,7 +68,7 @@
             {
                 if (!this.context.ContainsKey(RepositoryKey))
                 {
-                    throw new KeyNotFoundException(RepositoryKey);
+                    throw new InvalidOperationException(PropertyWasNotSetMessage);
                 }
 
                 return this.context.Get<string>(RepositoryKey);
@@ -84,7 +86,7 @@
             {
                 if (!this.context.ContainsKey(GitLoginKey))
                 {
-                    throw new KeyNotFoundException(GitLoginKey);
+                    throw new InvalidOperationException(PropertyWasNotSetMessage);
                 }
 
                 return this.context.Get<string>(GitLoginKey);
@@ -102,7 +104,7 @@
             {
                 if (!this.context.ContainsKey(GitPasswordKey))
                 {
-                    throw new KeyNotFoundException(GitPasswordKey);
+                    throw new InvalidOperationException(PropertyWasNotSetMessage);
                 }
 
                 return this.context.Get<string>(GitPasswordKey);
@@ -120,7 +122,7 @@
             {
                 if (!this.context.ContainsKey(GitClientKey))
                 {
-                    throw new KeyNotFoundException(GitClientKey);
+                    throw new InvalidOperationException(PropertyWasNotSetMessage);
                 }
 
                 return this.context.Get<GitHubClient>(GitClientKey);
