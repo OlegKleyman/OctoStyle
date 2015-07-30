@@ -28,7 +28,7 @@ namespace OctoStyle.Core
                 throw new ArgumentNullException("projectPath");
             }
 
-            if (projectPath == string.Empty)
+            if (projectPath.Length == 0)
             {
                 throw new ArgumentException("Cannot be empty.", "projectPath");
             }
