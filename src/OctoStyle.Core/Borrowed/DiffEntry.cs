@@ -23,7 +23,6 @@ namespace OctoStyle.Core.Borrowed
     /// <summary>
     ///     Represents a record in a unified diff.
     /// </summary>
-    /// <typeparam name="T">Type that will be diffed.</typeparam>
     internal class DiffEntry
     {
         #region Fields

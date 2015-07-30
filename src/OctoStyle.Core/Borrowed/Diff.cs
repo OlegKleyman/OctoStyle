@@ -33,9 +33,8 @@ namespace OctoStyle.Core.Borrowed
         /// <summary>
         ///     Creates a list of diff entries that represent the differences between the original and modified arrays.
         /// </summary>
-        /// <typeparam name="T">Class that represents the unit to compare.</typeparam>
-        /// <param name="original">The original <see cref="T"/> <see cref="Array"/> of units.</param>
-        /// <param name="modified">The modified <see cref="T"/> <see cref="Array"/> of units.</param>
+        /// <param name="original">The original lines.</param>
+        /// <param name="modified">The modified lines.</param>
         /// <returns>List of DiffEntry classes.</returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
         internal static IReadOnlyList<DiffEntry> CreateDiff(string[] original, string[] modified)
