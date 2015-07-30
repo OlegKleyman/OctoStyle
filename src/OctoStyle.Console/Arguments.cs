@@ -2,12 +2,16 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
 
     using NDesk.Options;
 
+    using OctoStyle.Core;
+
     public class Arguments
     {
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
         private Arguments(
             string login,
             string password,

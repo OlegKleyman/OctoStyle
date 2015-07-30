@@ -5,10 +5,17 @@
     using System.IO;
     using System.Linq;
 
+    /// <summary>
+    /// Represents a path resolver.
+    /// </summary>
     public class PathResolver : IPathResolver
     {
         private readonly IFileSystemManager manager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PathResolver"/> class.
+        /// </summary>
+        /// <param name="manager">The <see cref="IFileSystemManager"/> to use to interface with the file system.</param>
         public PathResolver(IFileSystemManager manager)
         {
             if (manager == null)

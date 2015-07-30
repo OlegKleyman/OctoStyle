@@ -1,6 +1,7 @@
 namespace OctoStyle.Core
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Represents the branches associated with a GitHub pull request.
@@ -12,6 +13,7 @@ namespace OctoStyle.Core
         /// </summary>
         /// <param name="branch">The branch requesting to be merged.</param>
         /// <param name="mergeBranch">The branch to be merged into.</param>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
         public GitHubPullRequestBranches(string branch, string mergeBranch)
         {
             const string branchParamName = "branch";

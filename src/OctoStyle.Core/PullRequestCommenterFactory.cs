@@ -5,12 +5,21 @@ namespace OctoStyle.Core
 
     using Octokit;
 
+    /// <summary>
+    /// Represents a factory for <see cref="PullRequestCommenter"/>.
+    /// </summary>
     public class PullRequestCommenterFactory : IPullRequestCommenterFactory
     {
         private readonly IPullRequestReviewCommentsClient client;
 
         private readonly GitHubRepository repository;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PullRequestCommenterFactory"/> class.
+        /// </summary>
+        /// <param name="client">The <see cref="IPullRequestReviewCommentsClient"/> to use for interfacing with github.</param>
+        /// <param name="repository">The <see cref="GitHubRepository"/> the pull requests are in.</param>
+        /// <param name="diffRetriever">The <see cref="IGitHubDiffRetriever"/> to used to retrieve diffs.</param>
         public PullRequestCommenterFactory(
             IPullRequestReviewCommentsClient client,
             GitHubRepository repository,
@@ -32,6 +41,10 @@ namespace OctoStyle.Core
             this.DiffRetriever = diffRetriever;
         }
 
+        /// <summary>
+        /// Gets or sets <see cref="DiffRetriever"/>
+        /// </summary>
+        /// <value>The <see cref="IGitHubDiffRetriever"/> to used to retrieve diffs.</value>
         public IGitHubDiffRetriever DiffRetriever { get; set; }
 
         /// <summary>

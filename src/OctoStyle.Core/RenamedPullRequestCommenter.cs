@@ -6,8 +6,16 @@ namespace OctoStyle.Core
 
     using Octokit;
 
+    /// <summary>
+    /// Represents a renamed pull request commenter.
+    /// </summary>
     public class RenamedPullRequestCommenter : PullRequestCommenter
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RenamedPullRequestCommenter"/> class.
+        /// </summary>
+        /// <param name="client">The <see cref="IPullRequestReviewCommentsClient"/> to use for making comments.</param>
+        /// <param name="repository">The <see cref="GitHubRepository"/> containing the pull request to comment on.</param>
         public RenamedPullRequestCommenter(IPullRequestReviewCommentsClient client, GitHubRepository repository)
             : base(client, repository)
         {

@@ -35,7 +35,7 @@
             "SA1513 - Statements or elements wrapped in curly brackets must be followed by a blank line.";
 
         [Test]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstant)]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
         public async void CreateShouldCreateComment()
         {
             var commenter = GetAddedPullRequestCommenter();

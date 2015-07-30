@@ -1,6 +1,7 @@
 namespace OctoStyle.Core
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Represents a GitHub repository.
@@ -12,6 +13,7 @@ namespace OctoStyle.Core
         /// </summary>
         /// <param name="owner">The repository owner.</param>
         /// <param name="name">The name of the repository.</param>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
         public GitHubRepository(string owner, string name)
         {
             if (owner == null)

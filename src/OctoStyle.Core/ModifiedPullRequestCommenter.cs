@@ -8,10 +8,19 @@ namespace OctoStyle.Core
 
     using Octokit;
 
+    /// <summary>
+    /// Represents a modification pull request commenter.
+    /// </summary>
     public class ModifiedPullRequestCommenter : PullRequestCommenter
     {
         private readonly IGitHubDiffRetriever diffRetriever;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModifiedPullRequestCommenter"/> class.
+        /// </summary>
+        /// <param name="client">The <see cref="IPullRequestReviewCommentsClient"/> to use for interfacing with github.</param>
+        /// <param name="repository">The <see cref="GitHubRepository"/> the pull requests are in.</param>
+        /// <param name="diffRetriever">The <see cref="IGitHubDiffRetriever"/> to used to retrieve diffs.</param>
         public ModifiedPullRequestCommenter(
             IPullRequestReviewCommentsClient client,
             GitHubRepository repository,

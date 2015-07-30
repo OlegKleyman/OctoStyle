@@ -37,7 +37,7 @@ namespace OctoStyle.Core.Borrowed
         /// <param name="original">The original <see cref="T"/> <see cref="Array"/> of units.</param>
         /// <param name="modified">The modified <see cref="T"/> <see cref="Array"/> of units.</param>
         /// <returns>List of DiffEntry classes.</returns>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstant)]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
         public static IReadOnlyList<DiffEntry<T>> CreateDiff<T>(T[] original, T[] modified) where T : IComparable
         {
             var start = 0;

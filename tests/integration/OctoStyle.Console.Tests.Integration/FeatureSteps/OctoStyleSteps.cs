@@ -19,7 +19,7 @@
     public class OctoStyleSteps : Steps
     {
         [BeforeFeature("octoStyle")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstant)]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
         public static void BeforeFeature()
         {
             const string loginKey = "OCTOSTYLE_LOGIN";
@@ -70,7 +70,7 @@
         }
 
         [When(@"I run the OctoStyle")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstant)]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
         public void WhenIRunTheOctoStyle()
         {
             const string relativeSolutionDirectory = @"..\..\..\OctoStyleTest";

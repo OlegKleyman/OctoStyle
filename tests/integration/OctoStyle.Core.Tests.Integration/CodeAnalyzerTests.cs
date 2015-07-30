@@ -11,7 +11,7 @@
     public class CodeAnalyzerTests
     {
         [Test]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstant)]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
         public void AnalyzeShouldReturnAllAnalysisIssues()
         {
             const string relativeSolutionPath = @"..\..\..\..\..";

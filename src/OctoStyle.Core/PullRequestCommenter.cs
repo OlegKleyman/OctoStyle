@@ -15,10 +15,6 @@ namespace OctoStyle.Core
 
         private readonly GitHubRepository repository;
 
-        private PullRequestCommenter()
-        {
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PullRequestCommenter"/> class.
         /// </summary>
@@ -38,6 +34,10 @@ namespace OctoStyle.Core
 
             this.client = client;
             this.repository = repository;
+        }
+
+        private PullRequestCommenter()
+        {
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace OctoStyle.Core
         /// </summary>
         public class NoCommentPullRequestCommenter : PullRequestCommenter
         {
-            private static readonly NoCommentPullRequestCommenter commenter = new NoCommentPullRequestCommenter();
+            private static readonly NoCommentPullRequestCommenter Commenter = new NoCommentPullRequestCommenter();
 
             private NoCommentPullRequestCommenter()
             {
@@ -92,7 +92,7 @@ namespace OctoStyle.Core
             {
                 get
                 {
-                    return commenter;
+                    return Commenter;
                 }
             }
 

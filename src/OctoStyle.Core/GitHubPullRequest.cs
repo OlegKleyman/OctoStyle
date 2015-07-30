@@ -20,7 +20,7 @@ namespace OctoStyle.Core
         /// <param name="files">The <see cref="IEnumerable{T}"/> of <see cref="PullRequestFile"/>
         /// containing files in the pull request.</param>
         /// <param name="branches">The <see cref="GitHubPullRequestBranches"/> the branches associated with the pull request.</param>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstant)]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
         public GitHubPullRequest(
             int number,
             string lastCommitId,

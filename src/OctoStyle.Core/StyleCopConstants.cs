@@ -1,11 +1,13 @@
 namespace OctoStyle.Core
 {
+    /// <summary>
+    /// Contains constants for stylecop.
+    /// </summary>
     public static class StyleCopConstants
     {
-        public const string Sa1303 = "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter";
-
-        public const string LocalConstant = "Local camel case constants are aceptable.";
-
-        public const string NamingCategory = "StyleCop.CSharp.NamingRules";
+        /// <summary>
+        /// The justification for local constants.
+        /// </summary>
+        public const string LocalConstantJustification = "Local camel case constants are aceptable.";
     }
 }
