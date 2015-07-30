@@ -11,14 +11,33 @@
 
     using OctoStyle.Core;
 
+    /// <summary>
+    /// Represents the main class for the application.
+    /// </summary>
     public class Program
     {
-        public static readonly List<Task<IEnumerable<PullRequestReviewComment>>> CommentTasks =
-            new List<Task<IEnumerable<PullRequestReviewComment>>>();
+        private static readonly Lazy<List<Task<IEnumerable<PullRequestReviewComment>>>> Comments =
+            new Lazy<List<Task<IEnumerable<PullRequestReviewComment>>>>(() => new List<Task<IEnumerable<PullRequestReviewComment>>>());
 
+        /// <summary>
+        /// Gets <see cref="CommentTasks"/>.
+        /// </summary>
+        /// <value>The pull request comments made during the <see cref="Main"/> method run.</value>
+        public static IEnumerable<Task<IEnumerable<PullRequestReviewComment>>> CommentTasks
+        {
+            get
+            {
+                return Comments.Value;
+            }
+        }
+
+        /// <summary>
+        /// The entry method into the application.
+        /// </summary>
+        /// <param name="args">The application arguments.</param>
         public static void Main(string[] args)
         {
-            CommentTasks.Clear();
+            Comments.Value.Clear();
 
             Arguments arguments;
 
@@ -56,11 +75,11 @@
                     var factory = new PullRequestCommenterFactory(client.PullRequest.Comment, repository, diffRetriever);
                     var analyzer = new CodeAnalyzer(projectPath);
 
-                    CommentTasks.Add(factory.Get(file.Status).Create(file, analyzer, filePath));
+                    Comments.Value.Add(factory.Get(file.Status).Create(file, analyzer, filePath));
                 }
             }
 
-            CommentTasks.ForEach(task => task.GetAwaiter().GetResult());
+            Comments.Value.ForEach(task => task.GetAwaiter().GetResult());
         }
     }
 }

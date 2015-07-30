@@ -9,6 +9,9 @@
 
     using OctoStyle.Core;
 
+    /// <summary>
+    /// Represents arguments for the stylecop application.
+    /// </summary>
     public class Arguments
     {
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
@@ -80,18 +83,47 @@
             this.PullRequestNumber = pullRequestNumber;
         }
 
+        /// <summary>
+        /// Gets <see cref="SolutionDirectory"/>.
+        /// </summary>
+        /// <value>The solution directory containing the target code to inspect.</value>
         public string SolutionDirectory { get; private set; }
 
+        /// <summary>
+        /// Gets <see cref="SolutionDirectory"/>.
+        /// </summary>
+        /// <value>The GitHub repository owner name.</value>
         public string RepositoryOwner { get; private set; }
 
+        /// <summary>
+        /// Gets <see cref="SolutionDirectory"/>.
+        /// </summary>
+        /// <value>The GitHub repository name.</value>
         public string Repository { get; private set; }
 
+        /// <summary>
+        /// Gets <see cref="SolutionDirectory"/>.
+        /// </summary>
+        /// <value>The pull request number to inspect.</value>
         public int PullRequestNumber { get; private set; }
 
+        /// <summary>
+        /// Gets <see cref="SolutionDirectory"/>.
+        /// </summary>
+        /// <value>The login to use for interfacing with the GitHub API.</value>
         public string Login { get; private set; }
 
-        public string Password { get; set; }
+        /// <summary>
+        /// Gets <see cref="SolutionDirectory"/>.
+        /// </summary>
+        /// <value>The password to use when interfacing with the GitHub API.</value>
+        public string Password { get; private set; }
 
+        /// <summary>
+        /// Retrieves application <see cref="Arguments"/>.
+        /// </summary>
+        /// <param name="args">The <see cref="IEnumerable{T}"/> of <see cref="string"/> containing application arguments.</param>
+        /// <returns>The application <see cref="Arguments"/>.</returns>
         public static Arguments Parse(IEnumerable<string> args)
         {
             if (args == null)
