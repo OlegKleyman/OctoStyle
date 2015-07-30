@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\GlobalSuppressions.cs">
+      <Link>GlobalSuppressions.cs</Link>
+    </Compile>
     <Compile Include="Borrowed\DiffTests.cs" />
     <Compile Include="GitHubDiffRetrieverTests.cs" />
     <Compile Include="GitDiffEntryFactoryTests.cs" />
@@ -45,11 +49,11 @@
     <Compile Include="NoCommentPullRequestCommenterTests.cs" />
     <Compile Include="PathResolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
-		<ExcludeFromStyleCop>true</ExcludeFromStyleCop>
-	</Compile>
+      <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
+    </Compile>
     <None Include="Resources\BomMode.cs" />
     <Compile Include="PullRequestCommenterFactoryTests.cs" />
-    <Compile Include="PullRequestRetriverTests.cs" />
+    <Compile Include="PullRequestRetrieverTests.cs" />
     <Compile Include="RenamedPullRequestCommenterTest.cs" />
     <Compile Include="StyleCopTests.cs" />
     <None Include="Resources\TestClass2.cs.new" />
@@ -86,6 +90,11 @@
       <LastGenOutput>FileContents.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="..\..\..\CodeAnalysisDictionary.xml">
+      <Link>CodeAnalysisDictionary.xml</Link>
+    </CodeAnalysisDictionary>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -5,10 +5,10 @@ namespace OctoStyle.Core.Tests.Unit
     using OctoStyle.Core.Borrowed;
 
     [TestFixture]
-    public class DiffEntryListExtensionsTests
+    public static class DiffEntryListExtensionsTests
     {
         [Test]
-        public void ToGitDiffShouldReturnGitDiffForMultiChunkDiff()
+        public static void ToGitDiffShouldReturnGitDiffForMultipleChunkDiff()
         {
             var diff = Diff.CreateDiff(
                 FileContents.TestClass2CsOld.Split('\n'),
@@ -70,7 +70,7 @@ namespace OctoStyle.Core.Tests.Unit
         }
 
         [Test]
-        public void ToGitDiffShouldReturnGitDiffForSingleChunkDiff()
+        public static void ToGitDiffShouldReturnGitDiffForSingleChunkDiff()
         {
             var diff = Diff.CreateDiff(
                 FileContents.TestLibraryCsprojOld.Split('\n'),

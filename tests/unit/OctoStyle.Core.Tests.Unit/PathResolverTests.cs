@@ -5,7 +5,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class PathResolverTests
+    public static class PathResolverTests
     {
         private const string ProjectFileFilter = "*.csproj";
 
@@ -22,14 +22,14 @@
         [TestCase(GetPathShouldReturnPathInitialOuterMostDirectoryPath, ProjectPath)]
         [TestCase(GetPathShouldReturnPathInitialMiddleDirectoryPath, ProjectPath)]
         [TestCase(ProjectPath, ProjectPath)]
-        public void GetPathShouldReturnPath(string initialPath, string expectedPath)
+        public static void GetPathShouldReturnPath(string initialPath, string expectedPath)
         {
-            IPathResolver resolver = this.GetPathResolver();
+            IPathResolver resolver = GetPathResolver();
             var path = resolver.GetPath(initialPath, ProjectFileFilter);
             Assert.That(path, Is.EqualTo(expectedPath));
         }
 
-        private PathResolver GetPathResolver()
+        private static PathResolver GetPathResolver()
         {
             var mockFileSystemManager = new Mock<IFileSystemManager>();
 

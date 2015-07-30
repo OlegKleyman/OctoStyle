@@ -7,10 +7,10 @@
     using OctoStyle.Core.Borrowed;
 
     [TestFixture]
-    public class DiffTests
+    public static class DiffTests
     {
         [Test]
-        public void DiffShouldReturnDiffListForMultiChunkDiff()
+        public static void DiffShouldReturnDiffListForMultipleChunkDiff()
         {
             var diff = Diff.CreateDiff(
                 FileContents.TestClass2CsOld.Replace(Environment.NewLine, "\n").Split('\n'),
@@ -50,7 +50,7 @@
         }
 
         [Test]
-        public void DiffShouldReturnDiffListForSingleChunkDiff()
+        public static void DiffShouldReturnDiffListForSingleChunkDiff()
         {
             var diff = Diff.CreateDiff(
                 FileContents.TestLibraryCsprojOld.Replace(Environment.NewLine, "\n").Split('\n'),

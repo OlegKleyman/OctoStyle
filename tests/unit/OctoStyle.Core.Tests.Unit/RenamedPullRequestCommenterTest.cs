@@ -11,12 +11,12 @@
     using Octokit;
 
     [TestFixture]
-    public class RenamedPullRequestCommenterTest
+    public static class RenamedPullRequestCommenterTest
     {
         [Test]
-        public async void CreateShouldCreateComment()
+        public static async void CreateShouldCreateComment()
         {
-            PullRequestCommenter commenter = this.GetRenamedPullRequestCommenter();
+            PullRequestCommenter commenter = GetRenamedPullRequestCommenter();
             var pullRequestFile = new GitHubPullRequestFile(
                 "src/TestLibrary/Nested/TestClass2.cs",
                 new GitHubPullRequest(
@@ -37,7 +37,7 @@
             Assert.That(comment[0].Position, Is.EqualTo(1));
         }
 
-        private RenamedPullRequestCommenter GetRenamedPullRequestCommenter()
+        private static RenamedPullRequestCommenter GetRenamedPullRequestCommenter()
         {
             var pullRequestCommentClient = new Mock<IPullRequestReviewCommentsClient>();
             pullRequestCommentClient.Setup(

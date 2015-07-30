@@ -5,12 +5,12 @@
     using OctoStyle.Core.Borrowed;
 
     [TestFixture]
-    public class GitDiffEntryFactoryTests
+    public static class GitDiffEntryFactoryTests
     {
         [Test]
-        public void GetEntryShouldReturnEqualGitDiffEntry()
+        public static void GetEntryShouldReturnEqualGitDiffEntry()
         {
-            var factory = this.GetGitDiffEntryFactory();
+            var factory = GetGitDiffEntryFactory();
 
             var entry = new DiffEntry(DiffEntryType.Equal, null, 0);
             entry.Count = 3;
@@ -29,9 +29,9 @@
         }
 
         [Test]
-        public void GetEntryShouldReturnModificationGitDiffEntryForNewLines()
+        public static void GetEntryShouldReturnModificationGitDiffEntryForNewLines()
         {
-            var factory = this.GetGitDiffEntryFactory();
+            var factory = GetGitDiffEntryFactory();
 
             var entry = new DiffEntry(DiffEntryType.Add, null, 4);
 
@@ -48,9 +48,9 @@
         }
 
         [Test]
-        public void GetEntryShouldReturnModificationGitDiffEntryForRemovedLines()
+        public static void GetEntryShouldReturnModificationGitDiffEntryForRemovedLines()
         {
-            var factory = this.GetGitDiffEntryFactory();
+            var factory = GetGitDiffEntryFactory();
 
             var entry = new DiffEntry(DiffEntryType.Remove, null, 4);
 
@@ -66,7 +66,7 @@
             Assert.That(modifiedEntry.Status, Is.EqualTo(GitDiffEntryStatus.Removed));
         }
 
-        private GitDiffEntryFactory GetGitDiffEntryFactory()
+        private static GitDiffEntryFactory GetGitDiffEntryFactory()
         {
             return new GitDiffEntryFactory();
         }

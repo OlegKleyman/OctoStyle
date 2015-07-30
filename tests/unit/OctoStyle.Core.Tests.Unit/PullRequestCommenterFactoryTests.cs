@@ -9,18 +9,27 @@
     using Octokit;
 
     [TestFixture]
-    public class PullRequestCommenterFactoryTests
+    public static class PullRequestCommenterFactoryTests
     {
         [TestCase(GitHubPullRequestFileStatus.Modified, typeof(ModifiedPullRequestCommenter))]
         [TestCase(GitHubPullRequestFileStatus.Added, typeof(AddedPullRequestCommenter))]
         [TestCase(GitHubPullRequestFileStatus.Renamed, typeof(RenamedPullRequestCommenter))]
-        public void GetShouldReturnPullRequestCommenterObject(GitHubPullRequestFileStatus status, Type expectedType)
+        public static void GetCommenterShouldReturnPullRequestCommenterObject(GitHubPullRequestFileStatus status, Type expectedType)
         {
             var factory = GetPullRequestCommenterFactory();
 
             var commenter = factory.GetCommenter(status);
 
             Assert.That(commenter, Is.InstanceOf(expectedType));
+        }
+
+        public static void GetCommenterShouldReturnNoCommentPullRequestCommenterObjectForDeletedFiles()
+        {
+            var factory = GetPullRequestCommenterFactory();
+
+            var commenter = factory.GetCommenter(GitHubPullRequestFileStatus.Deleted);
+
+            Assert.That(commenter, Is.InstanceOf(PullRequestCommenter.NoComment.GetType()));
         }
 
         private static IPullRequestCommenterFactory GetPullRequestCommenterFactory()

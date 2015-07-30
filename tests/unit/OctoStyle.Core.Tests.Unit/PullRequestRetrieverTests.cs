@@ -10,7 +10,7 @@
     using Octokit;
 
     [TestFixture]
-    public class PullRequestRetriverTests
+    public class PullRequestRetrieverTests
     {
         private const string FirstModifiedFileName = "src/TestLibrary/TestClass.cs";
 
