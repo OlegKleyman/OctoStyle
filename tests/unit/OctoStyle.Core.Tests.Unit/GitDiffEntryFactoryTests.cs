@@ -12,7 +12,7 @@
         {
             var factory = this.GetGitDiffEntryFactory();
 
-            var entry = new DiffEntry<string>(DiffEntryType.Equal, null, 0);
+            var entry = new DiffEntry(DiffEntryType.Equal, null, 0);
             entry.Count = 3;
 
             var result = factory.Get(entry, 3);
@@ -33,7 +33,7 @@
         {
             var factory = this.GetGitDiffEntryFactory();
 
-            var entry = new DiffEntry<string>(DiffEntryType.Add, null, 4);
+            var entry = new DiffEntry(DiffEntryType.Add, null, 4);
 
             var result = factory.Get(entry, 3);
 
@@ -52,7 +52,7 @@
         {
             var factory = this.GetGitDiffEntryFactory();
 
-            var entry = new DiffEntry<string>(DiffEntryType.Remove, null, 4);
+            var entry = new DiffEntry(DiffEntryType.Remove, null, 4);
 
             var result = factory.Get(entry, 3);
 

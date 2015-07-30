@@ -38,7 +38,7 @@ namespace OctoStyle.Core.Borrowed
         /// <param name="modified">The modified <see cref="T"/> <see cref="Array"/> of units.</param>
         /// <returns>List of DiffEntry classes.</returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
-        public static IReadOnlyList<DiffEntry<T>> CreateDiff<T>(T[] original, T[] modified) where T : IComparable
+        public static IReadOnlyList<DiffEntry> CreateDiff(string[] original, string[] modified)
         {
             var start = 0;
             var end = 0;
@@ -56,7 +56,7 @@ namespace OctoStyle.Core.Borrowed
 
             if (start == original.Length && start == modified.Length)
             {
-                return new List<DiffEntry<T>>().AsReadOnly();
+                return new List<DiffEntry>().AsReadOnly();
             }
 
             for (var i = 0; i < Math.Min(original.Length, modified.Length) - start; i++)
@@ -117,8 +117,8 @@ namespace OctoStyle.Core.Borrowed
 
             // Build the list of differences
             var stck = new Stack<int[]>();
-            var diffList = new List<DiffEntry<T>>();
-            DiffEntry<T> lastEqual = null;
+            var diffList = new List<DiffEntry>();
+            DiffEntry lastEqual = null;
 
             stck.Push(new int[2] { lines1Cnt - 1, lines2Cnt - 1 });
             do
@@ -137,7 +137,7 @@ namespace OctoStyle.Core.Borrowed
                     }
                     else
                     {
-                        lastEqual = new DiffEntry<T>();
+                        lastEqual = new DiffEntry();
                         diffList.Add(lastEqual);
                     }
                 }
@@ -146,13 +146,13 @@ namespace OctoStyle.Core.Borrowed
                     if (j >= 0 && (i <= 0 || j == 0 || lcs[i, j - 1] >= lcs[i - 1, j]))
                     {
                         stck.Push(new int[2] { i, j - 1 });
-                        diffList.Add(new DiffEntry<T>(DiffEntryType.Add, modified[j + start], j + start + 1));
+                        diffList.Add(new DiffEntry(DiffEntryType.Add, modified[j + start], j + start + 1));
                         lastEqual = null;
                     }
                     else if (i >= 0 && (j <= 0 || i == 0 || lcs[i, j - 1] < lcs[i - 1, j]))
                     {
                         stck.Push(new int[2] { i - 1, j });
-                        diffList.Add(new DiffEntry<T>(DiffEntryType.Remove, original[i + start], i + start + 1));
+                        diffList.Add(new DiffEntry(DiffEntryType.Remove, original[i + start], i + start + 1));
                         lastEqual = null;
                     }
                 }
@@ -171,7 +171,7 @@ namespace OctoStyle.Core.Borrowed
                                              : diffList[0].LineNumber
                                                - Math.Abs(diffList[0].LineNumber - maxEqualPadding);
 
-                    diffList.Insert(0, new DiffEntry<T> { Count = lineDifference });
+                    diffList.Insert(0, new DiffEntry { Count = lineDifference });
                 }
 
                 var lastEntry = diffList.Last();
@@ -180,7 +180,7 @@ namespace OctoStyle.Core.Borrowed
 
                 if (lastLineDifference > 0)
                 {
-                    diffList.Add(new DiffEntry<T> { Count = Math.Min(lastLineDifference, maxEqualPadding) });
+                    diffList.Add(new DiffEntry { Count = Math.Min(lastLineDifference, maxEqualPadding) });
                 }
             }
 

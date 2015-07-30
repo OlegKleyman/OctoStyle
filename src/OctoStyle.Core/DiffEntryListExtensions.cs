@@ -22,7 +22,7 @@ namespace OctoStyle.Core
         /// <returns>A <see cref="IEnumerable{T}"/> of <see cref="GitDiffEntry"/> representation of the <paramref name="diff"/>
         /// parameter.</returns>
         public static IReadOnlyList<GitDiffEntry> ToGitDiff(
-            this IEnumerable<DiffEntry<string>> diff,
+            this IEnumerable<DiffEntry> diff,
             IGitDiffEntryFactory factory)
         {
             if (diff == null)

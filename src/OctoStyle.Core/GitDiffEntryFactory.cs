@@ -14,10 +14,10 @@
         /// <summary>
         /// Gets git diff entries.
         /// </summary>
-        /// <param name="entry">The <see cref="DiffEntry{T}"/> of <see cref="string"/> to build from.</param>
+        /// <param name="entry">The <see cref="DiffEntry"/> to build from.</param>
         /// <param name="position">The position the diff entry exists in a git diff.</param>
         /// <returns><see cref="IReadOnlyList{T}"/> of <see cref="GitDiffEntry"/>.</returns>
-        public IReadOnlyList<GitDiffEntry> Get(DiffEntry<string> entry, int position)
+        public IReadOnlyList<GitDiffEntry> Get(DiffEntry entry, int position)
         {
             if (entry == null)
             {

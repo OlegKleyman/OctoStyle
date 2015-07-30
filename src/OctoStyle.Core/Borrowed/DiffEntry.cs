@@ -24,13 +24,13 @@ namespace OctoStyle.Core.Borrowed
     ///     Represents a record in a unified diff.
     /// </summary>
     /// <typeparam name="T">Type that will be diffed.</typeparam>
-    public class DiffEntry<T>
+    public class DiffEntry
     {
         #region Fields
 
         private readonly DiffEntryType entryType;
 
-        private readonly T obj;
+        private readonly string obj;
 
         private int count;
 
@@ -39,12 +39,12 @@ namespace OctoStyle.Core.Borrowed
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DiffEntry{T}"/> class.
+        /// Initializes a new instance of the <see cref="DiffEntry"/> class.
         /// </summary>
         /// <param name="entryType">The <see cref="DiffEntryType"/> of the entry.</param>
-        /// <param name="obj">The <see cref="T"/> entry.</param>
+        /// <param name="obj">The entry.</param>
         /// <param name="lineNumber">The line number of the entry.</param>
-        public DiffEntry(DiffEntryType entryType, T obj, int lineNumber)
+        public DiffEntry(DiffEntryType entryType, string obj, int lineNumber)
         {
             this.LineNumber = lineNumber;
             this.entryType = entryType;
@@ -83,7 +83,7 @@ namespace OctoStyle.Core.Borrowed
         ///     Gets the associated object for Add/Remove entries.
         /// </summary>
         /// <value>Gets the value of <see cref="obj"/></value>
-        public T Object
+        public string Object
         {
             get
             {
