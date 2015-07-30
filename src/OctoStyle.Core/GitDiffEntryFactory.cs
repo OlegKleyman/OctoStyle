@@ -9,7 +9,7 @@
     /// <summary>
     /// Represents a git diff entry factory.
     /// </summary>
-    public class GitDiffEntryFactory : IGitDiffEntryFactory
+    internal class GitDiffEntryFactory : IGitDiffEntryFactory
     {
         /// <summary>
         /// Gets git diff entries.
@@ -45,8 +45,10 @@
                     throw new InvalidOperationException(
                         string.Format(
                             CultureInfo.InvariantCulture,
-                            "Unable to convert DiffEntry of type {0} to GitDiff",
-                            entry.EntryType));
+                            "Unable to convert {0} of type {1} to a {2}",
+                            typeof(DiffEntry),
+                            entry.EntryType,
+                            typeof(GitDiffEntry)));
             }
 
             return gitDiff;

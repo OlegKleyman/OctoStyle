@@ -115,9 +115,13 @@ namespace OctoStyle.Core
                 ICodeAnalyzer analyzer,
                 string physicalFilePath)
             {
-                var task = new Task<IEnumerable<PullRequestReviewComment>>(() => new List<PullRequestReviewComment>());
-                task.RunSynchronously();
-                return task;
+                using (
+                    var task =
+                        new Task<IEnumerable<PullRequestReviewComment>>(() => new List<PullRequestReviewComment>()))
+                {
+                    task.RunSynchronously();
+                    return task;
+                }
             }
         }
     }

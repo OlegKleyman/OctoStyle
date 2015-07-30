@@ -75,7 +75,7 @@
                     var factory = new PullRequestCommenterFactory(client.PullRequest.Comment, repository, diffRetriever);
                     var analyzer = new CodeAnalyzer(projectPath);
 
-                    Comments.Value.Add(factory.Get(file.Status).Create(file, analyzer, filePath));
+                    Comments.Value.Add(factory.GetCommenter(file.Status).Create(file, analyzer, filePath));
                 }
             }
 

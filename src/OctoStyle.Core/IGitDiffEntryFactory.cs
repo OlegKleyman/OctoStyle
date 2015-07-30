@@ -7,7 +7,7 @@
     /// <summary>
     /// Represents a git diff entry factory.
     /// </summary>
-    public interface IGitDiffEntryFactory
+    internal interface IGitDiffEntryFactory
     {
         /// <summary>
         /// Gets git diff entries.

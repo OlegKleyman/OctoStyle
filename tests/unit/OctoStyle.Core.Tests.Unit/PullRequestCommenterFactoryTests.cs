@@ -19,7 +19,7 @@
         {
             var factory = GetPullRequestCommenterFactory();
 
-            var commenter = factory.Get(status);
+            var commenter = factory.GetCommenter(status);
 
             Assert.That(commenter, Is.InstanceOf(expectedType));
         }

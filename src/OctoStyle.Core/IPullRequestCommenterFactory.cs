@@ -10,6 +10,6 @@
         /// </summary>
         /// <param name="status">The target <see cref="GitHubPullRequestFileStatus"/> of file to comment on.</param>
         /// <returns>A <see cref="PullRequestCommenter"/>.</returns>
-        PullRequestCommenter Get(GitHubPullRequestFileStatus status);
+        PullRequestCommenter GetCommenter(GitHubPullRequestFileStatus status);
     }
 }

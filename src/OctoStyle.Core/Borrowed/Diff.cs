@@ -38,7 +38,7 @@ namespace OctoStyle.Core.Borrowed
         /// <param name="modified">The modified <see cref="T"/> <see cref="Array"/> of units.</param>
         /// <returns>List of DiffEntry classes.</returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
-        public static IReadOnlyList<DiffEntry> CreateDiff(string[] original, string[] modified)
+        internal static IReadOnlyList<DiffEntry> CreateDiff(string[] original, string[] modified)
         {
             var start = 0;
             var end = 0;
@@ -46,7 +46,7 @@ namespace OctoStyle.Core.Borrowed
             // Strip off the beginning and end, if it's equal
             while (start < Math.Min(original.Length, modified.Length))
             {
-                if (original[start].CompareTo(modified[start]) != 0)
+                if (String.Compare(original[start], modified[start], StringComparison.Ordinal) != 0)
                 {
                     break;
                 }
@@ -61,7 +61,7 @@ namespace OctoStyle.Core.Borrowed
 
             for (var i = 0; i < Math.Min(original.Length, modified.Length) - start; i++)
             {
-                if (original[original.Length - i - 1].CompareTo(modified[modified.Length - i - 1]) != 0)
+                if (String.Compare(original[original.Length - i - 1], modified[modified.Length - i - 1], StringComparison.Ordinal) != 0)
                 {
                     break;
                 }
@@ -82,7 +82,7 @@ namespace OctoStyle.Core.Borrowed
                     var originalValue = i + start;
                     var modifiedValue = j + start;
 
-                    if (original[originalValue].CompareTo(modified[modifiedValue]) != 0)
+                    if (String.Compare(original[originalValue], modified[modifiedValue], StringComparison.Ordinal) != 0)
                     {
                         if (i == 0 && j == 0)
                         {
@@ -128,7 +128,7 @@ namespace OctoStyle.Core.Borrowed
                 var i = data[0];
                 var j = data[1];
 
-                if (i >= 0 && j >= 0 && original[i + start].CompareTo(modified[j + start]) == 0)
+                if (i >= 0 && j >= 0 && String.CompareOrdinal(original[i + start], modified[j + start]) == 0)
                 {
                     stck.Push(new int[2] { i - 1, j - 1 });
                     if (lastEqual != null)
