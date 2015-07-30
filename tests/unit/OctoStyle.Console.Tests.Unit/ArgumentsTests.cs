@@ -6,10 +6,10 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class ArgumentsTests
+    public static class ArgumentsTests
     {
         [Test]
-        public void ParseShouldReturnArguments()
+        public static void ParseShouldReturnArguments()
         {
             var arguments =
                 Arguments.Parse(@"-l TestUser -p testpass -d C:\test -o OlegKleyman -r OctoStyleTest -pr 1".Split(' '));
@@ -23,7 +23,7 @@
         }
 
         [Test]
-        public void ParseShouldThrowArgumentExceptionWithHelpMessageWhenArgumentsAreMissing()
+        public static void ParseShouldThrowArgumentExceptionWithHelpMessageWhenArgumentsAreMissing()
         {
             var ex = Assert.Throws<ArgumentException>(() => Arguments.Parse(new[] { string.Empty }));
             Assert.That(
@@ -42,7 +42,7 @@
         }
 
         [Test]
-        public void ParseShouldThrowExceptionWhenArgumentIsNull()
+        public static void ParseShouldThrowExceptionWhenArgumentIsNull()
         {
             var ex = Assert.Throws<ArgumentNullException>(() => Arguments.Parse(null));
             Assert.That(ex.Message, Is.EqualTo("Value cannot be null.\r\nParameter name: args"));
