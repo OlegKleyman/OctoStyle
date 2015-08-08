@@ -11,7 +11,8 @@ namespace OctoStyle.Core
     /// </summary>
     public abstract class PullRequestCommenter
     {
-        private static readonly NoCommentPullRequestCommenter Commenter = new NoCommentPullRequestCommenter();
+        private static readonly Lazy<NoCommentPullRequestCommenter> Commenter =
+            new Lazy<NoCommentPullRequestCommenter>(() => new NoCommentPullRequestCommenter());
 
         private readonly IPullRequestReviewCommentsClient client;
 
@@ -52,7 +53,7 @@ namespace OctoStyle.Core
         {
             get
             {
-                return Commenter;
+                return Commenter.Value;
             }
         }
 
