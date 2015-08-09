@@ -62,7 +62,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="OctoStyle.Console.nuspec" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OctoStyle.Core\OctoStyle.Core.csproj">

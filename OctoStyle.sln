@@ -35,6 +35,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		src\Settings.StyleCop = src\Settings.StyleCop
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{AD0519AF-F978-4C51-A6AB-7860C9130A09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OctoStyle.Installer", "utilities\OctoStyle.Installer\OctoStyle.Installer.csproj", "{432607BB-4727-4696-820B-EACAB8B4ABF6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +69,10 @@ Global
 		{48AD8B56-6A37-44BE-B60E-2DEF9C767B19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48AD8B56-6A37-44BE-B60E-2DEF9C767B19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48AD8B56-6A37-44BE-B60E-2DEF9C767B19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{432607BB-4727-4696-820B-EACAB8B4ABF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{432607BB-4727-4696-820B-EACAB8B4ABF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{432607BB-4727-4696-820B-EACAB8B4ABF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{432607BB-4727-4696-820B-EACAB8B4ABF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,5 +86,6 @@ Global
 		{FDAE2EC3-0A09-45F8-9989-ED5931A7D7E7} = {6568C5DF-0251-4D9B-992C-4802B74FB8C3}
 		{C0572B35-76AD-41D3-B9F6-FCCDD8FF4F29} = {6568C5DF-0251-4D9B-992C-4802B74FB8C3}
 		{48AD8B56-6A37-44BE-B60E-2DEF9C767B19} = {25EC794C-A39E-4420-B2FA-F670CB4530AC}
+		{432607BB-4727-4696-820B-EACAB8B4ABF6} = {AD0519AF-F978-4C51-A6AB-7860C9130A09}
 	EndGlobalSection
 EndGlobal
