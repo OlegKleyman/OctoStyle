@@ -7,8 +7,14 @@
 
     using File = WixSharp.File;
 
-    public class Program
+    /// <summary>
+    /// Contains application level methods.
+    /// </summary>
+    public static class Program
     {
+        /// <summary>
+        /// The entry method into the application.
+        /// </summary>
         private static void Main()
         {
             const string mode = 
@@ -22,9 +28,10 @@
             const string rootSolutionDirectory = @"..\..";
             var octoStyleOutputPath = Path.Combine(rootSolutionDirectory, @"src\OctoStyle.Console\bin\", mode);
 
-            var project =
-            new Project("OctoStyle",
-                new Dir(@"%ProgramFiles%\Omego2K\OctoStyle",
+            var project = new Project(
+                "OctoStyle",
+                new Dir(
+                    @"%ProgramFiles%\Omego2K\OctoStyle",
                     new File(Path.Combine(octoStyleOutputPath, "OctoStyle.Console.exe")),
                     new File(Path.Combine(octoStyleOutputPath, "OctoStyle.Core.dll")),
                     new File(Path.Combine(octoStyleOutputPath, "NDesk.Options.dll")),
