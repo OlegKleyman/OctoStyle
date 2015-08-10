@@ -52,6 +52,12 @@
       <HintPath>..\..\packages\WixSharp.1.0.22.3\lib\WixSharp.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\OctoStyle.Console\OctoStyle.Console.csproj">
+      <Project>{35948f68-a753-47be-94d5-db8a11a3db19}</Project>
+      <Name>OctoStyle.Console</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\WixSharp.1.0.22.3\build\WixSharp.targets" Condition="Exists('..\..\packages\WixSharp.1.0.22.3\build\WixSharp.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
