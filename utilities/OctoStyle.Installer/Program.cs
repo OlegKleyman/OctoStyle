@@ -13,6 +13,8 @@
             const string mode = 
 #if DEBUG
             "Debug";
+#elif FULL
+            "Full";
 #else
             "Release";
 #endif
