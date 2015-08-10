@@ -31,6 +31,7 @@
                     new File(Path.Combine(octoStyleOutputPath, "StyleCop.CSharp.dll"))));
 
             Compiler.WixLocation = @"..\..\packages\WiX.3.9.2\tools";
+            Compiler.WixSdkLocation = @"..\..\packages\WiX.3.9.2\tools\sdk";
             Compiler.BuildMsi(project);
         }
     }
