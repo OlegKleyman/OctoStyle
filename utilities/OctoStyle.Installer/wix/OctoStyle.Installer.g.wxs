@@ -6,7 +6,7 @@
 </auto-generated>
 -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="48bbd745-dbb0-4130-8beb-20afc243261f" Name="OctoStyle" Language="1033" Codepage="Windows-1252" Version="1.0.0.0" UpgradeCode="48bbd745-dbb0-4130-8beb-20afb243261e" Manufacturer="OKleyman">
+  <Product Id="bde7b440-efa9-4fd8-9c96-0a0d2f35360b" Name="OctoStyle" Language="1033" Codepage="Windows-1252" Version="1.0.0.0" UpgradeCode="bde7b440-efa9-4fd8-9c96-0a0d1f35360a" Manufacturer="OKleyman">
     <Package InstallerVersion="200" Compressed="yes" SummaryCodepage="Windows-1252" Languages="1033" />
     <Media Id="1" Cabinet="OctoStyle.cab" EmbedCab="yes" />
 
@@ -15,31 +15,31 @@
         <Directory Id="ProgramFilesFolder.Omego2K" Name="Omego2K">
           <Directory Id="INSTALLDIR" Name="OctoStyle">
 
-            <Component Id="Component.OctoStyle.Console.exe" Guid="48bbd745-dbb0-4130-8beb-20af05fb3045">
+            <Component Id="Component.OctoStyle.Console.exe" Guid="bde7b440-efa9-4fd8-9c96-0a0d72ed4031">
               <File Id="OctoStyle.Console.exe" Source="..\..\src\OctoStyle.Console\bin\Full\OctoStyle.Console.exe" />
             </Component>
 
-            <Component Id="Component.OctoStyle.Core.dll" Guid="48bbd745-dbb0-4130-8beb-20afd0fb19c7">
+            <Component Id="Component.OctoStyle.Core.dll" Guid="bde7b440-efa9-4fd8-9c96-0a0d3ded29b3">
               <File Id="OctoStyle.Core.dll" Source="..\..\src\OctoStyle.Console\bin\Full\OctoStyle.Core.dll" />
             </Component>
 
-            <Component Id="Component.NDesk.Options.dll" Guid="48bbd745-dbb0-4130-8beb-20afa792ea69">
+            <Component Id="Component.NDesk.Options.dll" Guid="bde7b440-efa9-4fd8-9c96-0a0d1484fa55">
               <File Id="NDesk.Options.dll" Source="..\..\src\OctoStyle.Console\bin\Full\NDesk.Options.dll" />
             </Component>
 
-            <Component Id="Component.Octokit.dll" Guid="48bbd745-dbb0-4130-8beb-20af4f1ebc3b">
+            <Component Id="Component.Octokit.dll" Guid="bde7b440-efa9-4fd8-9c96-0a0dbc10cc27">
               <File Id="Octokit.dll" Source="..\..\src\OctoStyle.Console\bin\Full\Octokit.dll" />
             </Component>
 
-            <Component Id="Component.StyleCop.CSharp.Rules.dll" Guid="48bbd745-dbb0-4130-8beb-20af342898fb">
+            <Component Id="Component.StyleCop.CSharp.Rules.dll" Guid="bde7b440-efa9-4fd8-9c96-0a0da11aa8e7">
               <File Id="StyleCop.CSharp.Rules.dll" Source="..\..\src\OctoStyle.Console\bin\Full\StyleCop.CSharp.Rules.dll" />
             </Component>
 
-            <Component Id="Component.StyleCop.dll" Guid="48bbd745-dbb0-4130-8beb-20afe100db8a">
+            <Component Id="Component.StyleCop.dll" Guid="bde7b440-efa9-4fd8-9c96-0a0d4ef2eb76">
               <File Id="StyleCop.dll" Source="..\..\src\OctoStyle.Console\bin\Full\StyleCop.dll" />
             </Component>
 
-            <Component Id="Component.StyleCop.CSharp.dll" Guid="48bbd745-dbb0-4130-8beb-20af36a1a3be">
+            <Component Id="Component.StyleCop.CSharp.dll" Guid="bde7b440-efa9-4fd8-9c96-0a0da393b3aa">
               <File Id="StyleCop.CSharp.dll" Source="..\..\src\OctoStyle.Console\bin\Full\StyleCop.CSharp.dll" />
             </Component>
 

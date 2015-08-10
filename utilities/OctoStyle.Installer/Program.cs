@@ -18,8 +18,8 @@
 #else
             "Release";
 #endif
-
-            var octoStyleOutputPath = Path.Combine(@"..\..\src\OctoStyle.Console\bin\", mode);
+            const string rootSolutionDirectory = @"..\..";
+            var octoStyleOutputPath = Path.Combine(rootSolutionDirectory, @"src\OctoStyle.Console\bin\", mode);
 
             var project =
             new Project("OctoStyle",
@@ -32,8 +32,8 @@
                     new File(Path.Combine(octoStyleOutputPath, "StyleCop.dll")),
                     new File(Path.Combine(octoStyleOutputPath, "StyleCop.CSharp.dll"))));
 
-            Compiler.WixLocation = @"..\..\packages\WiX.3.9.2\tools";
-            Compiler.WixSdkLocation = @"..\..\packages\WiX.3.9.2\tools\sdk";
+            Compiler.WixLocation = Path.Combine(rootSolutionDirectory, @"packages\WiX.3.9.2\tools");
+            Compiler.WixSdkLocation = Path.Combine(rootSolutionDirectory, @"packages\WiX.3.9.2\tools\sdk");
             Compiler.BuildMsi(project);
         }
     }
