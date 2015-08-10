@@ -1,7 +1,10 @@
 ﻿namespace OctoStyle.Installer
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
+
+    using OctoStyle.Core;
 
     using WixSharp;
 
@@ -15,13 +18,15 @@
         /// <summary>
         /// The entry method into the application.
         /// </summary>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter",
+            Justification = StyleCopConstants.LocalConstantJustification)]
         private static void Main()
         {
             const string mode = 
 #if DEBUG
             "Debug";
 #elif FULL
-            "Full";
+                "Full";
 #else
             "Release";
 #endif
