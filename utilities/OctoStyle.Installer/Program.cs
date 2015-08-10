@@ -1,5 +1,6 @@
 ﻿namespace OctoStyle.Installer
 {
+    using System;
     using System.IO;
 
     using WixSharp;
@@ -31,6 +32,8 @@
                     new File(Path.Combine(octoStyleOutputPath, "StyleCop.CSharp.Rules.dll")),
                     new File(Path.Combine(octoStyleOutputPath, "StyleCop.dll")),
                     new File(Path.Combine(octoStyleOutputPath, "StyleCop.CSharp.dll"))));
+
+            project.GUID = new Guid("B6FF0CA5-1560-441D-97BA-55D568B3D332");
 
             Compiler.WixLocation = Path.Combine(rootSolutionDirectory, @"packages\WiX.3.9.2\tools");
             Compiler.WixSdkLocation = Path.Combine(rootSolutionDirectory, @"packages\WiX.3.9.2\tools\sdk");
