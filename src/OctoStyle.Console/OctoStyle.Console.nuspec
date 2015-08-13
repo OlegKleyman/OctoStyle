@@ -6,8 +6,12 @@
         <title>OctoStyle.Console</title>
         <authors>Oleg Kleyman</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Runs StyleCop rule checks against changed files in a pull request.</description>
+        <description>
+        	Runs StyleCop rule checks against changed files in a GitHub pull request. Assemblies only so it doesn't
+        	need to be installed on the build server.
+        </description>
         <language>en-US</language>
+        
     </metadata>
     <files>
         <file src="bin\Release\*.exe" target="tools" />
