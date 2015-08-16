@@ -43,6 +43,7 @@ An NUnit test runner is required.
 ### Minimum
 * Text Editor
 * At least .NET Framework 4.6
+
 ### Suggested
 * Visual Studio 2013+
 * Specflow Templates located [here](http://www.specflow.org/).
