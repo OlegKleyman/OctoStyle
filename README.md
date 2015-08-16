@@ -1,0 +1,1 @@
+# OctoStyle - Automatic pull request reviewer using StyleCop  [![Build Status](http://teamcity.theomegoone.net/viewType.html?buildTypeId=OctoStyle_Build&guest=1)](http://teamcity.theomegoone.net/app/rest/builds/buildType:(id:OctoStyle_Build)/statusIcon)
