@@ -68,7 +68,7 @@ namespace OctoStyle.Core
 
             var violations = analyzer.Analyze(physicalFilePath);
 
-            var accessibleViolations = diff.Join(
+            var accessibleViolations = diff.Where(entry => entry.Status == GitDiffEntryStatus.New).Join(
                 violations,
                 entry => entry.LineNumber,
                 violation => violation.LineNumber,
