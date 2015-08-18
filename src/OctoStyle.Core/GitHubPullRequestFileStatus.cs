@@ -26,8 +26,8 @@ namespace OctoStyle.Core
         Modified,
 
         /// <summary>
-        /// File has been deleted.
+        /// File has been removed.
         /// </summary>
-        Deleted
+        Removed
     }
 }

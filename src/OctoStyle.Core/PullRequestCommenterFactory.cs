@@ -61,7 +61,7 @@ namespace OctoStyle.Core
                 case GitHubPullRequestFileStatus.Added:
                     commenter = new AddedPullRequestCommenter(this.client, this.repository);
                     break;
-                case GitHubPullRequestFileStatus.Deleted:
+                case GitHubPullRequestFileStatus.Removed:
                     commenter = PullRequestCommenter.NoComment;
                     break;
                 case GitHubPullRequestFileStatus.Modified:

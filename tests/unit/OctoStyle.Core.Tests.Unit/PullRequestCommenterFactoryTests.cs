@@ -27,7 +27,7 @@
         {
             var factory = GetPullRequestCommenterFactory();
 
-            var commenter = factory.GetCommenter(GitHubPullRequestFileStatus.Deleted);
+            var commenter = factory.GetCommenter(GitHubPullRequestFileStatus.Removed);
 
             Assert.That(commenter, Is.InstanceOf(PullRequestCommenter.NoComment.GetType()));
         }
