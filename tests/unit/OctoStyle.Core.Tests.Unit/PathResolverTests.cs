@@ -53,6 +53,7 @@
             mockFileSystemManager.Setup(
                 manager => manager.IsDirectory(GetPathShouldReturnPathInitialMiddleDirectoryPath)).Returns(true);
             mockFileSystemManager.Setup(manager => manager.IsDirectory(ProjectPath)).Returns(true);
+            mockFileSystemManager.Setup(manager => manager.PathExists(It.IsAny<string>())).Returns(true);
 
             return new PathResolver(mockFileSystemManager.Object);
         }
