@@ -34,7 +34,7 @@
         /// <returns>The directory path which contains a file that matches the fileFilter argument.</returns>
         public string GetPath(string initialPath, string fileFilter)
         {
-            if (this.manager.IsDirectory(initialPath) && this.manager.GetFiles(initialPath, fileFilter).Any())
+            if (manager.PathExists(initialPath) && this.manager.IsDirectory(initialPath) && this.manager.GetFiles(initialPath, fileFilter).Any())
             {
                 return initialPath;
             }

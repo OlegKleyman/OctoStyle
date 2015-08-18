@@ -30,5 +30,10 @@
             var attributes = File.GetAttributes(path);
             return attributes.HasFlag(FileAttributes.Directory);
         }
+
+        public bool PathExists(string path)
+        {
+            return File.Exists(path) || Directory.Exists(path);
+        }
     }
 }

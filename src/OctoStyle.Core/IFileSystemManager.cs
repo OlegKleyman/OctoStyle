@@ -21,5 +21,7 @@
         /// <param name="path">The path to analyze.</param>
         /// <returns>True if the path is a directory.</returns>
         bool IsDirectory(string path);
+
+        bool PathExists(string path);
     }
 }
