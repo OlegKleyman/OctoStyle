@@ -1,0 +1,19 @@
+diff --git a/src/TestLibrary/Nested/TestClass2.cs b/src/TestLibrary/Nested/TestClass2.cs
+new file mode 100644
+index 0000000..f6876ed
+--- /dev/null
++++ b/src/TestLibrary/Nested/TestClass2.cs
+@@ -0,0 +1,14 @@
++﻿//test
++namespace TestLibrary
++{
++    public class TestClass2
++    {
++        public void testMethod()
++        {
++            foreach (var i in new [] {1,2,3,4})
++            {
++                var TestVar = 3;
++            }
++        }
++    }

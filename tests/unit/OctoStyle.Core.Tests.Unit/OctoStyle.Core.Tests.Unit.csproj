@@ -64,8 +64,13 @@
     <Compile Include="PullRequestRetrieverTests.cs" />
     <Compile Include="RenamedPullRequestCommenterTest.cs" />
     <Compile Include="StyleCopTests.cs" />
+    <None Include="Resources\FullDiff.diff" />
+    <None Include="Resources\TestClassCsDiff.diff" />
+    <None Include="Resources\TestClass2CsDiff.diff" />
     <None Include="Resources\TestClass2.cs.new" />
     <None Include="Resources\TestClass2.cs.old" />
+    <None Include="Resources\TestClass3CsDiff.diff" />
+    <None Include="Resources\TestLibraryCsprojDiff.diff" />
     <None Include="Resources\TestLibrary.csproj.new" />
     <None Include="Resources\TestLibrary.csproj.old" />
   </ItemGroup>

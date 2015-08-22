@@ -61,6 +61,63 @@ namespace OctoStyle.Core.Tests.Unit {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to diff --git a/src/TestLibrary/Nested/TestClass2.cs b/src/TestLibrary/Nested/TestClass2.cs
+        ///new file mode 100644
+        ///index 0000000..f6876ed
+        ///--- /dev/null
+        ///+++ b/src/TestLibrary/Nested/TestClass2.cs
+        ///@@ -0,0 +1,14 @@
+        ///+﻿//test
+        ///+namespace TestLibrary
+        ///+{
+        ///+    public class TestClass2
+        ///+    {
+        ///+        public void testMethod()
+        ///+        {
+        ///+            foreach (var i in new [] {1,2,3,4})
+        ///+            {
+        ///+                var TestVar = 3;
+        ///+            }
+        ///+        }
+        ///+    }
+        ///+}
+        ///diff --git a/src/TestLibrary/Nested/TestClass3.cs b/src [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string FullDiff {
+            get {
+                return ResourceManager.GetString("FullDiff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to diff --git a/src/TestLibrary/Nested/TestClass2.cs b/src/TestLibrary/Nested/TestClass2.cs
+        ///new file mode 100644
+        ///index 0000000..f6876ed
+        ///--- /dev/null
+        ///+++ b/src/TestLibrary/Nested/TestClass2.cs
+        ///@@ -0,0 +1,14 @@
+        ///+﻿//test
+        ///+namespace TestLibrary
+        ///+{
+        ///+    public class TestClass2
+        ///+    {
+        ///+        public void testMethod()
+        ///+        {
+        ///+            foreach (var i in new [] {1,2,3,4})
+        ///+            {
+        ///+                var TestVar = 3;
+        ///+            }
+        ///+        }
+        ///+    }
+        ///.
+        /// </summary>
+        internal static string TestClass2CsDiff {
+            get {
+                return ResourceManager.GetString("TestClass2CsDiff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to //test
         ///namespace TestLibrary
         ///{
@@ -106,6 +163,84 @@ namespace OctoStyle.Core.Tests.Unit {
         internal static string TestClass2CsOld {
             get {
                 return ResourceManager.GetString("TestClass2CsOld", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to diff --git a/src/TestLibrary/Nested/TestClass3.cs b/src/TestLibrary/Nested/TestClass3.cs
+        ///+}
+        ///new file mode 100644
+        ///index 0000000..c537e3f
+        ///--- /dev/null
+        ///+++ b/src/TestLibrary/Nested/TestClass3.cs
+        ///@@ -0,0 +1,12 @@
+        ///+﻿using System;
+        ///+using System.Collections.Generic;
+        ///+using System.Linq;
+        ///+using System.Text;
+        ///+using System.Threading.Tasks;
+        ///+
+        ///+namespace TestLibrary.Nested
+        ///+{
+        ///+    class TestClass3
+        ///+    {
+        ///+    }
+        ///+}
+        ///.
+        /// </summary>
+        internal static string TestClass3CsDiff {
+            get {
+                return ResourceManager.GetString("TestClass3CsDiff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to diff --git a/src/TestLibrary/TestClass.cs b/src/TestLibrary/TestClass.cs
+        ///index ef72072..85ce506 100644
+        ///--- a/src/TestLibrary/TestClass.cs
+        ///+++ b/src/TestLibrary/TestClass.cs
+        ///@@ -17,5 +17,13 @@ public void TestMethod()
+        ///             }
+        ///             2.ToString();
+        ///         }
+        ///+
+        ///+        public void Testmethod2()
+        ///+        {
+        ///+            for (int i = 5 - 1; i &gt;= 0; i--)
+        ///+            {
+        ///+            }
+        ///+            Console.WriteLine(&quot;Test output&quot;);
+        ///+        }
+        ///     }
+        /// }
+        ///\ No newline at end of file
+        ///.
+        /// </summary>
+        internal static string TestClassCsDiff {
+            get {
+                return ResourceManager.GetString("TestClassCsDiff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to diff --git a/src/TestLibrary/TestLibrary.csproj b/src/TestLibrary/TestLibrary.csproj
+        ///index e29f3ed..47c7471 100644
+        ///--- a/src/TestLibrary/TestLibrary.csproj
+        ///+++ b/src/TestLibrary/TestLibrary.csproj
+        ///@@ -30,13 +30,12 @@
+        ///     &lt;WarningLevel&gt;4&lt;/WarningLevel&gt;
+        ///   &lt;/PropertyGroup&gt;
+        ///   &lt;ItemGroup&gt;
+        ///+    &lt;Compile Include=&quot;Nested\TestClass3.cs&quot; /&gt;
+        ///     &lt;Compile Include=&quot;Properties\AssemblyInfo.cs&quot; /&gt;
+        ///     &lt;Compile Include=&quot;TestClass.cs&quot; /&gt;
+        ///-    &lt;Compile Include=&quot;TestClass2.cs&quot; /&gt;
+        ///-  &lt;/ItemGroup&gt;
+        ///-  &lt;ItemGrou [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string TestLibraryCsprojDiff {
+            get {
+                return ResourceManager.GetString("TestLibraryCsprojDiff", resourceCulture);
             }
         }
         

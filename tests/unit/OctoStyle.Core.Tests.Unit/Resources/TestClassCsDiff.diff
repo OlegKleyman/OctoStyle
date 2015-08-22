@@ -1,0 +1,19 @@
+diff --git a/src/TestLibrary/TestClass.cs b/src/TestLibrary/TestClass.cs
+index ef72072..85ce506 100644
+--- a/src/TestLibrary/TestClass.cs
++++ b/src/TestLibrary/TestClass.cs
+@@ -17,5 +17,13 @@ public void TestMethod()
+             }
+             2.ToString();
+         }
++
++        public void Testmethod2()
++        {
++            for (int i = 5 - 1; i >= 0; i--)
++            {
++            }
++            Console.WriteLine("Test output");
++        }
+     }
+ }
+\ No newline at end of file

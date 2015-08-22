@@ -1,0 +1,19 @@
+diff --git a/src/TestLibrary/Nested/TestClass3.cs b/src/TestLibrary/Nested/TestClass3.cs
++}
+new file mode 100644
+index 0000000..c537e3f
+--- /dev/null
++++ b/src/TestLibrary/Nested/TestClass3.cs
+@@ -0,0 +1,12 @@
++﻿using System;
++using System.Collections.Generic;
++using System.Linq;
++using System.Text;
++using System.Threading.Tasks;
++
++namespace TestLibrary.Nested
++{
++    class TestClass3
++    {
++    }
++}
