@@ -60,7 +60,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
-    <None Include="Resources\BomMode.cs" />
     <Compile Include="PullRequestCommenterFactoryTests.cs" />
     <Compile Include="PullRequestRetrieverTests.cs" />
     <Compile Include="RenamedPullRequestCommenterTest.cs" />
