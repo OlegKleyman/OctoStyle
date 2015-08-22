@@ -144,7 +144,9 @@
                         0,
                         0));
 
-            return new PullRequestRetriever(client.Object, repository);
+            var connection = new Mock<IConnection>();
+
+            return new PullRequestRetriever(client.Object, connection.Object, repository);
         }
 
         private static PullRequestFile GetPullRequestFile(

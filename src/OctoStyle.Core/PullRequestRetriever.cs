@@ -14,18 +14,26 @@
     {
         private readonly IPullRequestsClient client;
 
+        private readonly IConnection connection;
+
         private readonly GitHubRepository repository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PullRequestRetriever"/> class.
         /// </summary>
         /// <param name="client">The <see cref="IPullRequestsClient"/> to use for interfacing with GitHub.</param>
+        /// <param name="connection"></param>
         /// <param name="repository">The <see cref="GitHubRepository"/> containing the pull request to comment on.</param>
-        public PullRequestRetriever(IPullRequestsClient client, GitHubRepository repository)
+        public PullRequestRetriever(IPullRequestsClient client, IConnection connection, GitHubRepository repository)
         {
             if (client == null)
             {
                 throw new ArgumentNullException("client");
+            }
+
+            if (connection == null)
+            {
+                throw new ArgumentNullException("connection");
             }
 
             if (repository == null)
@@ -34,6 +42,7 @@
             }
 
             this.client = client;
+            this.connection = connection;
             this.repository = repository;
         }
 
