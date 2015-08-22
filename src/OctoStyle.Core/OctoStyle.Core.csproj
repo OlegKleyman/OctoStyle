@@ -85,6 +85,15 @@
     <Reference Include="Octokit">
       <HintPath>..\..\packages\Octokit.0.13.0\lib\net45\Octokit.dll</HintPath>
     </Reference>
+    <Reference Include="OMetaSharp">
+      <HintPath>..\..\common\lib\OMetaSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="OMetaSharp.OMetaCS">
+      <HintPath>..\..\common\lib\OMetaSharp.OMetaCS.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDiff">
+      <HintPath>..\..\common\lib\SharpDiff.dll</HintPath>
+    </Reference>
     <Reference Include="StyleCop">
       <HintPath>..\..\packages\StyleCop.4.7.49.0\lib\net35\StyleCop.dll</HintPath>
     </Reference>
