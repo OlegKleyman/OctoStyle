@@ -45,7 +45,9 @@
       <Link>GlobalSuppressions.cs</Link>
     </Compile>
     <Compile Include="AddedPullRequestCommenter.cs" />
+    <Compile Include="DifferWrapper.cs" />
     <Compile Include="DiffParser.cs" />
+    <Compile Include="IDiffer.cs" />
     <Compile Include="IDiffParser.cs" />
     <Compile Include="IPullRequestBuilder.cs" />
     <Compile Include="IPullRequestCommenterFactory.cs" />
