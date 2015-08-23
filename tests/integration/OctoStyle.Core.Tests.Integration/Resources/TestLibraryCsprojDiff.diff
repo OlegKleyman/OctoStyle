@@ -1,0 +1,21 @@
+diff --git a/src/TestLibrary/TestLibrary.csproj b/src/TestLibrary/TestLibrary.csproj
+index e29f3ed..47c7471 100644
+--- a/src/TestLibrary/TestLibrary.csproj
++++ b/src/TestLibrary/TestLibrary.csproj
+@@ -30,13 +30,12 @@
+     <WarningLevel>4</WarningLevel>
+   </PropertyGroup>
+   <ItemGroup>
++    <Compile Include="Nested\TestClass3.cs" />
+     <Compile Include="Properties\AssemblyInfo.cs" />
+     <Compile Include="TestClass.cs" />
+-    <Compile Include="TestClass2.cs" />
+-  </ItemGroup>
+-  <ItemGroup>
+-    <Folder Include="Nested\" />
++    <Compile Include="Nested\TestClass2.cs" />
+   </ItemGroup>
++  <ItemGroup />
+   <ItemGroup>
+     <Reference Include="System" />
+   </ItemGroup>

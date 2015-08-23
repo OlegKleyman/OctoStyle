@@ -45,6 +45,11 @@
       <Link>GlobalSuppressions.cs</Link>
     </Compile>
     <Compile Include="DifferWrapperTests.cs" />
+    <Compile Include="FileContents.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FileContents.resx</DependentUpon>
+    </Compile>
     <Compile Include="FileSystemManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
@@ -79,6 +84,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\TestLibraryCsprojDiff.diff" />
     <None Include="StyleCop.CSharp.Rules.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -108,6 +114,12 @@
     <Content Include="FileSystemManagerFiles\TestFile1.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FileContents.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FileContents.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
