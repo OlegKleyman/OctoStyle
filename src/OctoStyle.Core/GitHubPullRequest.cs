@@ -17,15 +17,13 @@ namespace OctoStyle.Core
         /// </summary>
         /// <param name="number">The pull request number.</param>
         /// <param name="lastCommitId">The last commit hash of the pull request.</param>
-        /// <param name="files">The <see cref="IEnumerable{T}"/> of <see cref="PullRequestFile"/>
-        /// containing files in the pull request.</param>
+        /// <param name="files">The <see cref="IEnumerable{T}"/> of <see cref="GitHubPullRequestFile"/>
+        ///     containing files in the pull request.</param>
+        /// <param name="diff"></param>
         /// <param name="branches">The <see cref="GitHubPullRequestBranches"/> the branches associated with the pull request.</param>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
-        public GitHubPullRequest(
-            int number,
-            string lastCommitId,
-            IEnumerable<PullRequestFile> files,
-            GitHubPullRequestBranches branches)
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter",
+            Justification = StyleCopConstants.LocalConstantJustification)]
+        public GitHubPullRequest(int number, string lastCommitId, IEnumerable<GitHubPullRequestFile> files, string diff, GitHubPullRequestBranches branches)
         {
             const string lastCommitIdParamName = "lastCommitId";
 
@@ -56,15 +54,13 @@ namespace OctoStyle.Core
 
             this.Number = number;
             this.LastCommitId = lastCommitId;
+            this.Diff = diff;
             this.Branches = branches;
-            this.Files =
-                files.Select(
-                    file =>
-                    new GitHubPullRequestFile(
-                        file.FileName,
-                        this,
-                        (GitHubPullRequestFileStatus)Enum.Parse(typeof(GitHubPullRequestFileStatus), file.Status, true),
-                        file.Changes)).ToList();
+
+            var pullRequestFiles = files as List<GitHubPullRequestFile> ?? files.ToList();
+            pullRequestFiles.ForEach(file => file.PullRequest = this);
+            
+            this.Files = pullRequestFiles;
         }
 
         /// <summary>
@@ -90,5 +86,7 @@ namespace OctoStyle.Core
         /// </summary>
         /// <value>The <see cref="IEnumerable{T}"/> of <see cref="PullRequestFile"/> containing files in the pull request.</value>
         public IReadOnlyList<GitHubPullRequestFile> Files { get; private set; }
+
+        public string Diff { get; private set; }
     }
 }
