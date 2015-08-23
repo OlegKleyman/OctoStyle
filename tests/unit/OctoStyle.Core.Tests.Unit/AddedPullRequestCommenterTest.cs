@@ -48,13 +48,9 @@
             var commenter = GetAddedPullRequestCommenter();
             var pullRequestFile = new GitHubPullRequestFile(
                 AddedFilePath,
-                new GitHubPullRequest(
-                    1,
-                    "123",
-                    new List<PullRequestFile>(),
-                    new GitHubPullRequestBranches("test_branch", "master")),
                 GitHubPullRequestFileStatus.Added,
-                0);
+                0,
+                FileContents.TestClass3CsDiff);
 
             var violations = new List<GitHubStyleViolation>
                                  {
@@ -78,7 +74,17 @@
             mockAnalyzer.Setup(analyzer => analyzer.Analyze(addedPhysicalFilePath)).Returns(violations);
 
             var comments =
-                (await commenter.Create(pullRequestFile, mockAnalyzer.Object, addedPhysicalFilePath)).ToList();
+                (await
+                 commenter.Create(
+                     new GitHubPullRequest(
+                     1,
+                     "123",
+                     new List<GitHubPullRequestFile>(),
+                     FileContents.TestClass3CsDiff,
+                     new GitHubPullRequestBranches("test_branch", "master")),
+                     pullRequestFile,
+                     mockAnalyzer.Object,
+                     addedPhysicalFilePath)).ToList();
 
             Assert.That(comments.Count, Is.EqualTo(3));
 

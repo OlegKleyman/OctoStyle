@@ -19,16 +19,22 @@
             PullRequestCommenter commenter = GetRenamedPullRequestCommenter();
             var pullRequestFile = new GitHubPullRequestFile(
                 "src/TestLibrary/Nested/TestClass2.cs",
-                new GitHubPullRequest(
-                    1,
-                    "123",
-                    new List<PullRequestFile>(),
-                    new GitHubPullRequestBranches("test_branch", "master")),
                 GitHubPullRequestFileStatus.Renamed,
-                1);
+                1,
+                FileContents.TestClass2CsDiff);
 
             var comment =
-                (await commenter.Create(pullRequestFile, null, @"C:\repo\TestLibrary\Nested\TestClass2.cs")).ToList();
+                (await
+                 commenter.Create(
+                     new GitHubPullRequest(
+                     1,
+                     "123",
+                     new List<GitHubPullRequestFile>(),
+                     FileContents.TestClass2CsDiff,
+                     new GitHubPullRequestBranches("test_branch", "master")),
+                     pullRequestFile,
+                     null,
+                     @"C:\repo\TestLibrary\Nested\TestClass2.cs")).ToList();
 
             Assert.That(comment.Count, Is.EqualTo(1));
             Assert.That(comment[0].Path, Is.EqualTo("src/TestLibrary/Nested/TestClass2.cs"));

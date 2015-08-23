@@ -56,11 +56,7 @@ namespace OctoStyle.Core
             this.LastCommitId = lastCommitId;
             this.Diff = diff;
             this.Branches = branches;
-
-            var pullRequestFiles = files as List<GitHubPullRequestFile> ?? files.ToList();
-            pullRequestFiles.ForEach(file => file.PullRequest = this);
-            
-            this.Files = pullRequestFiles;
+            this.Files = files.ToList();
         }
 
         /// <summary>

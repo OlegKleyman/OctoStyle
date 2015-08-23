@@ -81,25 +81,21 @@
             Assert.That(pullRequest.Files, Is.Not.Null);
             Assert.That(pullRequest.Files.Count, Is.EqualTo(4));
             
-            Assert.That(pullRequest.Files[0].PullRequest, Is.EqualTo(pullRequest));
             Assert.That(pullRequest.Files[0].FileName, Is.EqualTo(renamedFileName));
             Assert.That(pullRequest.Files[0].Status, Is.EqualTo(GitHubPullRequestFileStatus.Renamed));
             Assert.That(pullRequest.Files[0].Changes, Is.EqualTo(renamedChanges));
             Assert.That(pullRequest.Files[0].Diff, Is.EqualTo(FileContents.TestClass2CsDiff));
 
-            Assert.That(pullRequest.Files[1].PullRequest, Is.EqualTo(pullRequest));
             Assert.That(pullRequest.Files[1].FileName, Is.EqualTo(addedFileName));
             Assert.That(pullRequest.Files[1].Status, Is.EqualTo(GitHubPullRequestFileStatus.Added));
             Assert.That(pullRequest.Files[1].Changes, Is.EqualTo(addedChanges));
             Assert.That(pullRequest.Files[1].Diff, Is.EqualTo(FileContents.TestClass3CsDiff));
 
-            Assert.That(pullRequest.Files[2].PullRequest, Is.EqualTo(pullRequest));
             Assert.That(pullRequest.Files[2].FileName, Is.EqualTo(firstModifiedFileName));
             Assert.That(pullRequest.Files[2].Status, Is.EqualTo(GitHubPullRequestFileStatus.Modified));
             Assert.That(pullRequest.Files[2].Changes, Is.EqualTo(firstModifiedChanges));
             Assert.That(pullRequest.Files[2].Diff, Is.EqualTo(FileContents.TestClassCsDiff));
 
-            Assert.That(pullRequest.Files[3].PullRequest, Is.EqualTo(pullRequest));
             Assert.That(pullRequest.Files[3].FileName, Is.EqualTo(secondModifiedFileName));
             Assert.That(pullRequest.Files[3].Status, Is.EqualTo(GitHubPullRequestFileStatus.Modified));
             Assert.That(pullRequest.Files[3].Changes, Is.EqualTo(secondModifiedChanges));

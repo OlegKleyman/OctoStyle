@@ -7,8 +7,6 @@ namespace OctoStyle.Core
     /// </summary>
     public class GitHubPullRequestFile
     {
-        private GitHubPullRequest pullRequest;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GitHubPullRequestFile"/> class.
         /// </summary>
@@ -51,28 +49,7 @@ namespace OctoStyle.Core
         /// </summary>
         /// <value>The name of the file.</value>
         public string FileName { get; private set; }
-
-        /// <summary>
-        /// Gets the <see cref="PullRequest"/>.
-        /// </summary>
-        /// <value>The <see cref="GitHubPullRequest"/> the file is a part of.</value>
-        public GitHubPullRequest PullRequest
-        {
-            get
-            {
-                if (this.pullRequest == null)
-                {
-                    throw new InvalidOperationException("PullRequest is null.");
-                }
-
-                return this.pullRequest;
-            }
-            internal set
-            {
-                this.pullRequest = value;
-            }
-        }
-
+        
         /// <summary>
         /// Gets the <see cref="Status"/>.
         /// </summary>

@@ -25,6 +25,7 @@
         /// <summary>
         /// Creates a pull request comment.
         /// </summary>
+        /// <param name="pullRequest"></param>
         /// <param name="file">The <see cref="GitHubPullRequestFile"/> to comment on.</param>
         /// <param name="analyzer">The <see cref="ICodeAnalyzer"/> to use for finding violations.</param>
         /// <param name="physicalFilePath">The physical path of the file stored locally.</param>
@@ -32,11 +33,13 @@
         /// A <see cref="Task{TResult}"/> of <see cref="IEnumerable{T}"/> of <see cref="PullRequestReviewComment"/> representing the commenting operation.
         /// </returns>
         /// <exception cref="ArgumentNullException">The file or analyzer arguments are null.</exception>
-        public override async Task<IEnumerable<PullRequestReviewComment>> Create(
-            GitHubPullRequestFile file,
-            ICodeAnalyzer analyzer,
-            string physicalFilePath)
+        public override async Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequest pullRequest, GitHubPullRequestFile file, ICodeAnalyzer analyzer, string physicalFilePath)
         {
+            if (pullRequest == null)
+            {
+                throw new ArgumentNullException("pullRequest");
+            }
+
             if (file == null)
             {
                 throw new ArgumentNullException("file");
@@ -59,11 +62,11 @@
 
                 var comment = new PullRequestReviewCommentCreate(
                     message,
-                    file.PullRequest.LastCommitId,
+                    pullRequest.LastCommitId,
                     file.FileName,
                     violation.LineNumber);
 
-                comments.Add(await this.Create(comment, file.PullRequest.Number));
+                comments.Add(await this.Create(comment, pullRequest.Number));
             }
 
             return comments;

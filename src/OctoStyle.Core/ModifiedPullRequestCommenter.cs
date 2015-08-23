@@ -38,6 +38,7 @@ namespace OctoStyle.Core
         /// <summary>
         /// Creates a pull request comment.
         /// </summary>
+        /// <param name="pullRequest"></param>
         /// <param name="file">The <see cref="GitHubPullRequestFile"/> to comment on.</param>
         /// <param name="analyzer">The <see cref="ICodeAnalyzer"/> to use for finding violations.</param>
         /// <param name="physicalFilePath">The physical path of the file stored locally.</param>
@@ -45,11 +46,13 @@ namespace OctoStyle.Core
         /// A <see cref="Task{TResult}"/> of <see cref="IEnumerable{T}"/> of <see cref="PullRequestReviewComment"/>
         /// representing the commenting operation.
         /// </returns>
-        public override async Task<IEnumerable<PullRequestReviewComment>> Create(
-            GitHubPullRequestFile file,
-            ICodeAnalyzer analyzer,
-            string physicalFilePath)
+        public override async Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequest pullRequest, GitHubPullRequestFile file, ICodeAnalyzer analyzer, string physicalFilePath)
         {
+            if (pullRequest == null)
+            {
+                throw new ArgumentNullException("pullRequest");
+            }
+
             if (file == null)
             {
                 throw new ArgumentNullException("file");
@@ -63,8 +66,8 @@ namespace OctoStyle.Core
             var diff =
                 this.diffRetriever.RetrieveAsync(
                     file.FileName,
-                    file.PullRequest.Branches.Branch,
-                    file.PullRequest.Branches.MergeBranch).GetAwaiter().GetResult().OfType<ModificationGitDiffEntry>();
+                    pullRequest.Branches.Branch,
+                    pullRequest.Branches.MergeBranch).GetAwaiter().GetResult().OfType<ModificationGitDiffEntry>();
 
             var violations = analyzer.Analyze(physicalFilePath);
 
@@ -86,11 +89,11 @@ namespace OctoStyle.Core
 
                 var comment = new PullRequestReviewCommentCreate(
                     message,
-                    file.PullRequest.LastCommitId,
+                    pullRequest.LastCommitId,
                     file.FileName,
                     violation.Position);
 
-                comments.Add(await this.Create(comment, file.PullRequest.Number));
+                comments.Add(await this.Create(comment, pullRequest.Number));
             }
 
             return comments;
