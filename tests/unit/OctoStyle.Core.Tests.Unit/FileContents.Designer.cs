@@ -90,6 +90,37 @@ namespace OctoStyle.Core.Tests.Unit {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to diff --git a/src/TestLibrary/TestClass2.cs b/src/TestLibrary/TestClass2.cs
+        ///deleted file mode 100644
+        ///index 143a417..0000000
+        ///--- a/src/TestLibrary/TestClass2.cs
+        ///+++ /dev/null
+        ///@@ -1,17 +0,0 @@
+        ///-﻿namespace TestLibrary
+        ///-{
+        ///-    public class TestClass2
+        ///-    {
+        ///-        public void testMethod()
+        ///-        {
+        ///-            foreach (var i in new [] {1,2,3,4})
+        ///-            {
+        ///-                
+        ///-            }
+        ///-            foreach (var b in new[] { 1, 2, 3, 4 })
+        ///-            {
+        ///-
+        ///-            }
+        ///-        }
+        ///-    }
+        ///-}.
+        /// </summary>
+        internal static string TestClass2CsDeletedDiff {
+            get {
+                return ResourceManager.GetString("TestClass2CsDeletedDiff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to diff --git a/src/TestLibrary/Nested/TestClass2.cs b/src/TestLibrary/Nested/TestClass2.cs
         ///new file mode 100644
         ///index 0000000..f6876ed
@@ -109,6 +140,7 @@ namespace OctoStyle.Core.Tests.Unit {
         ///+            }
         ///+        }
         ///+    }
+        ///+}
         ///.
         /// </summary>
         internal static string TestClass2CsDiff {
@@ -185,8 +217,7 @@ namespace OctoStyle.Core.Tests.Unit {
         ///+    class TestClass3
         ///+    {
         ///+    }
-        ///+}
-        ///.
+        ///+}.
         /// </summary>
         internal static string TestClass3CsDiff {
             get {
@@ -213,8 +244,7 @@ namespace OctoStyle.Core.Tests.Unit {
         ///+        }
         ///     }
         /// }
-        ///\ No newline at end of file
-        ///.
+        ///\ No newline at end of file.
         /// </summary>
         internal static string TestClassCsDiff {
             get {
@@ -236,7 +266,8 @@ namespace OctoStyle.Core.Tests.Unit {
         ///     &lt;Compile Include=&quot;TestClass.cs&quot; /&gt;
         ///-    &lt;Compile Include=&quot;TestClass2.cs&quot; /&gt;
         ///-  &lt;/ItemGroup&gt;
-        ///-  &lt;ItemGrou [rest of string was truncated]&quot;;.
+        ///-  &lt;ItemGroup&gt;
+        ///-    &lt;Fold [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string TestLibraryCsprojDiff {
             get {

@@ -121,6 +121,9 @@
   <data name="FullDiff" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\FullDiff.diff;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="TestClass2CsDeletedDiff" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\TestClass2CsDeletedDiff.diff;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="TestClass2CsDiff" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\TestClass2CsDiff.diff;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>

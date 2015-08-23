@@ -45,6 +45,7 @@
       <Link>GlobalSuppressions.cs</Link>
     </Compile>
     <Compile Include="Borrowed\DiffTests.cs" />
+    <Compile Include="DiffParserTests.cs" />
     <Compile Include="GitHubDiffRetrieverTests.cs" />
     <Compile Include="GitDiffEntryFactoryTests.cs" />
     <Compile Include="DiffEntryListExtensionsTests.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="RenamedPullRequestCommenterTest.cs" />
     <Compile Include="StyleCopTests.cs" />
     <None Include="Resources\FullDiff.diff" />
+    <None Include="Resources\TestClass2CsDeletedDiff.diff" />
     <None Include="Resources\TestClassCsDiff.diff" />
     <None Include="Resources\TestClass2CsDiff.diff" />
     <None Include="Resources\TestClass2.cs.new" />
