@@ -2,12 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
 
     using Moq;
 
     using NUnit.Framework;
 
     using Octokit;
+    using Octokit.Internal;
 
     [TestFixture]
     public class PullRequestRetrieverTests
@@ -34,6 +36,8 @@
 
         private const string PullRequestMergeBranch = "master";
 
+        private const string LastCommitId = "126";
+
         private static readonly Uri RenamedContentUrl = new Uri("http://321");
 
         private static readonly Uri AddedContentUrl = new Uri("http://421");
@@ -49,22 +53,27 @@
             var pullRequest = await retriever.RetrieveAsync(PullRequestNumber);
 
             Assert.That(pullRequest.Number, Is.EqualTo(PullRequestNumber));
-            Assert.That(pullRequest.LastCommitId, Is.EqualTo("126"));
+            Assert.That(pullRequest.LastCommitId, Is.EqualTo(LastCommitId));
             Assert.That(pullRequest.Branches.Branch, Is.EqualTo(PullRequestBranch));
             Assert.That(pullRequest.Branches.MergeBranch, Is.EqualTo(PullRequestMergeBranch));
+            Assert.That(pullRequest.Diff, Is.EqualTo(FileContents.FullDiff));
             Assert.That(pullRequest.Files.Count, Is.EqualTo(4));
             Assert.That(pullRequest.Files[0].FileName, Is.EqualTo(RenamedFileName));
             Assert.That(pullRequest.Files[0].Status, Is.EqualTo(GitHubPullRequestFileStatus.Renamed));
             Assert.That(pullRequest.Files[0].Changes, Is.EqualTo(RenamedChanges));
+            Assert.That(pullRequest.Files[0].Diff, Is.EqualTo(FileContents.TestClass2CsDiff));
             Assert.That(pullRequest.Files[1].FileName, Is.EqualTo(AddedFileName));
             Assert.That(pullRequest.Files[1].Status, Is.EqualTo(GitHubPullRequestFileStatus.Added));
             Assert.That(pullRequest.Files[1].Changes, Is.EqualTo(AddedChanges));
+            Assert.That(pullRequest.Files[1].Diff, Is.EqualTo(FileContents.TestClass3CsDiff));
             Assert.That(pullRequest.Files[2].FileName, Is.EqualTo(FirstModifiedFileName));
             Assert.That(pullRequest.Files[2].Status, Is.EqualTo(GitHubPullRequestFileStatus.Modified));
             Assert.That(pullRequest.Files[2].Changes, Is.EqualTo(FirstModifiedChanges));
+            Assert.That(pullRequest.Files[2].Diff, Is.EqualTo(FileContents.TestClassCsDiff));
             Assert.That(pullRequest.Files[3].FileName, Is.EqualTo(SecondModifiedFileName));
             Assert.That(pullRequest.Files[3].Status, Is.EqualTo(GitHubPullRequestFileStatus.Modified));
             Assert.That(pullRequest.Files[3].Changes, Is.EqualTo(SecondModifiedChanges));
+            Assert.That(pullRequest.Files[3].Diff, Is.EqualTo(FileContents.TestLibraryCsprojDiff));
         }
 
         private static IPullRequestRetriever GetPullRequestRetriever()
@@ -78,7 +87,7 @@
                                   GetPullRequestCommit("123"),
                                   GetPullRequestCommit("124"),
                                   GetPullRequestCommit("125"),
-                                  GetPullRequestCommit("126")
+                                  GetPullRequestCommit(LastCommitId)
                               };
             client.Setup(requestsClient => requestsClient.Commits(repository.Owner, repository.Name, PullRequestNumber))
                 .ReturnsAsync(commits);
@@ -114,12 +123,21 @@
             client.Setup(requestsClient => requestsClient.Files(repository.Owner, repository.Name, PullRequestNumber))
                 .ReturnsAsync(files);
 
+            var diffUrl =
+                new Uri(
+                    String.Format(
+                        CultureInfo.InvariantCulture,
+                        "http://github.com/{0}/{1}/pull/{2}",
+                        repository.Owner,
+                        repository.Name,
+                        PullRequestNumber));
+
             client.Setup(requestsClient => requestsClient.Get(repository.Owner, repository.Name, PullRequestNumber))
                 .ReturnsAsync(
                     new PullRequest(
                         null,
                         null,
-                        null,
+                        diffUrl,
                         null,
                         null,
                         null,
@@ -145,8 +163,57 @@
                         0));
 
             var connection = new Mock<IConnection>();
+            var builder = new Mock<IPullRequestBuilder>();
+            var mockResponse = new Mock<IResponse>();
 
-            return new PullRequestRetriever(client.Object, connection.Object, repository);
+            connection.Setup(
+                con => con.Get<string>(It.Is<Uri>(uri => uri.AbsoluteUri == diffUrl.AbsoluteUri), null, null))
+                .ReturnsAsync(new ApiResponse<string>(mockResponse.Object, FileContents.FullDiff));
+
+            var pullRequestFiles = new List<GitHubPullRequestFile>
+                                       {
+                                           new GitHubPullRequestFile(
+                                               RenamedFileName,
+                                               GitHubPullRequestFileStatus.Renamed,
+                                               RenamedChanges,
+                                               FileContents.TestClass2CsDiff),
+                                           new GitHubPullRequestFile(
+                                               AddedFileName,
+                                               GitHubPullRequestFileStatus.Added,
+                                               AddedChanges,
+                                               FileContents.TestClass3CsDiff),
+                                           new GitHubPullRequestFile(
+                                               FirstModifiedFileName,
+                                               GitHubPullRequestFileStatus.Modified,
+                                               FirstModifiedChanges,
+                                               FileContents.TestClassCsDiff),
+                                           new GitHubPullRequestFile(
+                                               SecondModifiedFileName,
+                                               GitHubPullRequestFileStatus.Modified,
+                                               SecondModifiedChanges,
+                                               FileContents.TestLibraryCsprojDiff),
+                                       };
+
+
+            var pullRequest = new GitHubPullRequest(
+                PullRequestNumber,
+                LastCommitId,
+                pullRequestFiles,
+                FileContents.FullDiff,
+                new GitHubPullRequestBranches(PullRequestBranch, PullRequestMergeBranch));
+
+            builder.Setup(
+                requestBuilder =>
+                requestBuilder.Build(
+                    PullRequestNumber,
+                    LastCommitId,
+                    files,
+                    FileContents.FullDiff,
+                    It.Is<GitHubPullRequestBranches>(
+                        branches =>
+                        branches.Branch == PullRequestBranch & branches.MergeBranch == PullRequestMergeBranch))).Returns(pullRequest);
+
+            return new PullRequestRetriever(builder.Object, client.Object, connection.Object, repository);
         }
 
         private static PullRequestFile GetPullRequestFile(
