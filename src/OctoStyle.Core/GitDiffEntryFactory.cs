@@ -3,8 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
 
     using OctoStyle.Core.Borrowed;
+
+    using SharpDiff.FileStructure;
+
+    using Diff = SharpDiff.FileStructure.Diff;
 
     /// <summary>
     /// Represents a git diff entry factory.
@@ -52,6 +57,24 @@
             }
 
             return gitDiff;
+        }
+
+        public IReadOnlyList<GitDiffEntry> Get(ISnippet entry, int position)
+        {
+            if (entry == null)
+            {
+                throw new ArgumentNullException("entry");
+            }
+
+            if (entry.OriginalLines == null)
+            {
+                throw new ArgumentException("OriginalLines are missing.");
+            }
+
+            return
+                entry.OriginalLines.Select(originalLine => new EqualGitDiffEntry(position++))
+                    .Cast<GitDiffEntry>()
+                    .ToList();
         }
     }
 }

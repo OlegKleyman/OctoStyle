@@ -88,6 +88,10 @@
     <Reference Include="Octokit">
       <HintPath>..\..\..\packages\Octokit.0.13.0\lib\net45\Octokit.dll</HintPath>
     </Reference>
+    <Reference Include="SharpDiff, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common\lib\SharpDiff.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Net.Http" />
   </ItemGroup>

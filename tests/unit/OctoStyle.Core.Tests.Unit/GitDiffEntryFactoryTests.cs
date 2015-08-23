@@ -1,8 +1,12 @@
 ﻿namespace OctoStyle.Core.Tests.Unit
 {
+    using System.Linq;
+
     using NUnit.Framework;
 
     using OctoStyle.Core.Borrowed;
+
+    using SharpDiff;
 
     [TestFixture]
     public static class GitDiffEntryFactoryTests
@@ -64,6 +68,24 @@
             var modifiedEntry = (ModificationGitDiffEntry)result[0];
             Assert.That(modifiedEntry.LineNumber, Is.EqualTo(4));
             Assert.That(modifiedEntry.Status, Is.EqualTo(GitDiffEntryStatus.Removed));
+        }
+
+        [Test]
+        public static void GetShouldReturnGitEqualDiffForContextSnippetLine()
+        {
+            var diff = Differ.Load(FileContents.TestLibraryCsprojDiff).ToList();
+
+            var factory = GetGitDiffEntryFactory();
+
+            var equalDiff = factory.Get(diff[0].Chunks[0].Snippets.ToList()[0], 1);
+
+            Assert.That(equalDiff.Count, Is.EqualTo(3));
+            Assert.That(equalDiff[0], Is.InstanceOf<EqualGitDiffEntry>());
+            Assert.That(equalDiff[0].Position, Is.EqualTo(1));
+            Assert.That(equalDiff[1], Is.InstanceOf<EqualGitDiffEntry>());
+            Assert.That(equalDiff[1].Position, Is.EqualTo(2));
+            Assert.That(equalDiff[2], Is.InstanceOf<EqualGitDiffEntry>());
+            Assert.That(equalDiff[2].Position, Is.EqualTo(3));
         }
 
         private static GitDiffEntryFactory GetGitDiffEntryFactory()
