@@ -14,7 +14,7 @@
     using Octokit;
 
     [TestFixture]
-    public class ModifiedPullRequestCommenterTest
+    public class ModifiedPullRequestCommenterTests
     {
         private const int NoMethodDocumentationHeaderCommentId = 1;
 
