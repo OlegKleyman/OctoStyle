@@ -59,38 +59,29 @@
             return gitDiff;
         }
 
-        public IReadOnlyList<GitDiffEntry> Get(ISnippet entry, int position, int lineNumber)
+        public IReadOnlyList<GitDiffEntry> Get(ISnippet snippet, int position, int lineNumber)
         {
-            if (entry == null)
+            if (snippet == null)
             {
                 throw new ArgumentNullException("entry");
             }
 
             var gitDiff = new List<GitDiffEntry>();
 
-            if (entry is ContextSnippet)
-            {
-                if (entry.OriginalLines == null)
-                {
-                    throw new ArgumentException("OriginalLines are missing.");
-                }
+            gitDiff.AddRange(
+                snippet.OriginalLines.SelectMany(line => line.Spans)
+                    .Where(span => span.Kind == SpanKind.Equal)
+                    .Select(originalLine => new EqualGitDiffEntry(position++)));
 
-                gitDiff.AddRange(
-                    entry.OriginalLines.Select(originalLine => new EqualGitDiffEntry(position++)));
-            }
-            else if (entry is AdditionSnippet)
-            {
-                if (entry.ModifiedLines == null)
-                {
-                    throw new ArgumentException("ModifiedLines are missing.");
-                }
+            gitDiff.AddRange(
+                snippet.OriginalLines.SelectMany(line => line.Spans)
+                    .Where(span => span.Kind == SpanKind.Deletion)
+                    .Select(line => new ModificationGitDiffEntry(position++, GitDiffEntryStatus.Removed, default(int))));
 
-                foreach (var modifiedLine in entry.ModifiedLines)
-                {
-                    var diffEntry = new ModificationGitDiffEntry(position++, GitDiffEntryStatus.New, lineNumber++);
-                    gitDiff.Add(diffEntry);
-                }
-            }
+            gitDiff.AddRange(
+                snippet.ModifiedLines.SelectMany(line => line.Spans)
+                    .Where(span => span.Kind == SpanKind.Addition)
+                    .Select(line => new ModificationGitDiffEntry(position++, GitDiffEntryStatus.New, lineNumber++)));
 
             return gitDiff;
         }

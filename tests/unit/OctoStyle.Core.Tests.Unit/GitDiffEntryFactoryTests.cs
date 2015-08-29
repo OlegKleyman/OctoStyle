@@ -106,6 +106,53 @@
             Assert.That(result[0].Position, Is.EqualTo(4));
         }
 
+        [Test]
+        public static void GetShouldReturnGitModificationDiffForAdditionAndDeletionSnippet()
+        {
+            var diff = Differ.Load(FileContents.TestLibraryCsprojDiff).ToList();
+
+            var factory = GetGitDiffEntryFactory();
+
+            var result = factory.Get(diff[0].Chunks[0].Snippets.ToList()[3], 7, 36);
+
+            Assert.That(result.Count, Is.EqualTo(5));
+
+            Assert.That(result[0], Is.InstanceOf<ModificationGitDiffEntry>());
+            
+            var removedEntry = (ModificationGitDiffEntry)result[0];
+            Assert.That(removedEntry.LineNumber, Is.EqualTo(default(int)));
+            Assert.That(removedEntry.Status, Is.EqualTo(GitDiffEntryStatus.Removed));
+            Assert.That(result[0].Position, Is.EqualTo(7));
+
+            Assert.That(result[1], Is.InstanceOf<ModificationGitDiffEntry>());
+
+            removedEntry = (ModificationGitDiffEntry)result[1];
+            Assert.That(removedEntry.LineNumber, Is.EqualTo(default(int)));
+            Assert.That(removedEntry.Status, Is.EqualTo(GitDiffEntryStatus.Removed));
+            Assert.That(result[1].Position, Is.EqualTo(8));
+
+            Assert.That(result[2], Is.InstanceOf<ModificationGitDiffEntry>());
+
+            removedEntry = (ModificationGitDiffEntry)result[2];
+            Assert.That(removedEntry.LineNumber, Is.EqualTo(default(int)));
+            Assert.That(removedEntry.Status, Is.EqualTo(GitDiffEntryStatus.Removed));
+            Assert.That(result[2].Position, Is.EqualTo(9));
+
+            Assert.That(result[3], Is.InstanceOf<ModificationGitDiffEntry>());
+
+            removedEntry = (ModificationGitDiffEntry)result[3];
+            Assert.That(removedEntry.LineNumber, Is.EqualTo(default(int)));
+            Assert.That(removedEntry.Status, Is.EqualTo(GitDiffEntryStatus.Removed));
+            Assert.That(result[3].Position, Is.EqualTo(10));
+
+            Assert.That(result[4], Is.InstanceOf<ModificationGitDiffEntry>());
+            
+            removedEntry = (ModificationGitDiffEntry)result[4];
+            Assert.That(removedEntry.LineNumber, Is.EqualTo(36));
+            Assert.That(removedEntry.Status, Is.EqualTo(GitDiffEntryStatus.New));
+            Assert.That(result[4].Position, Is.EqualTo(11));
+        }
+
         private static GitDiffEntryFactory GetGitDiffEntryFactory()
         {
             return new GitDiffEntryFactory();
