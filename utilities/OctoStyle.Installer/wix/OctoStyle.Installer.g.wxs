@@ -43,6 +43,14 @@
               <File Id="StyleCop.CSharp.dll" Source="..\..\src\OctoStyle.Console\bin\Full\StyleCop.CSharp.dll" />
             </Component>
 
+            <Component Id="Component.OMetaSharp.dll" Guid="b6ff0ca5-1560-441d-97ba-55d51cc2121b">
+              <File Id="OMetaSharp.dll" Source="..\..\src\OctoStyle.Console\bin\Full\OMetaSharp.dll" />
+            </Component>
+
+            <Component Id="Component.SharpDiff.dll" Guid="b6ff0ca5-1560-441d-97ba-55d5bb20cced">
+              <File Id="SharpDiff.dll" Source="..\..\src\OctoStyle.Console\bin\Full\SharpDiff.dll" />
+            </Component>
+
           </Directory>
         </Directory>
       </Directory>
@@ -58,6 +66,8 @@
       <ComponentRef Id="Component.StyleCop.CSharp.Rules.dll" />
       <ComponentRef Id="Component.StyleCop.dll" />
       <ComponentRef Id="Component.StyleCop.CSharp.dll" />
+      <ComponentRef Id="Component.OMetaSharp.dll" />
+      <ComponentRef Id="Component.SharpDiff.dll" />
     </Feature>
 
   </Product>

@@ -43,7 +43,9 @@
                     new File(Path.Combine(octoStyleOutputPath, "Octokit.dll")),
                     new File(Path.Combine(octoStyleOutputPath, "StyleCop.CSharp.Rules.dll")),
                     new File(Path.Combine(octoStyleOutputPath, "StyleCop.dll")),
-                    new File(Path.Combine(octoStyleOutputPath, "StyleCop.CSharp.dll"))));
+                    new File(Path.Combine(octoStyleOutputPath, "StyleCop.CSharp.dll")),
+                    new File(Path.Combine(octoStyleOutputPath, "OMetaSharp.dll")),
+                    new File(Path.Combine(octoStyleOutputPath, "SharpDiff.dll"))));
 
             project.GUID = new Guid("B6FF0CA5-1560-441D-97BA-55D568B3D332");
 
