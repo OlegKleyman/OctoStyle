@@ -38,7 +38,7 @@ namespace OctoStyle.Core
         /// <summary>
         /// Creates a pull request comment.
         /// </summary>
-        /// <param name="pullRequest"></param>
+        /// <param name="pullRequest">The <see cref="GitHubPullRequest"/> to comment on.</param>
         /// <param name="file">The <see cref="GitHubPullRequestFile"/> to comment on.</param>
         /// <param name="analyzer">The <see cref="ICodeAnalyzer"/> to use for finding violations.</param>
         /// <param name="physicalFilePath">The physical path of the file stored locally.</param>

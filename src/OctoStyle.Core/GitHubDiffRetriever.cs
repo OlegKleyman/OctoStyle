@@ -22,7 +22,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="GitHubDiffRetriever"/> class.
         /// </summary>
-        /// <param name="differ"></param>
+        /// <param name="differ">The <see cref="IDiffer"/> instance to use for loading diffs.</param>
         public GitHubDiffRetriever(IDiffer differ)
         {
             if (differ == null)
@@ -32,7 +32,12 @@
 
             this.differ = differ;
         }
-        
+
+        /// <summary>
+        /// Retrieves a GitHub pull request file diff.
+        /// </summary>
+        /// <param name="rawDiff">The pull request file diff content.</param>
+        /// <returns>An <see cref="IReadOnlyList{T}"/> of <see cref="GitDiffEntry"/>.</returns>
         public IReadOnlyList<GitDiffEntry> Retrieve(string rawDiff)
         {
             var diff = this.differ.Load(rawDiff);

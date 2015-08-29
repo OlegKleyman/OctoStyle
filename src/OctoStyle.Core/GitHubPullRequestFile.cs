@@ -65,6 +65,10 @@ namespace OctoStyle.Core
         /// <value>The amount of changes in the file.</value>
         public int Changes { get; private set; }
 
+        /// <summary>
+        /// Gets <see cref="Diff"/>.
+        /// </summary>
+        /// <value>The GitHub pull request file unified diff.</value>
         public string Diff { get; private set; }
     }
 }

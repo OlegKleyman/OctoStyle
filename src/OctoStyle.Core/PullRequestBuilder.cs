@@ -6,10 +6,17 @@ namespace OctoStyle.Core
 
     using Octokit;
 
+    /// <summary>
+    /// Represents a pull request builder.
+    /// </summary>
     public class PullRequestBuilder : IPullRequestBuilder
     {
         private readonly IDiffParser parser;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PullRequestBuilder"/> class.
+        /// </summary>
+        /// <param name="parser">The <see cref="IDiffParser"/> to use to parse diffs.</param>
         public PullRequestBuilder(IDiffParser parser)
         {
             if (parser == null)
@@ -20,6 +27,15 @@ namespace OctoStyle.Core
             this.parser = parser;
         }
 
+        /// <summary>
+        /// Builds a <see cref="GitHubPullRequest"/>.
+        /// </summary>
+        /// <param name="number">The pull request number.</param>
+        /// <param name="lastCommitId">The last commit ID.</param>
+        /// <param name="files">The files in the pull request.</param>
+        /// <param name="diff">The full pull request unified diff.</param>
+        /// <param name="branches">The <see cref="GitHubPullRequestBranches"/>.</param>
+        /// <returns>A <see cref="GitHubPullRequest"/> object.</returns>
         public GitHubPullRequest Build(
             int number,
             string lastCommitId,

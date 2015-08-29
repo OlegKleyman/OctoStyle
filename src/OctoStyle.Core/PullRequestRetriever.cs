@@ -23,11 +23,17 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="PullRequestRetriever"/> class.
         /// </summary>
-        /// <param name="builder"></param>
+        /// <param name="builder">The <see cref="IPullRequestBuilder"/> instance to build pull request objects with.</param>
         /// <param name="client">The <see cref="IPullRequestsClient"/> to use for interfacing with GitHub.</param>
-        /// <param name="connection"></param>
+        /// <param name="connection">
+        /// The <see cref="IConnection"/> object to interface use when interfacing with GitHub.
+        /// </param>
         /// <param name="repository">The <see cref="GitHubRepository"/> containing the pull request to comment on.</param>
-        public PullRequestRetriever(IPullRequestBuilder builder, IPullRequestsClient client, IConnection connection, GitHubRepository repository)
+        public PullRequestRetriever(
+            IPullRequestBuilder builder,
+            IPullRequestsClient client,
+            IConnection connection,
+            GitHubRepository repository)
         {
             if (builder == null)
             {

@@ -19,7 +19,7 @@ namespace OctoStyle.Core
         /// <param name="lastCommitId">The last commit hash of the pull request.</param>
         /// <param name="files">The <see cref="IEnumerable{T}"/> of <see cref="GitHubPullRequestFile"/>
         ///     containing files in the pull request.</param>
-        /// <param name="diff"></param>
+        /// <param name="diff">The full GitHub pull request unified diff content.</param>
         /// <param name="branches">The <see cref="GitHubPullRequestBranches"/> the branches associated with the pull request.</param>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter",
             Justification = StyleCopConstants.LocalConstantJustification)]
@@ -83,6 +83,10 @@ namespace OctoStyle.Core
         /// <value>The <see cref="IEnumerable{T}"/> of <see cref="PullRequestFile"/> containing files in the pull request.</value>
         public IReadOnlyList<GitHubPullRequestFile> Files { get; private set; }
 
+        /// <summary>
+        /// Gets <see cref="Diff"/>.
+        /// </summary>
+        /// <value>The full GitHub pull request unified diff.</value>
         public string Diff { get; private set; }
     }
 }
