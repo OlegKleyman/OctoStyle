@@ -59,22 +59,40 @@
             return gitDiff;
         }
 
-        public IReadOnlyList<GitDiffEntry> Get(ISnippet entry, int position)
+        public IReadOnlyList<GitDiffEntry> Get(ISnippet entry, int position, int lineNumber)
         {
             if (entry == null)
             {
                 throw new ArgumentNullException("entry");
             }
 
-            if (entry.OriginalLines == null)
+            var gitDiff = new List<GitDiffEntry>();
+
+            if (entry is ContextSnippet)
             {
-                throw new ArgumentException("OriginalLines are missing.");
+                if (entry.OriginalLines == null)
+                {
+                    throw new ArgumentException("OriginalLines are missing.");
+                }
+
+                gitDiff.AddRange(
+                    entry.OriginalLines.Select(originalLine => new EqualGitDiffEntry(position++)));
+            }
+            else if (entry is AdditionSnippet)
+            {
+                if (entry.ModifiedLines == null)
+                {
+                    throw new ArgumentException("ModifiedLines are missing.");
+                }
+
+                foreach (var modifiedLine in entry.ModifiedLines)
+                {
+                    var diffEntry = new ModificationGitDiffEntry(position++, GitDiffEntryStatus.New, lineNumber++);
+                    gitDiff.Add(diffEntry);
+                }
             }
 
-            return
-                entry.OriginalLines.Select(originalLine => new EqualGitDiffEntry(position++))
-                    .Cast<GitDiffEntry>()
-                    .ToList();
+            return gitDiff;
         }
     }
 }

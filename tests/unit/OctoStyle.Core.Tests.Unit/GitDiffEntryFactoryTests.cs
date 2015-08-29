@@ -77,7 +77,7 @@
 
             var factory = GetGitDiffEntryFactory();
 
-            var equalDiff = factory.Get(diff[0].Chunks[0].Snippets.ToList()[0], 1);
+            var equalDiff = factory.Get(diff[0].Chunks[0].Snippets.ToList()[0], 1, 30);
 
             Assert.That(equalDiff.Count, Is.EqualTo(3));
             Assert.That(equalDiff[0], Is.InstanceOf<EqualGitDiffEntry>());
@@ -86,6 +86,24 @@
             Assert.That(equalDiff[1].Position, Is.EqualTo(2));
             Assert.That(equalDiff[2], Is.InstanceOf<EqualGitDiffEntry>());
             Assert.That(equalDiff[2].Position, Is.EqualTo(3));
+        }
+
+        [Test]
+        public static void GetShouldReturnGitModificationDiffForAdditionSnippet()
+        {
+            var diff = Differ.Load(FileContents.TestLibraryCsprojDiff).ToList();
+
+            var factory = GetGitDiffEntryFactory();
+
+            var result = factory.Get(diff[0].Chunks[0].Snippets.ToList()[1], 4, 33);
+
+            Assert.That(result.Count, Is.EqualTo(1));
+            Assert.That(result[0], Is.InstanceOf<ModificationGitDiffEntry>());
+            
+            var modifiedEntry = (ModificationGitDiffEntry)result[0];
+            Assert.That(modifiedEntry.LineNumber, Is.EqualTo(33));
+            Assert.That(modifiedEntry.Status, Is.EqualTo(GitDiffEntryStatus.New));
+            Assert.That(result[0].Position, Is.EqualTo(4));
         }
 
         private static GitDiffEntryFactory GetGitDiffEntryFactory()
