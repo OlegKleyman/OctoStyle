@@ -119,8 +119,8 @@
                                new ModificationGitDiffEntry(11, GitDiffEntryStatus.New, 27)
                            };
 
-            diffRetriever.Setup(retriever => retriever.RetrieveAsync(ModifiedFilePath, "test_branch", "master"))
-                .ReturnsAsync(diff);
+            diffRetriever.Setup(retriever => retriever.Retrieve(FileContents.TestClassCsDiff))
+                .Returns(diff);
 
             return new ModifiedPullRequestCommenter(
                 pullRequestCommentClient.Object,
