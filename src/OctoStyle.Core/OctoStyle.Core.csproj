@@ -52,10 +52,6 @@
     <Compile Include="IPullRequestBuilder.cs" />
     <Compile Include="IPullRequestCommenterFactory.cs" />
     <Compile Include="ModifiedPullRequestCommenter.cs" />
-    <Compile Include="Borrowed\Diff.cs" />
-    <Compile Include="Borrowed\DiffEntry.cs" />
-    <Compile Include="Borrowed\DiffEntryType.cs" />
-    <Compile Include="DiffEntryListExtensions.cs" />
     <Compile Include="EqualGitDiffEntry.cs" />
     <Compile Include="GitHubDiffRetriever.cs" />
     <Compile Include="GitDiffEntry.cs" />

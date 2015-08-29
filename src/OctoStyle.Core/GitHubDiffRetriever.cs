@@ -4,13 +4,8 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using System.Threading.Tasks;
-
-    using Octokit;
 
     using SharpDiff.FileStructure;
-
-    using Diff = OctoStyle.Core.Borrowed.Diff;
 
     /// <summary>
     /// Represents a github diff retriever.
@@ -42,7 +37,7 @@
         {
             var diff = this.differ.Load(rawDiff);
 
-            var enumeratedDiff = diff as SharpDiff.FileStructure.Diff[] ?? diff.ToArray();
+            var enumeratedDiff = diff as Diff[] ?? diff.ToArray();
 
             if (diff == null || !enumeratedDiff.Any())
             {

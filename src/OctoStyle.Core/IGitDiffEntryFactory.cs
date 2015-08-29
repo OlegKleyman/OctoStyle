@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using OctoStyle.Core.Borrowed;
+    using SharpDiff.FileStructure;
 
     /// <summary>
     /// Represents a git diff entry factory.
@@ -12,9 +12,10 @@
         /// <summary>
         /// Gets git diff entries.
         /// </summary>
-        /// <param name="entry">The <see cref="DiffEntry"/> of <see cref="string"/> to build from.</param>
-        /// <param name="position">The position the diff entry exists in a git diff.</param>
+        /// <param name="snippet">The <see cref="ISnippet"/> containing diff entries.</param>
+        /// <param name="position">The position the starting diff entry that exists in the git diff.</param>
+        /// <param name="lineNumber">The starting line number of the diff entry.</param>
         /// <returns><see cref="IReadOnlyList{T}"/> of <see cref="GitDiffEntry"/>.</returns>
-        IReadOnlyList<GitDiffEntry> Get(DiffEntry entry, int position);
+        IReadOnlyList<GitDiffEntry> Get(ISnippet snippet, int position, int lineNumber);
     }
 }

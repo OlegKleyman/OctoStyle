@@ -44,11 +44,9 @@
     <Compile Include="..\..\..\GlobalSuppressions.cs">
       <Link>GlobalSuppressions.cs</Link>
     </Compile>
-    <Compile Include="Borrowed\DiffTests.cs" />
     <Compile Include="DiffParserTests.cs" />
     <Compile Include="GitHubDiffRetrieverTests.cs" />
     <Compile Include="GitDiffEntryFactoryTests.cs" />
-    <Compile Include="DiffEntryListExtensionsTests.cs" />
     <Compile Include="FileContents.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
