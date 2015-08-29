@@ -6,7 +6,7 @@
 </auto-generated>
 -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="b6ff0ca5-1560-441d-97ba-55d578b3d333" Name="OctoStyle" Language="1033" Codepage="Windows-1252" Version="1.0.0.0" UpgradeCode="b6ff0ca5-1560-441d-97ba-55d568b3d332" Manufacturer="OKleyman">
+  <Product Id="99098ee3-16a5-4ed1-8179-ff8ea6f67328" Name="OctoStyle" Language="1033" Codepage="Windows-1252" Version="1.0.0.0" UpgradeCode="99098ee3-16a5-4ed1-8179-ff8e96f67327" Manufacturer="OKleyman">
     <Package InstallerVersion="200" Compressed="yes" SummaryCodepage="Windows-1252" Languages="1033" />
     <Media Id="1" Cabinet="OctoStyle.cab" EmbedCab="yes" />
 
@@ -15,39 +15,39 @@
         <Directory Id="ProgramFilesFolder.Omego2K" Name="Omego2K">
           <Directory Id="INSTALLDIR" Name="OctoStyle">
 
-            <Component Id="Component.OctoStyle.Console.exe" Guid="b6ff0ca5-1560-441d-97ba-55d5bb6bdd59">
+            <Component Id="Component.OctoStyle.Console.exe" Guid="99098ee3-16a5-4ed1-8179-ff8ee9ae7d4e">
               <File Id="OctoStyle.Console.exe" Source="..\..\src\OctoStyle.Console\bin\Full\OctoStyle.Console.exe" />
             </Component>
 
-            <Component Id="Component.OctoStyle.Core.dll" Guid="b6ff0ca5-1560-441d-97ba-55d5866bc6db">
+            <Component Id="Component.OctoStyle.Core.dll" Guid="99098ee3-16a5-4ed1-8179-ff8eb4ae66d0">
               <File Id="OctoStyle.Core.dll" Source="..\..\src\OctoStyle.Console\bin\Full\OctoStyle.Core.dll" />
             </Component>
 
-            <Component Id="Component.NDesk.Options.dll" Guid="b6ff0ca5-1560-441d-97ba-55d55d02977d">
+            <Component Id="Component.NDesk.Options.dll" Guid="99098ee3-16a5-4ed1-8179-ff8e8b453772">
               <File Id="NDesk.Options.dll" Source="..\..\src\OctoStyle.Console\bin\Full\NDesk.Options.dll" />
             </Component>
 
-            <Component Id="Component.Octokit.dll" Guid="b6ff0ca5-1560-441d-97ba-55d5058e694f">
+            <Component Id="Component.Octokit.dll" Guid="99098ee3-16a5-4ed1-8179-ff8e33d10944">
               <File Id="Octokit.dll" Source="..\..\src\OctoStyle.Console\bin\Full\Octokit.dll" />
             </Component>
 
-            <Component Id="Component.StyleCop.CSharp.Rules.dll" Guid="b6ff0ca5-1560-441d-97ba-55d5ea98450f">
+            <Component Id="Component.StyleCop.CSharp.Rules.dll" Guid="99098ee3-16a5-4ed1-8179-ff8e18dbe504">
               <File Id="StyleCop.CSharp.Rules.dll" Source="..\..\src\OctoStyle.Console\bin\Full\StyleCop.CSharp.Rules.dll" />
             </Component>
 
-            <Component Id="Component.StyleCop.dll" Guid="b6ff0ca5-1560-441d-97ba-55d59770889e">
+            <Component Id="Component.StyleCop.dll" Guid="99098ee3-16a5-4ed1-8179-ff8ec5b32893">
               <File Id="StyleCop.dll" Source="..\..\src\OctoStyle.Console\bin\Full\StyleCop.dll" />
             </Component>
 
-            <Component Id="Component.StyleCop.CSharp.dll" Guid="b6ff0ca5-1560-441d-97ba-55d5ec1150d2">
+            <Component Id="Component.StyleCop.CSharp.dll" Guid="99098ee3-16a5-4ed1-8179-ff8e1a54f0c7">
               <File Id="StyleCop.CSharp.dll" Source="..\..\src\OctoStyle.Console\bin\Full\StyleCop.CSharp.dll" />
             </Component>
 
-            <Component Id="Component.OMetaSharp.dll" Guid="b6ff0ca5-1560-441d-97ba-55d51cc2121b">
+            <Component Id="Component.OMetaSharp.dll" Guid="99098ee3-16a5-4ed1-8179-ff8e4a05b210">
               <File Id="OMetaSharp.dll" Source="..\..\src\OctoStyle.Console\bin\Full\OMetaSharp.dll" />
             </Component>
 
-            <Component Id="Component.SharpDiff.dll" Guid="b6ff0ca5-1560-441d-97ba-55d5bb20cced">
+            <Component Id="Component.SharpDiff.dll" Guid="99098ee3-16a5-4ed1-8179-ff8ee9636ce2">
               <File Id="SharpDiff.dll" Source="..\..\src\OctoStyle.Console\bin\Full\SharpDiff.dll" />
             </Component>
 
@@ -55,6 +55,13 @@
         </Directory>
       </Directory>
     </Directory>
+
+    <Upgrade Id="99098ee3-16a5-4ed1-8179-ff8e96f67327" >
+      <UpgradeVersion Minimum="0.0.0.0" IncludeMinimum="yes" Maximum="1.0.0.0" IncludeMaximum="no" Property="UPGRADEFOUND" />
+      <UpgradeVersion Minimum="1.0.0.0" IncludeMinimum="no" OnlyDetect="yes" Property="NEWPRODUCTFOUND" />
+    </Upgrade>
+
+    <CustomAction Id="PreventDowngrading" Error="Newer version already installed"  />
 
     <UIRef Id="WixUI_Minimal"  />
 
@@ -69,6 +76,16 @@
       <ComponentRef Id="Component.OMetaSharp.dll" />
       <ComponentRef Id="Component.SharpDiff.dll" />
     </Feature>
+
+    <InstallExecuteSequence >
+      <Custom Action="PreventDowngrading" After="FindRelatedProducts">NEWPRODUCTFOUND</Custom>
+
+      <RemoveExistingProducts After="InstallFinalize" />
+    </InstallExecuteSequence>
+
+    <InstallUISequence >
+      <Custom Action="PreventDowngrading" After="FindRelatedProducts">NEWPRODUCTFOUND</Custom>
+    </InstallUISequence>
 
   </Product>
 </Wix>

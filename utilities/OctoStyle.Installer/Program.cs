@@ -47,8 +47,10 @@
                     new File(Path.Combine(octoStyleOutputPath, "OMetaSharp.dll")),
                     new File(Path.Combine(octoStyleOutputPath, "SharpDiff.dll"))));
 
-            project.GUID = new Guid("B6FF0CA5-1560-441D-97BA-55D568B3D332");
-
+            project.GenerateProductGuids();
+            
+            project.MajorUpgradeStrategy = MajorUpgradeStrategy.Default;
+            
             const string wixToolsLocation = @"packages\WiX.3.9.2\tools";
 
             Compiler.WixLocation = Path.Combine(rootSolutionDirectory, wixToolsLocation);
