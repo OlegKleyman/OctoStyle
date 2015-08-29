@@ -46,7 +46,11 @@ namespace OctoStyle.Core
         /// A <see cref="Task{TResult}"/> of <see cref="IEnumerable{T}"/> of <see cref="PullRequestReviewComment"/>
         /// representing the commenting operation.
         /// </returns>
-        public override async Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequest pullRequest, GitHubPullRequestFile file, ICodeAnalyzer analyzer, string physicalFilePath)
+        public override async Task<IEnumerable<PullRequestReviewComment>> Create(
+            GitHubPullRequest pullRequest,
+            GitHubPullRequestFile file,
+            ICodeAnalyzer analyzer,
+            string physicalFilePath)
         {
             if (pullRequest == null)
             {
@@ -63,19 +67,16 @@ namespace OctoStyle.Core
                 throw new ArgumentNullException("analyzer");
             }
 
-            var diff =
-                this.diffRetriever.RetrieveAsync(
-                    file.FileName,
-                    pullRequest.Branches.Branch,
-                    pullRequest.Branches.MergeBranch).GetAwaiter().GetResult().OfType<ModificationGitDiffEntry>();
+            var diff = this.diffRetriever.Retrieve(file.Diff).OfType<ModificationGitDiffEntry>();
 
             var violations = analyzer.Analyze(physicalFilePath);
 
-            var accessibleViolations = diff.Where(entry => entry.Status == GitDiffEntryStatus.New).Join(
-                violations,
-                entry => entry.LineNumber,
-                violation => violation.LineNumber,
-                (entry, violation) => new { violation.RuleId, violation.Message, entry.Position });
+            var accessibleViolations = diff.Where(entry => entry.Status == GitDiffEntryStatus.New)
+                .Join(
+                    violations,
+                    entry => entry.LineNumber,
+                    violation => violation.LineNumber,
+                    (entry, violation) => new { violation.RuleId, violation.Message, entry.Position });
 
             var comments = new List<PullRequestReviewComment>();
 

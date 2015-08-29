@@ -68,7 +68,11 @@ namespace OctoStyle.Core
         /// A <see cref="Task{TResult}"/> of <see cref="IEnumerable{T}"/> of <see cref="PullRequestReviewComment"/>
         /// representing the commenting operation.
         /// </returns>
-        public abstract Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequest pullRequest, GitHubPullRequestFile file, ICodeAnalyzer analyzer, string physicalFilePath);
+        public abstract Task<IEnumerable<PullRequestReviewComment>> Create(
+            GitHubPullRequest pullRequest,
+            GitHubPullRequestFile file,
+            ICodeAnalyzer analyzer,
+            string physicalFilePath);
 
         /// <summary>
         /// Creates a pull request comment.
@@ -106,7 +110,11 @@ namespace OctoStyle.Core
             /// The result of <see cref="Task{TResult}"/> of <see cref="IEnumerable{T}"/> of <see cref="PullRequestReviewComment"/>
             /// will always be an empty enumeration.
             /// </remarks>
-            public override Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequest pullRequest, GitHubPullRequestFile file, ICodeAnalyzer analyzer, string physicalFilePath)
+            public override Task<IEnumerable<PullRequestReviewComment>> Create(
+                GitHubPullRequest pullRequest,
+                GitHubPullRequestFile file,
+                ICodeAnalyzer analyzer,
+                string physicalFilePath)
             {
                 using (
                     var task =
