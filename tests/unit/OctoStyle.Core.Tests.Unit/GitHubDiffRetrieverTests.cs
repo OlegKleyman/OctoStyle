@@ -9,10 +9,10 @@
     using SharpDiff;
 
     [TestFixture]
-    public class GitHubDiffRetrieverTests
+    public static class GitHubDiffRetrieverTests
     {
         [Test]
-        public void RetrieveShouldRetrieveGitDiff()
+        public static void RetrieveShouldRetrieveGitDiff()
         {
             var retriever = GetGitHubDiffRetriever();
 

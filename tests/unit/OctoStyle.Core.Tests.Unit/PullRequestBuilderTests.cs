@@ -11,14 +11,14 @@
     using Octokit;
 
     [TestFixture]
-    public class PullRequestBuilderTests
+    public static class PullRequestBuilderTests
     {
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter",
             Justification = StyleCopConstants.LocalConstantJustification)]
         [Test]
-        public void BuildShouldReturnPullRequest()
+        public static void BuildShouldReturnPullRequest()
         {
-            var builder = this.GetPullRequestBuilder();
+            var builder = GetPullRequestBuilder();
 
             const string pullRequestBranch = "test_branch";
             const string mergeBranch = "master";
@@ -115,7 +115,7 @@
             return new PullRequestFile(sha, fileName, status, 0, 0, changes, null, null, contentUrl, null);
         }
 
-        private IPullRequestBuilder GetPullRequestBuilder()
+        private static IPullRequestBuilder GetPullRequestBuilder()
         {
             var parser = new Mock<IDiffParser>();
             parser.Setup(diffParser => diffParser.Split(FileContents.FullDiff))

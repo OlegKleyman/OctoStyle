@@ -3,10 +3,10 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class DiffParserTests
+    public static class DiffParserTests
     {
         [Test]
-        public void SplitShouldReturnDiffSplit()
+        public static void SplitShouldReturnDiffSplit()
         {
             var parser = GetDiffParser();
 

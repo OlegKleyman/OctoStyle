@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0F9BB33A-FF1F-4618-8EE7-40681F90BF0C}"
 	ProjectSection(SolutionItems) = preProject
 		tests\Settings.StyleCop = tests\Settings.StyleCop
+		tests\Tests.ruleset = tests\Tests.ruleset
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{25EC794C-A39E-4420-B2FA-F670CB4530AC}"

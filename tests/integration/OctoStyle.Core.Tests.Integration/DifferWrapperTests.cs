@@ -7,10 +7,10 @@
     using SharpDiff.FileStructure;
 
     [TestFixture]
-    public class DifferWrapperTests
+    public static class DifferWrapperTests
     {
         [Test]
-        public void LoadShouldReturnDiff()
+        public static void LoadShouldReturnDiff()
         {
             var differ = GetDifferWrapper();
 
