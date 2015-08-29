@@ -19,5 +19,7 @@
         /// represents the retrieval asynchronous retrieval operation.
         /// </returns>
         Task<IReadOnlyList<GitDiffEntry>> RetrieveAsync(string filePath, string newBranch, string originalBranch);
+
+        IReadOnlyList<GitDiffEntry> Retrieve(string rawDiff);
     }
 }
