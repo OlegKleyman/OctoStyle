@@ -37,7 +37,7 @@ namespace OctoStyle.Core
                         firstDiffHeaderSegment,
                         fileNameDiffHeaderSegment,
                         secondDiffHeaderSegment,
-                        diffBody.TrimEnd('\n')));
+                        diffBody));
             }
 
             return diffs;
