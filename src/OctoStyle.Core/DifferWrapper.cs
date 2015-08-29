@@ -9,7 +9,7 @@
     {
         public IEnumerable<Diff> Load(string diff)
         {
-            return Differ.Load(diff);
+            return Differ.Load(string.Concat(diff, '\n'));
         }
     }
 }

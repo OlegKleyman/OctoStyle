@@ -161,7 +161,7 @@
 
             var mockDiffer = new Mock<IDiffer>();
             mockDiffer.Setup(differ => differ.Load(FileContents.TestLibraryCsprojDiff))
-                .Returns(Differ.Load(FileContents.TestLibraryCsprojDiff));
+                .Returns(Differ.Load(String.Concat(FileContents.TestLibraryCsprojDiff, "\n")));
 
             return new GitHubDiffRetriever(mockDiffer.Object, mockConnection.Object, new GitHubRepository("OlegKleyman", "OctoStyleTest"));
         }
