@@ -1,6 +1,7 @@
 namespace OctoStyle.Core
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Represents a file in a GitHub pull request.
@@ -13,7 +14,9 @@ namespace OctoStyle.Core
         /// <param name="fileName">The name of the file.</param>
         /// <param name="status">The <see cref="GitHubPullRequestFileStatus"/> of the file.</param>
         /// <param name="changes">The amount of changes in the file.</param>
-        /// <param name="diff"></param>
+        /// <param name="diff">The diff text for the file.</param>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter",
+            Justification = StyleCopConstants.LocalConstantJustification)]
         public GitHubPullRequestFile(string fileName, GitHubPullRequestFileStatus status, int changes, string diff)
         {
             if (fileName == null)
