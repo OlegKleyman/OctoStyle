@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
     using Moq;
 
@@ -12,6 +13,8 @@
     [TestFixture]
     public class PullRequestBuilderTests
     {
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter",
+            Justification = StyleCopConstants.LocalConstantJustification)]
         [Test]
         public void BuildShouldReturnPullRequest()
         {
@@ -102,6 +105,16 @@
             Assert.That(pullRequest.Files[3].Diff, Is.EqualTo(FileContents.TestLibraryCsprojDiff));
         }
 
+        private static PullRequestFile GetPullRequestFile(
+            string sha,
+            string fileName,
+            string status,
+            Uri contentUrl,
+            int changes)
+        {
+            return new PullRequestFile(sha, fileName, status, 0, 0, changes, null, null, contentUrl, null);
+        }
+
         private IPullRequestBuilder GetPullRequestBuilder()
         {
             var parser = new Mock<IDiffParser>();
@@ -115,21 +128,6 @@
                             { "src/TestLibrary/TestLibrary.csproj", FileContents.TestLibraryCsprojDiff }
                         });
             return new PullRequestBuilder(parser.Object);
-        }
-
-        private static PullRequestFile GetPullRequestFile(
-            string sha,
-            string fileName,
-            string status,
-            Uri contentUrl,
-            int changes)
-        {
-            return new PullRequestFile(sha, fileName, status, 0, 0, changes, null, null, contentUrl, null);
-        }
-
-        private static PullRequestCommit GetPullRequestCommit(string sha)
-        {
-            return new PullRequestCommit(null, null, null, null, null, new List<GitReference>(), sha, null);
         }
     }
 }

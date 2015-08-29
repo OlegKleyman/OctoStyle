@@ -194,7 +194,6 @@
                                                FileContents.TestLibraryCsprojDiff),
                                        };
 
-
             var pullRequest = new GitHubPullRequest(
                 PullRequestNumber,
                 LastCommitId,
