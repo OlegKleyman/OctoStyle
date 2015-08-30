@@ -11,7 +11,7 @@
         public async void CreateShouldReturnEmptyPullRequestComment()
         {
             var commenter = GetNoCommentPullRequestCommenter();
-            var comments = await commenter.Create(null, null, null);
+            var comments = await commenter.Create(null, null, null, null);
 
             Assert.That(comments, Is.Not.Null);
             Assert.That(comments.Any(), Is.False);

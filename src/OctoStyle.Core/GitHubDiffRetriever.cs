@@ -3,81 +3,93 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.Threading.Tasks;
+    using System.Linq;
 
-    using Octokit;
-
-    using OctoStyle.Core.Borrowed;
+    using SharpDiff.FileStructure;
 
     /// <summary>
     /// Represents a github diff retriever.
     /// </summary>
     public class GitHubDiffRetriever : IGitHubDiffRetriever
     {
-        private readonly Uri baseUri;
+        private readonly IDiffer differ;
+
+        private readonly IGitDiffEntryFactory diffFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GitHubDiffRetriever"/> class.
         /// </summary>
-        /// <param name="connection">The <see cref="IConnection"/> to use for interfacing with GitHub.</param>
-        /// <param name="repository">The <see cref="GitHubRepository"/> to interface with.</param>
-        public GitHubDiffRetriever(IConnection connection, GitHubRepository repository)
+        /// <param name="differ">The <see cref="IDiffer"/> instance to use for loading diffs.</param>
+        /// <param name="diffFactory">
+        /// The <see cref="IGitDiffEntryFactory"/> instance to retrieve <see cref="GitDiffEntry"/> objects with.
+        /// </param>
+        public GitHubDiffRetriever(IDiffer differ, IGitDiffEntryFactory diffFactory)
         {
-            if (connection == null)
+            if (differ == null)
             {
-                throw new ArgumentNullException("connection");
+                throw new ArgumentNullException("differ");
             }
 
-            if (repository == null)
+            if (diffFactory == null)
             {
-                throw new ArgumentNullException("repository");
+                throw new ArgumentNullException("diffFactory");
             }
 
-            this.Connection = connection;
-            this.baseUri =
-                new Uri(
-                    string.Format(
-                        CultureInfo.InvariantCulture,
-                        "https://api.github.com/repos/{0}/{1}/contents/",
-                        repository.Owner,
-                        repository.Name));
+            this.differ = differ;
+            this.diffFactory = diffFactory;
         }
 
         /// <summary>
-        /// Gets the <see cref="IConnection"/> used by this instance.
+        /// Retrieves a GitHub pull request file diff.
         /// </summary>
-        /// <value>Gets the <see cref="IConnection"/> object which interfaces with GitHub.</value>
-        public IConnection Connection { get; private set; }
-
-        /// <summary>
-        /// Retrieves a diff of a file between two GitHub branches.
-        /// </summary>
-        /// <param name="filePath">The file path as in the GitHub repository.</param>
-        /// <param name="newBranch">The branch of the modified file.</param>
-        /// <param name="originalBranch">The branch of the original file.</param>
-        /// <returns>
-        /// A <see cref="Task{TResult}"/> of <see cref="IReadOnlyList{T}"/> of <see cref="GitDiffEntry"/> that
-        /// represents the retrieval asynchronous retrieval operation.
-        /// </returns>
-        public async Task<IReadOnlyList<GitDiffEntry>> RetrieveAsync(
-            string filePath,
-            string newBranch,
-            string originalBranch)
+        /// <param name="rawDiff">The pull request file diff content.</param>
+        /// <returns>An <see cref="IReadOnlyList{T}"/> of <see cref="GitDiffEntry"/>.</returns>
+        public IReadOnlyList<GitDiffEntry> Retrieve(string rawDiff)
         {
-            var newFileEndpoint = new Uri(this.baseUri, string.Concat(filePath, "?ref=", newBranch));
-            var originalFileEndpoint = new Uri(this.baseUri, string.Concat(filePath, "?ref=", originalBranch));
-            var newFileContents = await this.Connection.Get<RepositoryContent>(newFileEndpoint, null, null);
-            var originalFileContents = await this.Connection.Get<RepositoryContent>(originalFileEndpoint, null, null);
+            var diff = this.differ.Load(rawDiff);
 
-            var delimeter = new[] { '\n' };
+            var enumeratedDiff = diff as Diff[] ?? diff.ToArray();
 
-            var diff =
-                Diff.CreateDiff(
-                    originalFileContents.Body.Content.Split(delimeter, StringSplitOptions.None),
-                    newFileContents.Body.Content.Split(delimeter, StringSplitOptions.None))
-                    .ToGitDiff(new GitDiffEntryFactory());
+            if (diff == null || !enumeratedDiff.Any())
+            {
+                throw new InvalidOperationException(
+                    string.Format(
+                        CultureInfo.InvariantCulture,
+                        "Unable to retrieve diff for:{0}{1}",
+                        Environment.NewLine,
+                        rawDiff));
+            }
 
-            return diff;
+            if (enumeratedDiff.Length > 1)
+            {
+                throw new InvalidOperationException(
+                    string.Format(
+                        CultureInfo.InvariantCulture,
+                        "Multiple diffs found for:{0}{1}",
+                        Environment.NewLine,
+                        rawDiff));
+            }
+
+            var targetDiff = enumeratedDiff.First();
+            var diffEntries = new List<GitDiffEntry>();
+            var position = 1;
+
+            foreach (var chunk in targetDiff.Chunks)
+            {
+                var lineNumer = chunk.NewRange.StartLine;
+
+                foreach (var snippet in chunk.Snippets)
+                {
+                    diffEntries.AddRange(this.diffFactory.GetList(snippet, position, lineNumer));
+
+                    position = diffEntries.Count + 1;
+                    lineNumer += snippet.ModifiedLines.Count()
+                                 + snippet.OriginalLines.SelectMany(line => line.Spans)
+                                       .Count(span => span.Kind == SpanKind.Equal);
+                }
+            }
+
+            return diffEntries;
         }
     }
 }

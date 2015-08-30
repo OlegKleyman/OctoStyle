@@ -60,7 +60,8 @@
 
             var repository = new GitHubRepository(arguments.RepositoryOwner, arguments.Repository);
 
-            var pullRequestRetriever = new PullRequestRetriever(client.PullRequest, repository);
+            var builder = new PullRequestBuilder(new DiffParser());
+            var pullRequestRetriever = new PullRequestRetriever(builder, client.PullRequest, client.Connection, repository);
 
             var pullRequest = pullRequestRetriever.RetrieveAsync(arguments.PullRequestNumber).GetAwaiter().GetResult();
 
@@ -71,12 +72,12 @@
                     var filePath = Path.Combine(arguments.SolutionDirectory, file.FileName);
 
                     var projectPath = pathResolver.GetPath(filePath, "*.csproj");
-                    var diffRetriever = new GitHubDiffRetriever(client.Connection, repository);
+                    var diffRetriever = new GitHubDiffRetriever(new DifferWrapper(), new GitDiffEntryFactory());
 
                     var factory = new PullRequestCommenterFactory(client.PullRequest.Comment, repository, diffRetriever);
                     var analyzer = new CodeAnalyzer(projectPath);
 
-                    Comments.Value.Add(factory.GetCommenter(file.Status).Create(file, analyzer, filePath));
+                    Comments.Value.Add(factory.GetCommenter(file.Status).Create(pullRequest, file, analyzer, filePath));
                 }
             }
 

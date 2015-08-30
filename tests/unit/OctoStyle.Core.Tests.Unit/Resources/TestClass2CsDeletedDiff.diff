@@ -1,0 +1,23 @@
+diff --git a/src/TestLibrary/TestClass2.cs b/src/TestLibrary/TestClass2.cs
+deleted file mode 100644
+index 143a417..0000000
+--- a/src/TestLibrary/TestClass2.cs
++++ /dev/null
+@@ -1,17 +0,0 @@
+-﻿namespace TestLibrary
+-{
+-    public class TestClass2
+-    {
+-        public void testMethod()
+-        {
+-            foreach (var i in new [] {1,2,3,4})
+-            {
+-                
+-            }
+-            foreach (var b in new[] { 1, 2, 3, 4 })
+-            {
+-
+-            }
+-        }
+-    }
+-}

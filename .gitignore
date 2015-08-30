@@ -198,3 +198,4 @@ FakesAssemblies/
 
 # MSI files
 *.msi
+utilities/OctoStyle.Installer/wix/*.wxs

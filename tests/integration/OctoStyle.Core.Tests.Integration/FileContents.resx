@@ -118,34 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="FullDiff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\FullDiff.diff;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="TestClass2CsDeletedDiff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\TestClass2CsDeletedDiff.diff;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="TestClass2CsDiff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\TestClass2CsDiff.diff;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="TestClass2CsNew" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\TestClass2.cs.new;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="TestClass2CsOld" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\TestClass2.cs.old;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="TestClass3CsDiff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\TestClass3CsDiff.diff;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="TestClassCsDiff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\TestClassCsDiff.diff;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="TestLibraryCsprojDiff" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\TestLibraryCsprojDiff.diff;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="TestLibraryCsprojNew" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\TestLibrary.csproj.new;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="TestLibraryCsprojOld" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\TestLibrary.csproj.old;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

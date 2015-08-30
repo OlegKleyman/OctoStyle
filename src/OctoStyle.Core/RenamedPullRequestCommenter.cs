@@ -24,6 +24,7 @@ namespace OctoStyle.Core
         /// <summary>
         /// Creates a pull request comment.
         /// </summary>
+        /// <param name="pullRequest">The <see cref="GitHubPullRequest"/> to comment on.</param>
         /// <param name="file">The <see cref="GitHubPullRequestFile"/> to comment on.</param>
         /// <param name="analyzer">The <see cref="ICodeAnalyzer"/> to use for finding violations.</param>
         /// <param name="physicalFilePath">The physical path of the file stored locally.</param>
@@ -31,11 +32,13 @@ namespace OctoStyle.Core
         /// A <see cref="Task{TResult}"/> of <see cref="IEnumerable{T}"/> of <see cref="PullRequestReviewComment"/>
         /// representing the commenting operation.
         /// </returns>
-        public override async Task<IEnumerable<PullRequestReviewComment>> Create(
-            GitHubPullRequestFile file,
-            ICodeAnalyzer analyzer,
-            string physicalFilePath)
+        public override async Task<IEnumerable<PullRequestReviewComment>> Create(GitHubPullRequest pullRequest, GitHubPullRequestFile file, ICodeAnalyzer analyzer, string physicalFilePath)
         {
+            if (pullRequest == null)
+            {
+                throw new ArgumentNullException("pullRequest");
+            }
+
             if (file == null)
             {
                 throw new ArgumentNullException("file");
@@ -47,11 +50,11 @@ namespace OctoStyle.Core
             {
                 var comment = new PullRequestReviewCommentCreate(
                     "Renamed files not supported.",
-                    file.PullRequest.LastCommitId,
+                    pullRequest.LastCommitId,
                     file.FileName,
                     1);
 
-                var addedComment = await this.Create(comment, file.PullRequest.Number);
+                var addedComment = await this.Create(comment, pullRequest.Number);
 
                 comments.Add(addedComment);
             }

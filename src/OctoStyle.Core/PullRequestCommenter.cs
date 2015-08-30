@@ -60,6 +60,7 @@ namespace OctoStyle.Core
         /// <summary>
         /// Creates a pull request comment.
         /// </summary>
+        /// <param name="pullRequest">The <see cref="GitHubPullRequest"/> to comment on.</param>
         /// <param name="file">The <see cref="GitHubPullRequestFile"/> to comment on.</param>
         /// <param name="analyzer">The <see cref="ICodeAnalyzer"/> to use for finding violations.</param>
         /// <param name="physicalFilePath">The physical path of the file stored locally.</param>
@@ -68,6 +69,7 @@ namespace OctoStyle.Core
         /// representing the commenting operation.
         /// </returns>
         public abstract Task<IEnumerable<PullRequestReviewComment>> Create(
+            GitHubPullRequest pullRequest,
             GitHubPullRequestFile file,
             ICodeAnalyzer analyzer,
             string physicalFilePath);
@@ -96,6 +98,7 @@ namespace OctoStyle.Core
             /// <summary>
             /// Does not do anything.
             /// </summary>
+            /// <param name="pullRequest">The <see cref="GitHubPullRequest"/> to comment on.</param>
             /// <param name="file">The <see cref="GitHubPullRequestFile"/> to comment on.</param>
             /// <param name="analyzer">The <see cref="ICodeAnalyzer"/> to use for finding violations.</param>
             /// <param name="physicalFilePath">The physical path of the file stored locally.</param>
@@ -108,6 +111,7 @@ namespace OctoStyle.Core
             /// will always be an empty enumeration.
             /// </remarks>
             public override Task<IEnumerable<PullRequestReviewComment>> Create(
+                GitHubPullRequest pullRequest,
                 GitHubPullRequestFile file,
                 ICodeAnalyzer analyzer,
                 string physicalFilePath)

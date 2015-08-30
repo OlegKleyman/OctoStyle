@@ -1,0 +1,101 @@
+diff --git a/src/TestLibrary/Nested/TestClass2.cs b/src/TestLibrary/Nested/TestClass2.cs
+new file mode 100644
+index 0000000..f6876ed
+--- /dev/null
++++ b/src/TestLibrary/Nested/TestClass2.cs
+@@ -0,0 +1,14 @@
++﻿//test
++namespace TestLibrary
++{
++    public class TestClass2
++    {
++        public void testMethod()
++        {
++            foreach (var i in new [] {1,2,3,4})
++            {
++                var TestVar = 3;
++            }
++        }
++    }
++}
+diff --git a/src/TestLibrary/Nested/TestClass3.cs b/src/TestLibrary/Nested/TestClass3.cs
+new file mode 100644
+index 0000000..c537e3f
+--- /dev/null
++++ b/src/TestLibrary/Nested/TestClass3.cs
+@@ -0,0 +1,12 @@
++﻿using System;
++using System.Collections.Generic;
++using System.Linq;
++using System.Text;
++using System.Threading.Tasks;
++
++namespace TestLibrary.Nested
++{
++    class TestClass3
++    {
++    }
++}
+diff --git a/src/TestLibrary/TestClass.cs b/src/TestLibrary/TestClass.cs
+index ef72072..85ce506 100644
+--- a/src/TestLibrary/TestClass.cs
++++ b/src/TestLibrary/TestClass.cs
+@@ -17,5 +17,13 @@ public void TestMethod()
+             }
+             2.ToString();
+         }
++
++        public void Testmethod2()
++        {
++            for (int i = 5 - 1; i >= 0; i--)
++            {
++            }
++            Console.WriteLine("Test output");
++        }
+     }
+ }
+\ No newline at end of file
+diff --git a/src/TestLibrary/TestClass2.cs b/src/TestLibrary/TestClass2.cs
+deleted file mode 100644
+index 143a417..0000000
+--- a/src/TestLibrary/TestClass2.cs
++++ /dev/null
+@@ -1,17 +0,0 @@
+-﻿namespace TestLibrary
+-{
+-    public class TestClass2
+-    {
+-        public void testMethod()
+-        {
+-            foreach (var i in new [] {1,2,3,4})
+-            {
+-                
+-            }
+-            foreach (var b in new[] { 1, 2, 3, 4 })
+-            {
+-
+-            }
+-        }
+-    }
+-}
+diff --git a/src/TestLibrary/TestLibrary.csproj b/src/TestLibrary/TestLibrary.csproj
+index e29f3ed..47c7471 100644
+--- a/src/TestLibrary/TestLibrary.csproj
++++ b/src/TestLibrary/TestLibrary.csproj
+@@ -30,13 +30,12 @@
+     <WarningLevel>4</WarningLevel>
+   </PropertyGroup>
+   <ItemGroup>
++    <Compile Include="Nested\TestClass3.cs" />
+     <Compile Include="Properties\AssemblyInfo.cs" />
+     <Compile Include="TestClass.cs" />
+-    <Compile Include="TestClass2.cs" />
+-  </ItemGroup>
+-  <ItemGroup>
+-    <Folder Include="Nested\" />
++    <Compile Include="Nested\TestClass2.cs" />
+   </ItemGroup>
++  <ItemGroup />
+   <ItemGroup>
+     <Reference Include="System" />
+   </ItemGroup>

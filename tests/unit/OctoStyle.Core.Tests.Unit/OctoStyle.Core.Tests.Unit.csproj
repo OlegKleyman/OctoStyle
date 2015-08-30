@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\Tests.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -44,29 +44,34 @@
     <Compile Include="..\..\..\GlobalSuppressions.cs">
       <Link>GlobalSuppressions.cs</Link>
     </Compile>
-    <Compile Include="Borrowed\DiffTests.cs" />
+    <Compile Include="DiffParserTests.cs" />
     <Compile Include="GitHubDiffRetrieverTests.cs" />
     <Compile Include="GitDiffEntryFactoryTests.cs" />
-    <Compile Include="DiffEntryListExtensionsTests.cs" />
     <Compile Include="FileContents.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FileContents.resx</DependentUpon>
     </Compile>
     <Compile Include="AddedPullRequestCommenterTest.cs" />
-    <Compile Include="ModifiedPullRequestCommenterTest.cs" />
+    <Compile Include="ModifiedPullRequestCommenterTests.cs" />
     <Compile Include="NoCommentPullRequestCommenterTests.cs" />
     <Compile Include="PathResolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
-    <None Include="Resources\BomMode.cs" />
+    <Compile Include="PullRequestBuilderTests.cs" />
     <Compile Include="PullRequestCommenterFactoryTests.cs" />
     <Compile Include="PullRequestRetrieverTests.cs" />
     <Compile Include="RenamedPullRequestCommenterTest.cs" />
     <Compile Include="StyleCopTests.cs" />
+    <None Include="Resources\FullDiff.diff" />
+    <None Include="Resources\TestClass2CsDeletedDiff.diff" />
+    <None Include="Resources\TestClassCsDiff.diff" />
+    <None Include="Resources\TestClass2CsDiff.diff" />
     <None Include="Resources\TestClass2.cs.new" />
     <None Include="Resources\TestClass2.cs.old" />
+    <None Include="Resources\TestClass3CsDiff.diff" />
+    <None Include="Resources\TestLibraryCsprojDiff.diff" />
     <None Include="Resources\TestLibrary.csproj.new" />
     <None Include="Resources\TestLibrary.csproj.old" />
   </ItemGroup>
@@ -80,6 +85,10 @@
     </Reference>
     <Reference Include="Octokit">
       <HintPath>..\..\..\packages\Octokit.0.13.0\lib\net45\Octokit.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDiff, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\common\lib\SharpDiff.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Net.Http" />

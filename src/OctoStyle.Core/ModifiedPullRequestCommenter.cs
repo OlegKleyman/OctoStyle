@@ -38,6 +38,7 @@ namespace OctoStyle.Core
         /// <summary>
         /// Creates a pull request comment.
         /// </summary>
+        /// <param name="pullRequest">The <see cref="GitHubPullRequest"/> to comment on.</param>
         /// <param name="file">The <see cref="GitHubPullRequestFile"/> to comment on.</param>
         /// <param name="analyzer">The <see cref="ICodeAnalyzer"/> to use for finding violations.</param>
         /// <param name="physicalFilePath">The physical path of the file stored locally.</param>
@@ -46,10 +47,16 @@ namespace OctoStyle.Core
         /// representing the commenting operation.
         /// </returns>
         public override async Task<IEnumerable<PullRequestReviewComment>> Create(
+            GitHubPullRequest pullRequest,
             GitHubPullRequestFile file,
             ICodeAnalyzer analyzer,
             string physicalFilePath)
         {
+            if (pullRequest == null)
+            {
+                throw new ArgumentNullException("pullRequest");
+            }
+
             if (file == null)
             {
                 throw new ArgumentNullException("file");
@@ -60,19 +67,16 @@ namespace OctoStyle.Core
                 throw new ArgumentNullException("analyzer");
             }
 
-            var diff =
-                this.diffRetriever.RetrieveAsync(
-                    file.FileName,
-                    file.PullRequest.Branches.Branch,
-                    file.PullRequest.Branches.MergeBranch).GetAwaiter().GetResult().OfType<ModificationGitDiffEntry>();
+            var diff = this.diffRetriever.Retrieve(file.Diff).OfType<ModificationGitDiffEntry>();
 
             var violations = analyzer.Analyze(physicalFilePath);
 
-            var accessibleViolations = diff.Where(entry => entry.Status == GitDiffEntryStatus.New).Join(
-                violations,
-                entry => entry.LineNumber,
-                violation => violation.LineNumber,
-                (entry, violation) => new { violation.RuleId, violation.Message, entry.Position });
+            var accessibleViolations = diff.Where(entry => entry.Status == GitDiffEntryStatus.New)
+                .Join(
+                    violations,
+                    entry => entry.LineNumber,
+                    violation => violation.LineNumber,
+                    (entry, violation) => new { violation.RuleId, violation.Message, entry.Position });
 
             var comments = new List<PullRequestReviewComment>();
 
@@ -86,11 +90,11 @@ namespace OctoStyle.Core
 
                 var comment = new PullRequestReviewCommentCreate(
                     message,
-                    file.PullRequest.LastCommitId,
+                    pullRequest.LastCommitId,
                     file.FileName,
                     violation.Position);
 
-                comments.Add(await this.Create(comment, file.PullRequest.Number));
+                comments.Add(await this.Create(comment, pullRequest.Number));
             }
 
             return comments;

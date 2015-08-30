@@ -14,7 +14,7 @@
     using Octokit;
 
     [TestFixture]
-    public class ModifiedPullRequestCommenterTest
+    public class ModifiedPullRequestCommenterTests
     {
         private const int NoMethodDocumentationHeaderCommentId = 1;
 
@@ -41,13 +41,9 @@
             var commenter = GetAddedPullRequestCommenter();
             var pullRequestFile = new GitHubPullRequestFile(
                 ModifiedFilePath,
-                new GitHubPullRequest(
-                    1,
-                    "123",
-                    new List<PullRequestFile>(),
-                    new GitHubPullRequestBranches("test_branch", "master")),
                 GitHubPullRequestFileStatus.Added,
-                0);
+                0,
+                FileContents.TestClassCsDiff);
 
             var violations = new List<GitHubStyleViolation>
                                  {
@@ -66,7 +62,17 @@
             mockAnalyzer.Setup(analyzer => analyzer.Analyze(modifiedPhysicalFilePath)).Returns(violations);
 
             var comments =
-                (await commenter.Create(pullRequestFile, mockAnalyzer.Object, modifiedPhysicalFilePath)).ToList();
+                (await
+                 commenter.Create(
+                     new GitHubPullRequest(
+                     1,
+                     "123",
+                     new List<GitHubPullRequestFile>(),
+                     FileContents.TestClassCsDiff,
+                     new GitHubPullRequestBranches("test_branch", "master")),
+                     pullRequestFile,
+                     mockAnalyzer.Object,
+                     modifiedPhysicalFilePath)).ToList();
 
             Assert.That(comments.Count, Is.EqualTo(2));
 
@@ -113,8 +119,8 @@
                                new ModificationGitDiffEntry(11, GitDiffEntryStatus.New, 27)
                            };
 
-            diffRetriever.Setup(retriever => retriever.RetrieveAsync(ModifiedFilePath, "test_branch", "master"))
-                .ReturnsAsync(diff);
+            diffRetriever.Setup(retriever => retriever.Retrieve(FileContents.TestClassCsDiff))
+                .Returns(diff);
 
             return new ModifiedPullRequestCommenter(
                 pullRequestCommentClient.Object,

@@ -45,12 +45,13 @@
       <Link>GlobalSuppressions.cs</Link>
     </Compile>
     <Compile Include="AddedPullRequestCommenter.cs" />
+    <Compile Include="DifferWrapper.cs" />
+    <Compile Include="DiffParser.cs" />
+    <Compile Include="IDiffer.cs" />
+    <Compile Include="IDiffParser.cs" />
+    <Compile Include="IPullRequestBuilder.cs" />
     <Compile Include="IPullRequestCommenterFactory.cs" />
     <Compile Include="ModifiedPullRequestCommenter.cs" />
-    <Compile Include="Borrowed\Diff.cs" />
-    <Compile Include="Borrowed\DiffEntry.cs" />
-    <Compile Include="Borrowed\DiffEntryType.cs" />
-    <Compile Include="DiffEntryListExtensions.cs" />
     <Compile Include="EqualGitDiffEntry.cs" />
     <Compile Include="GitHubDiffRetriever.cs" />
     <Compile Include="GitDiffEntry.cs" />
@@ -74,6 +75,7 @@
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="CodeAnalyzer.cs" />
+    <Compile Include="PullRequestBuilder.cs" />
     <Compile Include="PullRequestCommenter.cs" />
     <Compile Include="PullRequestCommenterFactory.cs" />
     <Compile Include="PullRequestRetriever.cs" />
@@ -84,6 +86,15 @@
   <ItemGroup>
     <Reference Include="Octokit">
       <HintPath>..\..\packages\Octokit.0.13.0\lib\net45\Octokit.dll</HintPath>
+    </Reference>
+    <Reference Include="OMetaSharp">
+      <HintPath>..\..\common\lib\OMetaSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="OMetaSharp.OMetaCS">
+      <HintPath>..\..\common\lib\OMetaSharp.OMetaCS.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDiff">
+      <HintPath>..\..\common\lib\SharpDiff.dll</HintPath>
     </Reference>
     <Reference Include="StyleCop">
       <HintPath>..\..\packages\StyleCop.4.7.49.0\lib\net35\StyleCop.dll</HintPath>
