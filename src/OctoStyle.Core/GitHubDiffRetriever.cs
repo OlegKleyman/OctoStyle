@@ -14,18 +14,29 @@
     {
         private readonly IDiffer differ;
 
+        private readonly IGitDiffEntryFactory diffFactory;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GitHubDiffRetriever"/> class.
         /// </summary>
         /// <param name="differ">The <see cref="IDiffer"/> instance to use for loading diffs.</param>
-        public GitHubDiffRetriever(IDiffer differ)
+        /// <param name="diffFactory">
+        /// The <see cref="IGitDiffEntryFactory"/> instance to retrieve <see cref="GitDiffEntry"/> objects with.
+        /// </param>
+        public GitHubDiffRetriever(IDiffer differ, IGitDiffEntryFactory diffFactory)
         {
             if (differ == null)
             {
                 throw new ArgumentNullException("differ");
             }
 
+            if (diffFactory == null)
+            {
+                throw new ArgumentNullException("diffFactory");
+            }
+
             this.differ = differ;
+            this.diffFactory = diffFactory;
         }
 
         /// <summary>
@@ -61,7 +72,6 @@
 
             var targetDiff = enumeratedDiff.First();
             var diffEntries = new List<GitDiffEntry>();
-            var factory = new GitDiffEntryFactory();
             var position = 1;
 
             foreach (var chunk in targetDiff.Chunks)
@@ -70,7 +80,7 @@
 
                 foreach (var snippet in chunk.Snippets)
                 {
-                    diffEntries.AddRange(factory.Get(snippet, position, lineNumer));
+                    diffEntries.AddRange(this.diffFactory.GetList(snippet, position, lineNumer));
 
                     position = diffEntries.Count + 1;
                     lineNumer += snippet.ModifiedLines.Count()

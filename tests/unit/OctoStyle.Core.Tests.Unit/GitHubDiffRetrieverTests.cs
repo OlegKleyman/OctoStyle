@@ -1,12 +1,15 @@
 ﻿namespace OctoStyle.Core.Tests.Unit
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using Moq;
 
     using NUnit.Framework;
 
     using SharpDiff;
+    using SharpDiff.FileStructure;
 
     [TestFixture]
     public static class GitHubDiffRetrieverTests
@@ -68,11 +71,39 @@
 
         private static IGitHubDiffRetriever GetGitHubDiffRetriever()
         {
+            var diff = Differ.Load(FileContents.TestLibraryCsprojDiff);
+            var diffFactory = new GitDiffEntryFactory();
+            
             var mockDiffer = new Mock<IDiffer>();
-            mockDiffer.Setup(differ => differ.Load(FileContents.TestLibraryCsprojDiff))
-                .Returns(Differ.Load(String.Concat(FileContents.TestLibraryCsprojDiff, "\n")));
+            var enumeratedDiff = diff as Diff[] ?? diff.ToArray();
 
-            return new GitHubDiffRetriever(mockDiffer.Object);
+            mockDiffer.Setup(differ => differ.Load(FileContents.TestLibraryCsprojDiff))
+                .Returns(enumeratedDiff);
+
+            var mockDiffFactory = new Mock<IGitDiffEntryFactory>();
+
+            mockDiffFactory.Setup(factory => factory.GetList(It.IsAny<ISnippet>(), 1, 30))
+                .Returns(diffFactory.GetList(enumeratedDiff.First().Chunks[0].Snippets.ElementAt(0), 1, 30));
+
+            mockDiffFactory.Setup(factory => factory.GetList(It.IsAny<ISnippet>(), 4, 33))
+                .Returns(diffFactory.GetList(enumeratedDiff.First().Chunks[0].Snippets.ElementAt(1), 4, 33));
+
+            mockDiffFactory.Setup(factory => factory.GetList(It.IsAny<ISnippet>(), 5, 34))
+                .Returns(diffFactory.GetList(enumeratedDiff.First().Chunks[0].Snippets.ElementAt(2), 5, 34));
+
+            mockDiffFactory.Setup(factory => factory.GetList(It.IsAny<ISnippet>(), 7, 36))
+                .Returns(diffFactory.GetList(enumeratedDiff.First().Chunks[0].Snippets.ElementAt(3), 7, 36));
+
+            mockDiffFactory.Setup(factory => factory.GetList(It.IsAny<ISnippet>(), 12, 37))
+                .Returns(diffFactory.GetList(enumeratedDiff.First().Chunks[0].Snippets.ElementAt(4), 12, 37));
+
+            mockDiffFactory.Setup(factory => factory.GetList(It.IsAny<ISnippet>(), 13, 38))
+                .Returns(diffFactory.GetList(enumeratedDiff.First().Chunks[0].Snippets.ElementAt(5), 13, 38));
+
+            mockDiffFactory.Setup(factory => factory.GetList(It.IsAny<ISnippet>(), 14, 39))
+                .Returns(diffFactory.GetList(enumeratedDiff.First().Chunks[0].Snippets.ElementAt(6), 14, 39));
+
+            return new GitHubDiffRetriever(mockDiffer.Object, mockDiffFactory.Object);
         }
     }
 }

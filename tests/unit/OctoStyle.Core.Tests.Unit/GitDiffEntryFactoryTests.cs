@@ -16,7 +16,7 @@
 
             var factory = GetGitDiffEntryFactory();
 
-            var equalDiff = factory.Get(diff[0].Chunks[0].Snippets.ToList()[0], 1, 30);
+            var equalDiff = factory.GetList(diff[0].Chunks[0].Snippets.ToList()[0], 1, 30);
 
             Assert.That(equalDiff.Count, Is.EqualTo(3));
             Assert.That(equalDiff[0], Is.InstanceOf<EqualGitDiffEntry>());
@@ -34,7 +34,7 @@
 
             var factory = GetGitDiffEntryFactory();
 
-            var result = factory.Get(diff[0].Chunks[0].Snippets.ToList()[1], 4, 33);
+            var result = factory.GetList(diff[0].Chunks[0].Snippets.ToList()[1], 4, 33);
 
             Assert.That(result.Count, Is.EqualTo(1));
             Assert.That(result[0], Is.InstanceOf<ModificationGitDiffEntry>());
@@ -52,7 +52,7 @@
 
             var factory = GetGitDiffEntryFactory();
 
-            var result = factory.Get(diff[0].Chunks[0].Snippets.ToList()[3], 7, 36);
+            var result = factory.GetList(diff[0].Chunks[0].Snippets.ToList()[3], 7, 36);
 
             Assert.That(result.Count, Is.EqualTo(5));
 
