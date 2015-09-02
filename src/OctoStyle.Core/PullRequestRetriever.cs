@@ -89,7 +89,7 @@
 
             var files = await this.client.Files(this.repository.Owner, this.repository.Name, number);
             var pull = await this.client.Get(this.repository.Owner, this.repository.Name, number);
-            var diff = await this.connection.Get<string>(pull.DiffUrl, null, null);
+            var diff = await this.connection.Get<string>(pull.Url, null, "application/vnd.github.VERSION.diff");
 
             return this.builder.Build(
                 number,

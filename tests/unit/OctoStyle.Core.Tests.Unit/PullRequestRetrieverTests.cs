@@ -123,11 +123,11 @@
             client.Setup(requestsClient => requestsClient.Files(repository.Owner, repository.Name, PullRequestNumber))
                 .ReturnsAsync(files);
 
-            var diffUrl =
+            var pullRequestUrl =
                 new Uri(
                     String.Format(
                         CultureInfo.InvariantCulture,
-                        "http://github.com/{0}/{1}/pull/{2}",
+                        "https://api.github.com/repos/{0}/{1}/pulls/{2}",
                         repository.Owner,
                         repository.Name,
                         PullRequestNumber));
@@ -135,9 +135,9 @@
             client.Setup(requestsClient => requestsClient.Get(repository.Owner, repository.Name, PullRequestNumber))
                 .ReturnsAsync(
                     new PullRequest(
+                        pullRequestUrl,
                         null,
                         null,
-                        diffUrl,
                         null,
                         null,
                         null,
@@ -167,7 +167,11 @@
             var mockResponse = new Mock<IResponse>();
 
             connection.Setup(
-                con => con.Get<string>(It.Is<Uri>(uri => uri.AbsoluteUri == diffUrl.AbsoluteUri), null, null))
+                con =>
+                con.Get<string>(
+                    It.Is<Uri>(uri => uri.AbsoluteUri == pullRequestUrl.AbsoluteUri),
+                    null,
+                    "application/vnd.github.VERSION.diff"))
                 .ReturnsAsync(new ApiResponse<string>(mockResponse.Object, FileContents.FullDiff));
 
             var pullRequestFiles = new List<GitHubPullRequestFile>
@@ -210,7 +214,8 @@
                     FileContents.FullDiff,
                     It.Is<GitHubPullRequestBranches>(
                         branches =>
-                        branches.Branch == PullRequestBranch & branches.MergeBranch == PullRequestMergeBranch))).Returns(pullRequest);
+                        branches.Branch == PullRequestBranch & branches.MergeBranch == PullRequestMergeBranch)))
+                .Returns(pullRequest);
 
             return new PullRequestRetriever(builder.Object, client.Object, connection.Object, repository);
         }
