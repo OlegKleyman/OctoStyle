@@ -1,5 +1,6 @@
 namespace OctoStyle.Core
 {
+    using System;
     using System.Collections.Generic;
 
     public class VisualStudioCodeAnalyzer : ICodeAnalyzer
@@ -8,6 +9,11 @@ namespace OctoStyle.Core
 
         public VisualStudioCodeAnalyzer(string solutionFilePath)
         {
+            if (solutionFilePath == null)
+            {
+                throw new ArgumentNullException(nameof(solutionFilePath));
+            }
+
             this.solutionFilePath = solutionFilePath;
         }
 
