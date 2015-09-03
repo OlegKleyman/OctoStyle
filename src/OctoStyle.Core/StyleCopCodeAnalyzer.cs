@@ -9,19 +9,19 @@ namespace OctoStyle.Core
     /// <summary>
     /// Represents a style cop code analyzer.
     /// </summary>
-    public class CodeAnalyzer : ICodeAnalyzer
+    public class StyleCopCodeAnalyzer : ICodeAnalyzer
     {
         private readonly CodeProject project;
 
         private readonly Queue<Violation> violations;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CodeAnalyzer"/> class.
+        /// Initializes a new instance of the <see cref="StyleCopCodeAnalyzer"/> class.
         /// </summary>
         /// <param name="projectPath">The path of the project to analyze.</param>
         /// <exception cref="ArgumentException">The projectPath argument is an empty string.</exception>
         /// <exception cref="ArgumentNullException">The projectPath argument is an empty string.</exception>
-        public CodeAnalyzer(string projectPath)
+        public StyleCopCodeAnalyzer(string projectPath)
         {
             if (projectPath == null)
             {

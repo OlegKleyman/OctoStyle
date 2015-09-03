@@ -1,15 +1,19 @@
 ﻿namespace OctoStyle.Core.Tests.Unit
 {
+    using System;
+
     using NUnit.Framework;
 
     [TestFixture]
     public class CodeAnalyzerFactoryTests
     {
-        [Test]
-        public void GetAnalyzerShouldReturnAnalyzer(AnalysisEngine engine)
+        [TestCase(AnalysisEngine.StyleCop, @"C:\OctoStyleTest", typeof(StyleCopCodeAnalyzer))]
+        public void GetAnalyzerShouldReturnAnalyzer(AnalysisEngine engine, string path, Type type)
         {
             var factory = GetCodeAnalyzerFactory();
-            var analyzer = factory.GetAnalyzer(engine);
+            var analyzer = factory.GetAnalyzer(engine, path);
+
+            Assert.That(analyzer, Is.TypeOf(type));
         }
 
         private static ICodeAnalyzerFactory GetCodeAnalyzerFactory()

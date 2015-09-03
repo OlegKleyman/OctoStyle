@@ -77,7 +77,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="CodeAnalyzer.cs" />
+    <Compile Include="StyleCopCodeAnalyzer.cs" />
     <Compile Include="PullRequestBuilder.cs" />
     <Compile Include="PullRequestCommenter.cs" />
     <Compile Include="PullRequestCommenterFactory.cs" />

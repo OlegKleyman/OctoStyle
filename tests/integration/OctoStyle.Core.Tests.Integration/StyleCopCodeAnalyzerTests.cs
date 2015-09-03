@@ -9,7 +9,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public static class CodeAnalyzerTests
+    public static class StyleCopCodeAnalyzerTests
     {
         [Test]
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
@@ -27,7 +27,7 @@
                         relativeSolutionPath));
             }
 
-            var styleCop = new CodeAnalyzer(projectPath);
+            var styleCop = new StyleCopCodeAnalyzer(projectPath);
             var violations =
                 styleCop.Analyze(Path.Combine(Directory.GetCurrentDirectory(), @"Resources\TestClass.cs")).ToList();
 

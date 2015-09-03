@@ -2,9 +2,9 @@
 {
     public class CodeAnalyzerFactory : ICodeAnalyzerFactory
     {
-        public ICodeAnalyzer GetAnalyzer(AnalysisEngine engine)
+        public ICodeAnalyzer GetAnalyzer(AnalysisEngine engine, string path)
         {
-            throw new System.NotImplementedException();
+            return new StyleCopCodeAnalyzer(path);
         }
     }
 }

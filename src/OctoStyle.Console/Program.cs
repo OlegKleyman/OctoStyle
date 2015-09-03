@@ -74,7 +74,7 @@
                     var diffRetriever = new GitHubDiffRetriever(new DifferWrapper(), new GitDiffEntryFactory());
 
                     var factory = new PullRequestCommenterFactory(client.PullRequest.Comment, repository, diffRetriever);
-                    var analyzer = new CodeAnalyzer(projectPath);
+                    var analyzer = new StyleCopCodeAnalyzer(projectPath);
 
                     Comments.Value.Add(factory.GetCommenter(file.Status).Create(pullRequest, file, analyzer, filePath));
                 }
