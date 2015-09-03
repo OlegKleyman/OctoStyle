@@ -1,4 +1,4 @@
-namespace OctoStyle.Console
+namespace OctoStyle.Core
 {
     public enum AnalysisEngine
     {
