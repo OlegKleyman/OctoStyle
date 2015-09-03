@@ -5,8 +5,6 @@ namespace OctoStyle.Core
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
-    using Octokit;
-
     /// <summary>
     /// Represents a GitHub pull request.
     /// </summary>
