@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
@@ -62,8 +61,6 @@
 
             var builder = new PullRequestBuilder(new DiffParser());
             var pullRequestRetriever = new PullRequestRetriever(builder, client.PullRequest, client.Connection, repository);
-            var con = new Connection(new ProductHeaderValue("OctoStyle"),
-                new InMemoryCredentialStore(new Credentials(arguments.Login, arguments.Password)));
             
             var pullRequest = pullRequestRetriever.RetrieveAsync(arguments.PullRequestNumber).GetAwaiter().GetResult();
 
