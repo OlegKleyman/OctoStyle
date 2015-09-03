@@ -46,8 +46,10 @@
     </Compile>
     <Compile Include="AddedPullRequestCommenter.cs" />
     <Compile Include="AnalysisEngine.cs" />
+    <Compile Include="CodeAnalyzerFactory.cs" />
     <Compile Include="DifferWrapper.cs" />
     <Compile Include="DiffParser.cs" />
+    <Compile Include="ICodeAnalyzerFactory.cs" />
     <Compile Include="IDiffer.cs" />
     <Compile Include="IDiffParser.cs" />
     <Compile Include="IPullRequestBuilder.cs" />
