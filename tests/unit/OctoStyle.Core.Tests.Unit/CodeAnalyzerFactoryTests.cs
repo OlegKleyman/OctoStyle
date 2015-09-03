@@ -8,6 +8,7 @@
     public class CodeAnalyzerFactoryTests
     {
         [TestCase(AnalysisEngine.StyleCop, @"C:\OctoStyleTest", typeof(StyleCopCodeAnalyzer))]
+        [TestCase(AnalysisEngine.VisualStudio, @"C:\OctoStyleTest\OctoStyleTest.sln", typeof(VisualStudioCodeAnalyzer))]
         public void GetAnalyzerShouldReturnAnalyzer(AnalysisEngine engine, string path, Type type)
         {
             var factory = GetCodeAnalyzerFactory();
