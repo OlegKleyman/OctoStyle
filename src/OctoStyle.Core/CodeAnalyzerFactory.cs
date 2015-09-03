@@ -6,7 +6,7 @@
     {
         public ICodeAnalyzer GetAnalyzer(AnalysisEngine engine, string path)
         {
-            var analyzer = default(ICodeAnalyzer);
+            ICodeAnalyzer analyzer;
 
             switch (engine)
             {
@@ -16,6 +16,8 @@
                 case AnalysisEngine.VisualStudio:
                     analyzer = new VisualStudioCodeAnalyzer(path);
                     break;
+                default:
+                    throw new ArgumentException($"Unrecognized analyzer: {engine}", nameof(engine));
             }
 
             return analyzer;
