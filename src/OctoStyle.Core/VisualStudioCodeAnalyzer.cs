@@ -4,8 +4,11 @@ namespace OctoStyle.Core
 
     public class VisualStudioCodeAnalyzer : ICodeAnalyzer
     {
+        private readonly string solutionFilePath;
+
         public VisualStudioCodeAnalyzer(string solutionFilePath)
         {
+            this.solutionFilePath = solutionFilePath;
         }
 
         public IEnumerable<GitHubStyleViolation> Analyze(string filePath)
