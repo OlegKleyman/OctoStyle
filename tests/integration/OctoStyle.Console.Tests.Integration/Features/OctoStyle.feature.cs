@@ -79,8 +79,28 @@ this.ScenarioSetup(scenarioInfo);
 #line 9
  testRunner.Given("I have a pull request with stylistic problems", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 10
- testRunner.When("I run the OctoStyle", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I run the OctoStyle using the StyleCop engine", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 11
+ testRunner.Then("there should be comments on the pull request on the lines of the found violations" +
+                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Pull request with issues using code analysis")]
+        [NUnit.Framework.CategoryAttribute("pullRequest")]
+        public virtual void PullRequestWithIssuesUsingCodeAnalysis()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Pull request with issues using code analysis", new string[] {
+                        "pullRequest"});
+#line 14
+this.ScenarioSetup(scenarioInfo);
+#line 15
+ testRunner.Given("I have a pull request with stylistic problems", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 16
+ testRunner.When("I run the OctoStyle using the CodeAnalysis engine", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 17
  testRunner.Then("there should be comments on the pull request on the lines of the found violations" +
                     "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

@@ -69,20 +69,21 @@
             ScenarioContextExtended.Current.PullRequestNumber = 1;
         }
 
-        [When(@"I run the OctoStyle")]
+        [When(@"I run the OctoStyle using the (StyleCop|CodeAnalysis) engine")]
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
-        public static void WhenIrunTheOctoStyle()
+        public static void WhenIrunTheOctoStyle(AnalysisEngine engine)
         {
             const string relativeSolutionDirectory = @"..\..\..\OctoStyleTest";
             var arguments = string.Format(
                 CultureInfo.InvariantCulture,
-                "-l {0} -p {1} -d {2} -o {3} -r {4} -pr {5}",
+                "-l {0} -p {1} -d {2} -o {3} -r {4} -pr {5} -e {6}",
                 FeatureContextExtended.Current.GitLogin,
                 FeatureContextExtended.Current.GitPassword,
                 Path.GetFullPath(relativeSolutionDirectory),
                 FeatureContextExtended.Current.RepositoryOwner,
                 FeatureContextExtended.Current.Repository,
-                ScenarioContextExtended.Current.PullRequestNumber);
+                ScenarioContextExtended.Current.PullRequestNumber,
+                engine);
 
             Program.Main(arguments.Split(' '));
 
