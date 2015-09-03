@@ -14,6 +14,11 @@ namespace OctoStyle.Core
                 throw new ArgumentNullException(nameof(solutionFilePath));
             }
 
+            if (solutionFilePath.Length == 0)
+            {
+                throw new ArgumentException("Cannot be empty.", nameof(solutionFilePath));
+            }
+
             this.solutionFilePath = solutionFilePath;
         }
 

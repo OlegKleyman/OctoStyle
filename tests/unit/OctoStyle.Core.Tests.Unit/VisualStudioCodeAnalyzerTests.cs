@@ -24,6 +24,15 @@
             Assert.That(ex.Message, Is.EqualTo("Value cannot be null.\r\nParameter name: solutionFilePath"));
         }
 
+        [Test]
+        public void ConstructorShouldThrowArgumentExceptionWhenArgumentIsEmpty()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => new VisualStudioCodeAnalyzer(string.Empty));
+
+            Assert.That(ex.ParamName, Is.EqualTo("solutionFilePath"));
+            Assert.That(ex.Message, Is.EqualTo("Cannot be empty.\r\nParameter name: solutionFilePath"));
+        }
+
         private static VisualStudioCodeAnalyzer GetVisualStudioCodeAnalyzer()
         {
             return new VisualStudioCodeAnalyzer(@"C:\OctoStyleTest\OctoStyleTest.sln");
