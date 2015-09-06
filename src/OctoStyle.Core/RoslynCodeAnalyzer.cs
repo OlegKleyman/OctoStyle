@@ -12,11 +12,11 @@ namespace OctoStyle.Core
     using Microsoft.CodeAnalysis.Diagnostics;
     using Microsoft.CodeAnalysis.MSBuild;
 
-    public class VisualStudioCodeAnalyzer : ICodeAnalyzer
+    public class RoslynCodeAnalyzer : ICodeAnalyzer
     {
         private readonly string solutionFilePath;
 
-        public VisualStudioCodeAnalyzer(string solutionFilePath)
+        public RoslynCodeAnalyzer(string solutionFilePath)
         {
             if (solutionFilePath == null)
             {

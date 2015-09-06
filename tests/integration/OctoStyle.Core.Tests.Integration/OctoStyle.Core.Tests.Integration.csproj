@@ -55,7 +55,7 @@
       <ExcludeFromStyleCop>true</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="StyleCopCodeAnalyzerTests.cs" />
-    <Compile Include="VisualStudioCodeAnalyzerTests.cs" />
+    <Compile Include="RoslynCodeAnalyzerTests.cs" />
     <None Include="Resources\TestClass.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

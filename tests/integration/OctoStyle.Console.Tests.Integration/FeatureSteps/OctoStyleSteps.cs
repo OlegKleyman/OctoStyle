@@ -69,7 +69,7 @@
             ScenarioContextExtended.Current.PullRequestNumber = 1;
         }
 
-        [When(@"I run the OctoStyle using the (StyleCop|CodeAnalysis) engine")]
+        [When(@"I run the OctoStyle using the (StyleCop|Roslyn) engine")]
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = StyleCopConstants.LocalConstantJustification)]
         public static void WhenIrunTheOctoStyle(AnalysisEngine engine)
         {

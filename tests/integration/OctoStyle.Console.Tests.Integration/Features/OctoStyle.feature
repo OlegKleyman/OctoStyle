@@ -13,5 +13,5 @@ Scenario: Pull request with issues
 @pullRequest
 Scenario: Pull request with issues using code analysis
 	Given I have a pull request with stylistic problems	
-	When I run the OctoStyle using the CodeAnalysis engine
+	When I run the OctoStyle using the Roslyn engine
 	Then there should be comments on the pull request on the lines of the found violations

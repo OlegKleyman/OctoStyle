@@ -8,7 +8,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class VisualStudioCodeAnalyzerTests
+    public class RoslynCodeAnalyzerTests
     {
         [Test]
         public void AnalyzeShouldReturnAllAnalysisIssues()
@@ -25,7 +25,7 @@
                         relativeSolutionPath));
             }
 
-            var analyzer = new VisualStudioCodeAnalyzer(Path.Combine(projectPath, "OctoStyleTest.sln"));
+            var analyzer = new RoslynCodeAnalyzer(Path.Combine(projectPath, "OctoStyleTest.sln"));
 
             var violations =
                 analyzer.Analyze(Path.Combine(projectPath, @"src\TestLibrary\TestClass.cs"))

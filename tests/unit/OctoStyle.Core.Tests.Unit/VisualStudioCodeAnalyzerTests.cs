@@ -18,7 +18,7 @@
         [Test]
         public void ConstructorShouldThrowArgumentNullExceptionWhenArgumentIsNull()
         {
-            var ex = Assert.Throws<ArgumentNullException>(() => new VisualStudioCodeAnalyzer(null));
+            var ex = Assert.Throws<ArgumentNullException>(() => new RoslynCodeAnalyzer(null));
 
             Assert.That(ex.ParamName, Is.EqualTo("solutionFilePath"));
             Assert.That(ex.Message, Is.EqualTo("Value cannot be null.\r\nParameter name: solutionFilePath"));
@@ -27,15 +27,15 @@
         [Test]
         public void ConstructorShouldThrowArgumentExceptionWhenArgumentIsEmpty()
         {
-            var ex = Assert.Throws<ArgumentException>(() => new VisualStudioCodeAnalyzer(string.Empty));
+            var ex = Assert.Throws<ArgumentException>(() => new RoslynCodeAnalyzer(string.Empty));
 
             Assert.That(ex.ParamName, Is.EqualTo("solutionFilePath"));
             Assert.That(ex.Message, Is.EqualTo("Cannot be empty.\r\nParameter name: solutionFilePath"));
         }
 
-        private static VisualStudioCodeAnalyzer GetVisualStudioCodeAnalyzer()
+        private static RoslynCodeAnalyzer GetVisualStudioCodeAnalyzer()
         {
-            return new VisualStudioCodeAnalyzer(@"C:\OctoStyleTest\OctoStyleTest.sln");
+            return new RoslynCodeAnalyzer(@"C:\OctoStyleTest\OctoStyleTest.sln");
         }
     }
 }

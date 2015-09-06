@@ -13,8 +13,8 @@
                 case AnalysisEngine.StyleCop:
                     analyzer = new StyleCopCodeAnalyzer(path);
                     break;
-                case AnalysisEngine.VisualStudio:
-                    analyzer = new VisualStudioCodeAnalyzer(path);
+                case AnalysisEngine.Roslyn:
+                    analyzer = new RoslynCodeAnalyzer(path);
                     break;
                 default:
                     throw new ArgumentException($"Unrecognized analyzer: {engine}", nameof(engine));

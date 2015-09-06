@@ -99,7 +99,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 15
  testRunner.Given("I have a pull request with stylistic problems", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 16
- testRunner.When("I run the OctoStyle using the CodeAnalysis engine", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I run the OctoStyle using the Roslyn engine", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 17
  testRunner.Then("there should be comments on the pull request on the lines of the found violations" +
                     "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
