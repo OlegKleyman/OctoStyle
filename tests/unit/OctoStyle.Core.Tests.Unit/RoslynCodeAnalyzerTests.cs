@@ -2,6 +2,10 @@
 {
     using System;
 
+    using Microsoft.CodeAnalysis.Diagnostics;
+
+    using Moq;
+
     using NUnit.Framework;
 
     [TestFixture]
@@ -53,7 +57,9 @@
 
         private static RoslynCodeAnalyzer GetRoslynCodeAnalyzer()
         {
-            return new RoslynCodeAnalyzer(@"C:\OctoStyleTest\OctoStyleTest.sln");
+            var diagnosticAnalyzer = new Mock<DiagnosticAnalyzer>();
+
+            return new RoslynCodeAnalyzer(@"C:\OctoStyleTest\OctoStyleTest.sln", diagnosticAnalyzer.Object);
         }
     }
 }
