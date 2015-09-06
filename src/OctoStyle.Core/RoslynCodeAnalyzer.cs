@@ -48,27 +48,18 @@ namespace OctoStyle.Core
         {
             var workspace = MSBuildWorkspace.Create();
 
-            var solution = workspace.OpenSolutionAsync(solutionFilePath).GetAwaiter().GetResult();
+            var solution = workspace.OpenSolutionAsync(this.solutionFilePath).GetAwaiter().GetResult();
 
             var projectDiagnosticTasks = new List<Task<ImmutableArray<Diagnostic>>>();
-
-            foreach (var project in solution.Projects)
-            {
-                if (project.Language != LanguageNames.CSharp)
-                {
-                    continue;
-                }
-
-                projectDiagnosticTasks.Add(GetProjectAnalyzerDiagnostics(this.analyzers, project));
-            }
+            
+            projectDiagnosticTasks.AddRange(
+                solution.Projects.Where(project => project.Language == LanguageNames.CSharp)
+                    .Select(project => GetProjectAnalyzerDiagnostics(this.analyzers, project)));
 
             var diagnosticBuilder = ImmutableList.CreateBuilder<Diagnostic>();
-
-            foreach (var task in projectDiagnosticTasks)
-            {
-                diagnosticBuilder.AddRange(task.ConfigureAwait(false).GetAwaiter().GetResult());
-            }
-
+            diagnosticBuilder.AddRange(
+                projectDiagnosticTasks.SelectMany(task => task.ConfigureAwait(false).GetAwaiter().GetResult()));
+            
             var violations =
                 diagnosticBuilder.Where(
                     diagnostic =>
@@ -81,25 +72,6 @@ namespace OctoStyle.Core
                             diagnostic.Location.GetLineSpan().EndLinePosition.Line));
             
             return violations;
-        }
-
-        private static ImmutableArray<DiagnosticAnalyzer> GetAllAnalyzers()
-        {
-            Assembly assembly = typeof(StyleCop.Analyzers.NoCodeFixAttribute).Assembly;
-
-            var diagnosticAnalyzerType = typeof(DiagnosticAnalyzer);
-
-            List<DiagnosticAnalyzer> analyzers = new List<DiagnosticAnalyzer>();
-
-            foreach (var type in assembly.GetTypes())
-            {
-                if (type.IsSubclassOf(diagnosticAnalyzerType) && !type.IsAbstract)
-                {
-                    analyzers.Add((DiagnosticAnalyzer)Activator.CreateInstance(type));
-                }
-            }
-
-            return analyzers.ToImmutableArray();
         }
 
         private static async Task<ImmutableArray<Diagnostic>> GetProjectAnalyzerDiagnostics(ImmutableArray<DiagnosticAnalyzer> analyzers, Project project)

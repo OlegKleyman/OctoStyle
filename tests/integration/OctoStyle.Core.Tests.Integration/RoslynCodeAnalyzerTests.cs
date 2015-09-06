@@ -1,9 +1,13 @@
 ﻿namespace OctoStyle.Core.Tests.Integration
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
+
+    using Microsoft.CodeAnalysis.Diagnostics;
 
     using NUnit.Framework;
 
@@ -25,7 +29,15 @@
                         relativeSolutionPath));
             }
 
-            var analyzer = new RoslynCodeAnalyzer(Path.Combine(projectPath, "OctoStyleTest.sln"));
+            var analyzerAssembly = Assembly.LoadFrom("StyleCop.Analyzers.dll");
+
+            var analyzers =
+                new List<DiagnosticAnalyzer>(
+                    analyzerAssembly.GetTypes()
+                        .Where(type => type.IsSubclassOf(typeof(DiagnosticAnalyzer)) && !type.IsAbstract)
+                        .Select(type => (DiagnosticAnalyzer)Activator.CreateInstance(type)));
+
+            var analyzer = new RoslynCodeAnalyzer(Path.Combine(projectPath, "OctoStyleTest.sln"), analyzers.ToArray());
 
             var violations =
                 analyzer.Analyze(Path.Combine(projectPath, @"src\TestLibrary\TestClass.cs"))
