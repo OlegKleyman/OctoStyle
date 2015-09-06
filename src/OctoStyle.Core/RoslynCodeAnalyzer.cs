@@ -16,11 +16,18 @@ namespace OctoStyle.Core
     {
         private readonly string solutionFilePath;
 
-        public RoslynCodeAnalyzer(string solutionFilePath)
+        private readonly DiagnosticAnalyzer[] analyzers;
+
+        public RoslynCodeAnalyzer(string solutionFilePath, params DiagnosticAnalyzer[] analyzers)
         {
             if (solutionFilePath == null)
             {
                 throw new ArgumentNullException(nameof(solutionFilePath));
+            }
+
+            if (analyzers == null)
+            {
+                throw new ArgumentNullException(nameof(analyzers));
             }
 
             if (solutionFilePath.Length == 0)
@@ -29,6 +36,7 @@ namespace OctoStyle.Core
             }
 
             this.solutionFilePath = solutionFilePath;
+            this.analyzers = analyzers;
         }
 
         public IEnumerable<GitHubStyleViolation> Analyze(string filePath)

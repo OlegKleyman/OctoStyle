@@ -10,13 +10,13 @@
         [Test]
         public void ConstructorShouldCreateObject()
         {
-            GetVisualStudioCodeAnalyzer();
+            GetRoslynCodeAnalyzer();
 
             Assert.Pass("If the object is created without an exeption then the constructor is considered working.");
         }
 
         [Test]
-        public void ConstructorShouldThrowArgumentNullExceptionWhenArgumentIsNull()
+        public void ConstructorShouldThrowArgumentNullExceptionWhenSolutionPathArgumentIsNull()
         {
             var ex = Assert.Throws<ArgumentNullException>(() => new RoslynCodeAnalyzer(null));
 
@@ -25,7 +25,7 @@
         }
 
         [Test]
-        public void ConstructorShouldThrowArgumentExceptionWhenArgumentIsEmpty()
+        public void ConstructorShouldThrowArgumentExceptionWhenSolutionPathArgumentIsEmpty()
         {
             var ex = Assert.Throws<ArgumentException>(() => new RoslynCodeAnalyzer(string.Empty));
 
@@ -33,7 +33,16 @@
             Assert.That(ex.Message, Is.EqualTo("Cannot be empty.\r\nParameter name: solutionFilePath"));
         }
 
-        private static RoslynCodeAnalyzer GetVisualStudioCodeAnalyzer()
+        [Test]
+        public void ConstructorShouldThrowArgumentNullExceptionWhenAnalyzersArgumentIsNull()
+        {
+            var ex = Assert.Throws<ArgumentNullException>(() => new RoslynCodeAnalyzer(string.Empty, null));
+
+            Assert.That(ex.ParamName, Is.EqualTo("analyzers"));
+            Assert.That(ex.Message, Is.EqualTo("Value cannot be null.\r\nParameter name: analyzers"));
+        }
+
+        private static RoslynCodeAnalyzer GetRoslynCodeAnalyzer()
         {
             return new RoslynCodeAnalyzer(@"C:\OctoStyleTest\OctoStyleTest.sln");
         }

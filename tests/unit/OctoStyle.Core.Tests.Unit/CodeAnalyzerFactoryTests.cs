@@ -2,6 +2,8 @@
 {
     using System;
 
+    using Microsoft.CodeAnalysis.Diagnostics;
+
     using NUnit.Framework;
 
     [TestFixture]
@@ -12,7 +14,7 @@
         public void GetAnalyzerShouldReturnAnalyzer(AnalysisEngine engine, string path, Type type)
         {
             var factory = GetCodeAnalyzerFactory();
-            var analyzer = factory.GetAnalyzer(engine, path);
+            var analyzer = factory.GetAnalyzer(engine, path, new DiagnosticAnalyzer[0]);
 
             Assert.That(analyzer, Is.TypeOf(type));
         }
