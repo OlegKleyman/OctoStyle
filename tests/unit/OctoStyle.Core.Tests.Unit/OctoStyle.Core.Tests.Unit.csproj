@@ -65,7 +65,7 @@
     <Compile Include="PullRequestRetrieverTests.cs" />
     <Compile Include="RenamedPullRequestCommenterTest.cs" />
     <Compile Include="StyleCopTests.cs" />
-    <Compile Include="VisualStudioCodeAnalyzerTests.cs" />
+    <Compile Include="RoslynCodeAnalyzerTests.cs" />
     <None Include="Resources\FullDiff.diff" />
     <None Include="Resources\TestClass2CsDeletedDiff.diff" />
     <None Include="Resources\TestClassCsDiff.diff" />

@@ -16,7 +16,7 @@ namespace OctoStyle.Core
     {
         private readonly string solutionFilePath;
 
-        private readonly DiagnosticAnalyzer[] analyzers;
+        private readonly ImmutableArray<DiagnosticAnalyzer> analyzers;
 
         public RoslynCodeAnalyzer(string solutionFilePath, params DiagnosticAnalyzer[] analyzers)
         {
@@ -35,8 +35,13 @@ namespace OctoStyle.Core
                 throw new ArgumentException("Cannot be empty.", nameof(solutionFilePath));
             }
 
+            if (analyzers.Length == 0)
+            {
+                throw new ArgumentException("Cannot be empty.", nameof(analyzers));
+            }
+
             this.solutionFilePath = solutionFilePath;
-            this.analyzers = analyzers;
+            this.analyzers = analyzers.ToImmutableArray();
         }
 
         public IEnumerable<GitHubStyleViolation> Analyze(string filePath)
@@ -54,7 +59,7 @@ namespace OctoStyle.Core
                     continue;
                 }
 
-                projectDiagnosticTasks.Add(GetProjectAnalyzerDiagnostics(GetAllAnalyzers(), project));
+                projectDiagnosticTasks.Add(GetProjectAnalyzerDiagnostics(this.analyzers, project));
             }
 
             var diagnosticBuilder = ImmutableList.CreateBuilder<Diagnostic>();

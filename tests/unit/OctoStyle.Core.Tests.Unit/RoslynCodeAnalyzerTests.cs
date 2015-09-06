@@ -5,7 +5,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class VisualStudioCodeAnalyzerTests
+    public class RoslynCodeAnalyzerTests
     {
         [Test]
         public void ConstructorShouldCreateObject()
@@ -40,6 +40,15 @@
 
             Assert.That(ex.ParamName, Is.EqualTo("analyzers"));
             Assert.That(ex.Message, Is.EqualTo("Value cannot be null.\r\nParameter name: analyzers"));
+        }
+
+        [Test]
+        public void ConstructorShouldThrowArgumentExceptionWhenAnalyzersArgumentIsEmpty()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => new RoslynCodeAnalyzer("test"));
+
+            Assert.That(ex.ParamName, Is.EqualTo("analyzers"));
+            Assert.That(ex.Message, Is.EqualTo("Cannot be empty.\r\nParameter name: analyzers"));
         }
 
         private static RoslynCodeAnalyzer GetRoslynCodeAnalyzer()
