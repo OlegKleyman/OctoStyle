@@ -21,7 +21,8 @@
             string solutionDirectory,
             string repositoryOwner,
             string repository,
-            int pullRequestNumber)
+            int pullRequestNumber,
+            AnalysisEngine engine)
         {
             if (login == null)
             {
@@ -81,6 +82,7 @@
             this.RepositoryOwner = repositoryOwner;
             this.Repository = repository;
             this.PullRequestNumber = pullRequestNumber;
+            this.Engine = engine;
         }
 
         /// <summary>
@@ -106,6 +108,8 @@
         /// </summary>
         /// <value>The pull request number to inspect.</value>
         public int PullRequestNumber { get; private set; }
+
+        public AnalysisEngine Engine { get; }
 
         /// <summary>
         /// Gets <see cref="SolutionDirectory"/>.
@@ -137,33 +141,52 @@
             var repositoryOwner = default(string);
             var repository = default(string);
             var pullRequestNumber = default(int);
+            var engine = default(AnalysisEngine);
 
-            var options =
-                new OptionSet().Add("l=", l => login = l)
-                    .Add("p=", p => password = p)
-                    .Add("d=", d => solutionDirectory = d)
-                    .Add("o=", o => repositoryOwner = o)
-                    .Add("r=", r => repository = r)
-                    .Add(
-                        "pr=",
-                        pu =>
+            var options = new OptionSet().Add("l=", l => login = l)
+                .Add("p=", p => password = p)
+                .Add("d=", d => solutionDirectory = d)
+                .Add("o=", o => repositoryOwner = o)
+                .Add("r=", r => repository = r)
+                .Add(
+                    "e=",
+                    e =>
+                        {
+                            if (!Enum.TryParse(e, true, out engine))
                             {
-                                if (
-                                    !int.TryParse(
-                                        pu,
-                                        NumberStyles.Integer,
-                                        CultureInfo.InvariantCulture,
-                                        out pullRequestNumber))
+                                throw new ArgumentException(
+                                    $"Engine must be {string.Join(", ", Enum.GetNames(typeof(AnalysisEngine)))}.",
+                                    nameof(e));
+                            }
+                        }).Add(
+                            "pr=",
+                            pu =>
                                 {
-                                    throw new ArgumentException(
-                                        "pu must be an integer referencing an active pull request");
-                                }
-                            });
+                                    if (
+                                        !int.TryParse(
+                                            pu,
+                                            NumberStyles.Integer,
+                                            CultureInfo.InvariantCulture,
+                                            out pullRequestNumber))
+                                    {
+                                        throw new ArgumentException(
+                                            "pu must be an integer referencing an active pull request",
+                                            nameof(pu));
+                                    }
+                                });
+
             options.Parse(args);
 
             try
             {
-                return new Arguments(login, password, solutionDirectory, repositoryOwner, repository, pullRequestNumber);
+                return new Arguments(
+                    login,
+                    password,
+                    solutionDirectory,
+                    repositoryOwner,
+                    repository,
+                    pullRequestNumber,
+                    engine);
             }
             catch (ArgumentException ex)
             {

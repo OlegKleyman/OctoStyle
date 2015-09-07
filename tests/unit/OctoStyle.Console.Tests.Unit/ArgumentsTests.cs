@@ -5,6 +5,8 @@
 
     using NUnit.Framework;
 
+    using OctoStyle.Core;
+
     [TestFixture]
     public static class ArgumentsTests
     {
@@ -12,7 +14,7 @@
         public static void ParseShouldReturnArguments()
         {
             var arguments =
-                Arguments.Parse(@"-l TestUser -p testpass -d C:\test -o OlegKleyman -r OctoStyleTest -pr 1".Split(' '));
+                Arguments.Parse(@"-l TestUser -p testpass -d C:\test -o OlegKleyman -r OctoStyleTest -pr 1 -e StyleCop".Split(' '));
 
             Assert.That(arguments.Login, Is.EqualTo("TestUser"));
             Assert.That(arguments.Password, Is.EqualTo("testpass"));
@@ -20,6 +22,7 @@
             Assert.That(arguments.RepositoryOwner, Is.EqualTo(@"OlegKleyman"));
             Assert.That(arguments.Repository, Is.EqualTo(@"OctoStyleTest"));
             Assert.That(arguments.PullRequestNumber, Is.EqualTo(1));
+            Assert.That(arguments.Engine, Is.EqualTo(AnalysisEngine.StyleCop));
         }
 
         [Test]
