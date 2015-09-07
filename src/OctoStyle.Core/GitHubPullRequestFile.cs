@@ -30,7 +30,7 @@ namespace OctoStyle.Core
             }
 
             const string cannotBeEmptyMessage = "Cannot be empty";
-            
+
             if (fileName.Length == 0)
             {
                 throw new ArgumentException(cannotBeEmptyMessage, "fileName");
@@ -52,7 +52,7 @@ namespace OctoStyle.Core
         /// </summary>
         /// <value>The name of the file.</value>
         public string FileName { get; private set; }
-        
+
         /// <summary>
         /// Gets the <see cref="Status"/>.
         /// </summary>

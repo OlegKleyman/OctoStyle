@@ -155,7 +155,8 @@
                             if (!Enum.TryParse(e, true, out engine))
                             {
                                 throw new ArgumentException(
-                                    $"Engine must be {string.Join(", ", Enum.GetNames(typeof(AnalysisEngine)))}.",
+                                    FormattableString.Invariant(
+                                        $"Engine must be {string.Join(", ", Enum.GetNames(typeof(AnalysisEngine)))}."),
                                     nameof(e));
                             }
                         }).Add(

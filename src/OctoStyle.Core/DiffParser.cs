@@ -1,6 +1,5 @@
 namespace OctoStyle.Core
 {
-    using System;
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
 
@@ -20,7 +19,7 @@ namespace OctoStyle.Core
         public IDictionary<string, string> Split(string diff)
         {
             var regex = new Regex(@"^(diff\s--git\sa/)(.+)(\sb/.+)$", RegexOptions.Multiline);
-            
+
             var splitDiff = regex.Split(diff);
             var diffs = new Dictionary<string, string>();
 
@@ -33,11 +32,7 @@ namespace OctoStyle.Core
 
                 diffs.Add(
                     fileNameDiffHeaderSegment,
-                    String.Concat(
-                        firstDiffHeaderSegment,
-                        fileNameDiffHeaderSegment,
-                        secondDiffHeaderSegment,
-                        diffBody));
+                    string.Concat(firstDiffHeaderSegment, fileNameDiffHeaderSegment, secondDiffHeaderSegment, diffBody));
             }
 
             return diffs;
