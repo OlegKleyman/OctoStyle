@@ -151,9 +151,59 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.Given("I have a pull request with stylistic problems", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 28
  testRunner.When("I run the OctoStyle using the Roslyn engine", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "File",
+                        "Position",
+                        "Message"});
+            table2.AddRow(new string[] {
+                        "src/TestLibrary/TestClass.cs",
+                        "5",
+                        "SA1600 - A C# code element is missing a documentation header."});
+            table2.AddRow(new string[] {
+                        "src/TestLibrary/TestClass.cs",
+                        "10",
+                        "SA1513 - A closing curly bracket within a C# element, statement, or expression is" +
+                            " not followed by a blank line."});
+            table2.AddRow(new string[] {
+                        "src/TestLibrary/Nested/TestClass2.cs",
+                        "1",
+                        "Renamed files not supported."});
+            table2.AddRow(new string[] {
+                        "src/TestLibrary/Nested/TestClass3.cs",
+                        "1",
+                        "SA1633 - A C# code file is missing a standard file header."});
+            table2.AddRow(new string[] {
+                        "src/TestLibrary/Nested/TestClass3.cs",
+                        "1",
+                        "SA1200 - A C# using directive is placed outside of a namespace element."});
+            table2.AddRow(new string[] {
+                        "src/TestLibrary/Nested/TestClass3.cs",
+                        "2",
+                        "SA1200 - A C# using directive is placed outside of a namespace element."});
+            table2.AddRow(new string[] {
+                        "src/TestLibrary/Nested/TestClass3.cs",
+                        "3",
+                        "SA1200 - A C# using directive is placed outside of a namespace element."});
+            table2.AddRow(new string[] {
+                        "src/TestLibrary/Nested/TestClass3.cs",
+                        "4",
+                        "SA1200 - A C# using directive is placed outside of a namespace element."});
+            table2.AddRow(new string[] {
+                        "src/TestLibrary/Nested/TestClass3.cs",
+                        "5",
+                        "SA1200 - A C# using directive is placed outside of a namespace element."});
+            table2.AddRow(new string[] {
+                        "src/TestLibrary/Nested/TestClass3.cs",
+                        "9",
+                        "SA1600 - A C# code element is missing a documentation header."});
+            table2.AddRow(new string[] {
+                        "src/TestLibrary/Nested/TestClass3.cs",
+                        "9",
+                        "SA1400 - The access modifier for a C# element has not been explicitly defined."});
 #line 29
  testRunner.Then("there should be comments on the pull request on the lines of the found violations" +
-                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+                    "", ((string)(null)), table2, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
