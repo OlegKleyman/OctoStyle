@@ -80,9 +80,60 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.Given("I have a pull request with stylistic problems", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 10
  testRunner.When("I run the OctoStyle using the StyleCop engine", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "File",
+                        "Position",
+                        "Message"});
+            table1.AddRow(new string[] {
+                        "src/TestLibrary/TestClass.cs",
+                        "5",
+                        "SA1600 - The method must have a documentation header."});
+            table1.AddRow(new string[] {
+                        "src/TestLibrary/TestClass.cs",
+                        "9",
+                        "SA1513 - Statements or elements wrapped in curly brackets must be followed by a b" +
+                            "lank line."});
+            table1.AddRow(new string[] {
+                        "src/TestLibrary/Nested/TestClass2.cs",
+                        "1",
+                        "Renamed files not supported."});
+            table1.AddRow(new string[] {
+                        "src/TestLibrary/Nested/TestClass3.cs",
+                        "1",
+                        "SA1633 - The file has no header, the header Xml is invalid, or the header is not " +
+                            "located at the top of the file."});
+            table1.AddRow(new string[] {
+                        "src/TestLibrary/Nested/TestClass3.cs",
+                        "1",
+                        "SA1200 - All using directives must be placed inside of the namespace."});
+            table1.AddRow(new string[] {
+                        "src/TestLibrary/Nested/TestClass3.cs",
+                        "2",
+                        "SA1200 - All using directives must be placed inside of the namespace."});
+            table1.AddRow(new string[] {
+                        "src/TestLibrary/Nested/TestClass3.cs",
+                        "3",
+                        "SA1200 - All using directives must be placed inside of the namespace."});
+            table1.AddRow(new string[] {
+                        "src/TestLibrary/Nested/TestClass3.cs",
+                        "4",
+                        "SA1200 - All using directives must be placed inside of the namespace."});
+            table1.AddRow(new string[] {
+                        "src/TestLibrary/Nested/TestClass3.cs",
+                        "5",
+                        "SA1200 - All using directives must be placed inside of the namespace."});
+            table1.AddRow(new string[] {
+                        "src/TestLibrary/Nested/TestClass3.cs",
+                        "9",
+                        "SA1600 - The class must have a documentation header."});
+            table1.AddRow(new string[] {
+                        "src/TestLibrary/Nested/TestClass3.cs",
+                        "9",
+                        "SA1400 - The class must have an access modifier."});
 #line 11
  testRunner.Then("there should be comments on the pull request on the lines of the found violations" +
-                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+                    "", ((string)(null)), table1, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -94,13 +145,13 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Pull request with issues using code analysis", new string[] {
                         "pullRequest"});
-#line 14
+#line 26
 this.ScenarioSetup(scenarioInfo);
-#line 15
+#line 27
  testRunner.Given("I have a pull request with stylistic problems", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 16
+#line 28
  testRunner.When("I run the OctoStyle using the Roslyn engine", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 17
+#line 29
  testRunner.Then("there should be comments on the pull request on the lines of the found violations" +
                     "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

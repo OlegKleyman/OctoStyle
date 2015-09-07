@@ -14,6 +14,7 @@
     using OctoStyle.Core;
 
     using TechTalk.SpecFlow;
+    using TechTalk.SpecFlow.Assist;
 
     [Binding]
     public class OctoStyleSteps : Steps
@@ -91,7 +92,7 @@
         }
 
         [Then(@"there should be comments on the pull request on the lines of the found violations")]
-        public static void ThenThereShouldBeCommentsOnThePullRequestOnTheLinesOfTheFoundViolations()
+        public static void ThenThereShouldBeCommentsOnThePullRequestOnTheLinesOfTheFoundViolations(Table expectedComments)
         {
             var client = FeatureContextExtended.Current.GitClient;
 
@@ -101,85 +102,24 @@
                     FeatureContextExtended.Current.Repository,
                     ScenarioContextExtended.Current.PullRequestNumber).GetAwaiter().GetResult();
 
-            var testClassComments =
-                comments.Where(
-                    comment => (comment.Path.EndsWith("TestClass.cs", StringComparison.Ordinal) && comment.Position >= 5 && comment.Position <= 9))
-                    .ToList();
+            var expected = expectedComments.CreateSet<PullRequestComment>().ToArray();
 
-            var testClass2Comments =
-                comments.Where(comment => (comment.Path.EndsWith("TestClass2.cs", StringComparison.Ordinal) && comment.Position == 1)).ToList();
-
-            var testClass3Comments =
-                comments.Where(comment => (comment.Path.EndsWith("TestClass3.cs", StringComparison.Ordinal) && comment.Position <= 9)).ToList();
-
-            Assert.That(testClassComments.Count, Is.GreaterThanOrEqualTo(2));
-
-            Assert.That(
-                testClassComments.Any(
-                    comment =>
-                    comment.Body == "SA1600 - The method must have a documentation header." && comment.Position == 5));
-
-            Assert.That(
-                testClassComments.Any(
-                    comment =>
-                    comment.Body
-                    == "SA1513 - Statements or elements wrapped in curly brackets must be followed by a blank line."
-                    && comment.Position == 9));
-
-            Assert.That(testClass2Comments.Count, Is.GreaterThanOrEqualTo(1));
-
-            Assert.That(
-                testClass2Comments.Any(
-                    comment => comment.Body == "Renamed files not supported." && comment.Position == 1));
-
-            Assert.That(testClass3Comments.Count, Is.GreaterThanOrEqualTo(8));
-
-            Assert.That(
-                testClass3Comments.Any(
-                    comment =>
-                    comment.Body
-                    == "SA1633 - The file has no header, the header Xml is invalid, or the header is not located at the top of the file."
-                    && comment.Position == 1));
-
-            Assert.That(
-                testClass3Comments.Any(
-                    comment =>
-                    comment.Body == "SA1200 - All using directives must be placed inside of the namespace."
-                    && comment.Position == 1));
-
-            Assert.That(
-                testClass3Comments.Any(
-                    comment =>
-                    comment.Body == "SA1200 - All using directives must be placed inside of the namespace."
-                    && comment.Position == 2));
-
-            Assert.That(
-                testClass3Comments.Any(
-                    comment =>
-                    comment.Body == "SA1200 - All using directives must be placed inside of the namespace."
-                    && comment.Position == 3));
-
-            Assert.That(
-                testClass3Comments.Any(
-                    comment =>
-                    comment.Body == "SA1200 - All using directives must be placed inside of the namespace."
-                    && comment.Position == 4));
-
-            Assert.That(
-                testClass3Comments.Any(
-                    comment =>
-                    comment.Body == "SA1200 - All using directives must be placed inside of the namespace."
-                    && comment.Position == 5));
-
-            Assert.That(
-                testClass3Comments.Any(
-                    comment =>
-                    comment.Body == "SA1600 - The class must have a documentation header." && comment.Position == 9));
-
-            Assert.That(
-                testClass3Comments.Any(
-                    comment =>
-                    comment.Body == "SA1400 - The class must have an access modifier." && comment.Position == 9));
+            Assert.That(comments.Count, Is.GreaterThanOrEqualTo(expected.Length));
+            foreach (var expectedComment in expected)
+            {
+                Assert.That(
+                    comments.Any(
+                        comment =>
+                        comment.Path == expectedComment.File && comment.Body == expectedComment.Message
+                        && comment.Position == expectedComment.Position),
+                    string.Format(
+                        CultureInfo.InvariantCulture,
+                        "Comment was not found:{0}File: {1}{0}Position: {2}{0}Message: {3}",
+                        Environment.NewLine,
+                        expectedComment.File,
+                        expectedComment.Position,
+                        expectedComment.Message));
+            }
         }
     }
 }

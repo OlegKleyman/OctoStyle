@@ -114,6 +114,7 @@
     <Compile Include="..\..\..\GlobalSuppressions.cs">
       <Link>GlobalSuppressions.cs</Link>
     </Compile>
+    <Compile Include="FeatureSteps\PullRequestComment.cs" />
     <Compile Include="Features\OctoStyle.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
