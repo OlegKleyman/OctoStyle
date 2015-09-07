@@ -61,19 +61,20 @@ namespace OctoStyle.Core
                 projectDiagnosticTasks.AddRange(allDiagnostics.RemoveRange(compilation.GetDiagnostics()));
             }
 
+            const int lineOffsetCorrection = 1;
+
             var violations =
                 projectDiagnosticTasks.Where(
-                    diagnostic =>
-                    string.Compare(
+                    diagnostic => diagnostic.Location.SourceTree != null && string.Compare(
                         diagnostic.Location.SourceTree.FilePath,
-                        filePath,
+                        filePath.Replace('/', '\\'),
                         StringComparison.OrdinalIgnoreCase) == 0)
                     .Select(
                         diagnostic =>
                         new GitHubStyleViolation(
                             diagnostic.Id,
                             diagnostic.Descriptor.Description.ToString(CultureInfo.InvariantCulture),
-                            diagnostic.Location.GetLineSpan().EndLinePosition.Line));
+                            diagnostic.Location.GetLineSpan().EndLinePosition.Line + lineOffsetCorrection)).ToList();
 
             return violations;
         }
