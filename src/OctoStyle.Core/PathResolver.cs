@@ -32,7 +32,7 @@
         /// <param name="initialPath">The initial path to start looking in.</param>
         /// <param name="fileFilter">The file filter to use to find the path.</param>
         /// <returns>The directory path which contains a file that matches the fileFilter argument.</returns>
-        public string GetPath(string initialPath, string fileFilter)
+        public string GetDirectoryPath(string initialPath, string fileFilter)
         {
             if (this.manager.PathExists(initialPath) && this.manager.IsDirectory(initialPath) && this.manager.GetFiles(initialPath, fileFilter).Any())
             {
@@ -47,7 +47,7 @@
                     string.Format(CultureInfo.InvariantCulture, "Directory name of {0} was not found", initialPath));
             }
 
-            return this.GetPath(directoryName, fileFilter);
+            return this.GetDirectoryPath(directoryName, fileFilter);
         }
     }
 }

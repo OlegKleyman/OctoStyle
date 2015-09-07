@@ -25,7 +25,7 @@
         public static void GetPathShouldReturnPath(string initialPath, string expectedPath)
         {
             IPathResolver resolver = GetPathResolver();
-            var path = resolver.GetPath(initialPath, ProjectFileFilter);
+            var path = resolver.GetDirectoryPath(initialPath, ProjectFileFilter);
             Assert.That(path, Is.EqualTo(expectedPath));
         }
 

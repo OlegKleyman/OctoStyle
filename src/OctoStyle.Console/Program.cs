@@ -70,7 +70,7 @@
                 {
                     var filePath = Path.Combine(arguments.SolutionDirectory, file.FileName);
 
-                    var projectPath = pathResolver.GetPath(filePath, "*.csproj");
+                    var projectPath = pathResolver.GetDirectoryPath(filePath, "*.csproj");
                     var diffRetriever = new GitHubDiffRetriever(new DifferWrapper(), new GitDiffEntryFactory());
 
                     var factory = new PullRequestCommenterFactory(client.PullRequest.Comment, repository, diffRetriever);

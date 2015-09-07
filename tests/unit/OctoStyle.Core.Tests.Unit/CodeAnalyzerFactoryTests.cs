@@ -47,7 +47,7 @@
         private static ICodeAnalyzerFactory GetCodeAnalyzerFactory()
         {
             var pathResolver = new Mock<IPathResolver>();
-            pathResolver.Setup(resolver => resolver.GetPath(@"C:\OctoStyleTest\TestProject\TestClass.cs", "*.csproj"))
+            pathResolver.Setup(resolver => resolver.GetDirectoryPath(@"C:\OctoStyleTest\TestProject\TestClass.cs", "*.csproj"))
                 .Returns(@"C:\OctoStyleTest");
 
             return new CodeAnalyzerFactory(pathResolver.Object);
