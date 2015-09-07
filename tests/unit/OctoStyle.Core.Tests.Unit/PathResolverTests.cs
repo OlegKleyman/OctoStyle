@@ -22,7 +22,7 @@
         [TestCase(GetPathShouldReturnPathInitialOuterMostDirectoryPath, ProjectPath)]
         [TestCase(GetPathShouldReturnPathInitialMiddleDirectoryPath, ProjectPath)]
         [TestCase(ProjectPath, ProjectPath)]
-        public static void GetPathShouldReturnPath(string initialPath, string expectedPath)
+        public static void GetDirectoryPathShouldReturnPath(string initialPath, string expectedPath)
         {
             IPathResolver resolver = GetPathResolver();
             var path = resolver.GetDirectoryPath(initialPath, ProjectFileFilter);
