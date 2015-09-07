@@ -9,18 +9,18 @@
     {
         private const string ProjectFileFilter = "*.csproj";
 
-        private const string GetPathShouldReturnPathInitialFilePath =
+        private const string InitialFilePath =
             @"C:\testPath\innerDirectory1\innerDirectory2\someFile.cs";
 
-        private const string GetPathShouldReturnPathInitialOuterMostDirectoryPath = @"C:\testPath\innerDirectory1";
+        private const string InitialOuterMostDirectoryPath = @"C:\testPath\innerDirectory1";
 
-        private const string GetPathShouldReturnPathInitialMiddleDirectoryPath = @"C:\testPath\innerDirectory1";
+        private const string InitialMiddleDirectoryPath = @"C:\testPath\innerDirectory1";
 
         private const string ProjectPath = @"C:\testPath";
 
-        [TestCase(GetPathShouldReturnPathInitialFilePath, ProjectPath)]
-        [TestCase(GetPathShouldReturnPathInitialOuterMostDirectoryPath, ProjectPath)]
-        [TestCase(GetPathShouldReturnPathInitialMiddleDirectoryPath, ProjectPath)]
+        [TestCase(InitialFilePath, ProjectPath)]
+        [TestCase(InitialOuterMostDirectoryPath, ProjectPath)]
+        [TestCase(InitialMiddleDirectoryPath, ProjectPath)]
         [TestCase(ProjectPath, ProjectPath)]
         public static void GetDirectoryPathShouldReturnPath(string initialPath, string expectedPath)
         {
@@ -34,24 +34,24 @@
             var mockFileSystemManager = new Mock<IFileSystemManager>();
 
             mockFileSystemManager.Setup(
-                manager => manager.GetFiles(GetPathShouldReturnPathInitialFilePath, ProjectFileFilter))
+                manager => manager.GetFiles(InitialFilePath, ProjectFileFilter))
                 .Returns(new string[] { });
             mockFileSystemManager.Setup(
                 manager =>
-                manager.GetFiles(GetPathShouldReturnPathInitialOuterMostDirectoryPath, ProjectFileFilter))
+                manager.GetFiles(InitialOuterMostDirectoryPath, ProjectFileFilter))
                 .Returns(new string[] { });
             mockFileSystemManager.Setup(
-                manager => manager.GetFiles(GetPathShouldReturnPathInitialMiddleDirectoryPath, ProjectFileFilter))
+                manager => manager.GetFiles(InitialMiddleDirectoryPath, ProjectFileFilter))
                 .Returns(new string[] { });
             mockFileSystemManager.Setup(manager => manager.GetFiles(ProjectPath, ProjectFileFilter))
                 .Returns(new[] { "test.csproj" });
 
-            mockFileSystemManager.Setup(manager => manager.IsDirectory(GetPathShouldReturnPathInitialFilePath))
+            mockFileSystemManager.Setup(manager => manager.IsDirectory(InitialFilePath))
                 .Returns(false);
             mockFileSystemManager.Setup(
-                manager => manager.IsDirectory(GetPathShouldReturnPathInitialOuterMostDirectoryPath)).Returns(true);
+                manager => manager.IsDirectory(InitialOuterMostDirectoryPath)).Returns(true);
             mockFileSystemManager.Setup(
-                manager => manager.IsDirectory(GetPathShouldReturnPathInitialMiddleDirectoryPath)).Returns(true);
+                manager => manager.IsDirectory(InitialMiddleDirectoryPath)).Returns(true);
             mockFileSystemManager.Setup(manager => manager.IsDirectory(ProjectPath)).Returns(true);
             mockFileSystemManager.Setup(manager => manager.PathExists(It.IsAny<string>())).Returns(true);
 
