@@ -44,11 +44,35 @@
             Assert.That(ex.Message, Is.EqualTo("Value cannot be null.\r\nParameter name: pathResolver"));
         }
 
+        [TestCase(@"C:\MultipleSolutionDirectory",
+            "There must be exactly one solution file in the file hierarchy, but found 2")]
+        [TestCase(@"C:\NoSolutionDirectory",
+            "There must be exactly one solution file in the file hierarchy, but found 0")]
+        public void GetAnalyzerShouldThrowInvalidOperationExceptionWhenExactlyOneSolutionFileIsNotFound(
+            string solutionDirectory,
+            object exceptionMessage)
+        {
+            var factory = GetCodeAnalyzerFactory();
+            var diagnosticAnalyzer = new Mock<DiagnosticAnalyzer>();
+            var ex =
+                Assert.Throws<InvalidOperationException>(
+                    () => factory.GetAnalyzer(AnalysisEngine.Roslyn, solutionDirectory, diagnosticAnalyzer.Object));
+
+            Assert.That(ex.Message, Is.EqualTo(exceptionMessage));
+        }
+
         private static ICodeAnalyzerFactory GetCodeAnalyzerFactory()
         {
             var pathResolver = new Mock<IPathResolver>();
-            pathResolver.Setup(resolver => resolver.GetDirectoryPath(@"C:\OctoStyleTest\TestProject\TestClass.cs", "*.csproj"))
+            pathResolver.Setup(
+                resolver => resolver.GetDirectoryPath(@"C:\OctoStyleTest\TestProject\TestClass.cs", "*.csproj"))
                 .Returns(@"C:\OctoStyleTest");
+            pathResolver.Setup(resolver => resolver.GetFilePaths(@"C:\MultipleSolutionDirectory", "*.sln"))
+                .Returns(
+                    new[]
+                        { @"C:\MultipleSolutionDirectory\solution1.sln", @"C:\MultipleSolutionDirectory\solution2.sln" });
+            pathResolver.Setup(resolver => resolver.GetFilePaths(@"C:\NoSolutionDirectory", "*.sln"))
+                .Returns(new string[0]);
 
             return new CodeAnalyzerFactory(pathResolver.Object);
         }

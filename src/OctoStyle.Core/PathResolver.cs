@@ -1,6 +1,7 @@
 ﻿namespace OctoStyle.Core
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -48,6 +49,11 @@
             }
 
             return this.GetDirectoryPath(directoryName, fileFilter);
+        }
+
+        public IEnumerable<string> GetFilePaths(string path, string fileFilter)
+        {
+            throw new NotImplementedException();
         }
     }
 }
