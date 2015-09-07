@@ -5,8 +5,6 @@ namespace OctoStyle.Core
     using System.Collections.Immutable;
     using System.Globalization;
     using System.Linq;
-    using System.Reflection;
-    using System.Threading.Tasks;
 
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.Diagnostics;
@@ -50,39 +48,34 @@ namespace OctoStyle.Core
 
             var solution = workspace.OpenSolutionAsync(this.solutionFilePath).GetAwaiter().GetResult();
 
-            var projectDiagnosticTasks = new List<Task<ImmutableArray<Diagnostic>>>();
-            
-            projectDiagnosticTasks.AddRange(
-                solution.Projects.Where(project => project.Language == LanguageNames.CSharp)
-                    .Select(project => GetProjectAnalyzerDiagnostics(this.analyzers, project)));
+            var projectDiagnosticTasks = new List<Diagnostic>();
 
-            var diagnosticBuilder = ImmutableList.CreateBuilder<Diagnostic>();
-            diagnosticBuilder.AddRange(
-                projectDiagnosticTasks.SelectMany(task => task.ConfigureAwait(false).GetAwaiter().GetResult()));
-            
+            foreach (var project in solution.Projects.Where(project => project.Language == LanguageNames.CSharp))
+            {
+                var compilation = project.GetCompilationAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+                var compilationWithAnalyzers = compilation.WithAnalyzers(this.analyzers);
+
+                var allDiagnostics =
+                    compilationWithAnalyzers.GetAllDiagnosticsAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+
+                projectDiagnosticTasks.AddRange(allDiagnostics.RemoveRange(compilation.GetDiagnostics()));
+            }
+
             var violations =
-                diagnosticBuilder.Where(
+                projectDiagnosticTasks.Where(
                     diagnostic =>
-                    string.Compare(diagnostic.Location.SourceTree.FilePath, filePath, StringComparison.OrdinalIgnoreCase) == 0)
+                    string.Compare(
+                        diagnostic.Location.SourceTree.FilePath,
+                        filePath,
+                        StringComparison.OrdinalIgnoreCase) == 0)
                     .Select(
                         diagnostic =>
                         new GitHubStyleViolation(
                             diagnostic.Id,
                             diagnostic.Descriptor.Description.ToString(CultureInfo.InvariantCulture),
                             diagnostic.Location.GetLineSpan().EndLinePosition.Line));
-            
+
             return violations;
-        }
-
-        private static async Task<ImmutableArray<Diagnostic>> GetProjectAnalyzerDiagnostics(ImmutableArray<DiagnosticAnalyzer> analyzers, Project project)
-        {
-            Compilation compilation = await project.GetCompilationAsync().ConfigureAwait(false);
-            CompilationWithAnalyzers compilationWithAnalyzers = compilation.WithAnalyzers(analyzers);
-
-            var allDiagnostics = await compilationWithAnalyzers.GetAllDiagnosticsAsync().ConfigureAwait(false);
-
-            // We want analyzer diagnostics and analyzer exceptions
-            return allDiagnostics.RemoveRange(compilation.GetDiagnostics());
         }
     }
 }
