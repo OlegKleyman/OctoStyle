@@ -35,7 +35,8 @@
         /// <returns>The directory path which contains a file that matches the fileFilter argument.</returns>
         public string GetDirectoryPath(string initialPath, string fileFilter)
         {
-            if (this.manager.PathExists(initialPath) && this.manager.IsDirectory(initialPath) && this.manager.GetFiles(initialPath, fileFilter).Any())
+            if (this.manager.PathExists(initialPath) && this.manager.IsDirectory(initialPath)
+                && this.manager.GetFiles(initialPath, fileFilter).Any())
             {
                 return initialPath;
             }
@@ -51,9 +52,23 @@
             return this.GetDirectoryPath(directoryName, fileFilter);
         }
 
-        public IEnumerable<string> GetFilePaths(string path, string fileFilter)
+        public IEnumerable<string> GetFilePaths(string initialPath, string fileFilter)
         {
-            throw new NotImplementedException();
+            if (this.manager.PathExists(initialPath) && this.manager.IsDirectory(initialPath)
+                && this.manager.GetFiles(initialPath, fileFilter).Any())
+            {
+                return this.manager.GetFiles(initialPath, fileFilter);
+            }
+
+            var directoryName = Path.GetDirectoryName(initialPath);
+
+            if (directoryName == null)
+            {
+                throw new InvalidOperationException(
+                    string.Format(CultureInfo.InvariantCulture, "Directory name of {0} was not found", initialPath));
+            }
+
+            return this.GetFilePaths(directoryName, fileFilter);
         }
     }
 }

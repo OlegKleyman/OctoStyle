@@ -15,6 +15,6 @@
         /// <returns>The directory path which contains a file that matches the fileFilter argument.</returns>
         string GetDirectoryPath(string initialPath, string fileFilter);
 
-        IEnumerable<string> GetFilePaths(string path, string fileFilter);
+        IEnumerable<string> GetFilePaths(string initialPath, string fileFilter);
     }
 }
