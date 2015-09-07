@@ -41,7 +41,7 @@
                                 .ToString(CultureInfo.InvariantCulture));
                     }
 
-                    analyzer = new RoslynCodeAnalyzer(path, analyzers);
+                    analyzer = new RoslynCodeAnalyzer(solutionFilesEnumerated.First(), analyzers);
                     break;
                 default:
                     throw new ArgumentException($"Unrecognized analyzer: {engine}", nameof(engine));

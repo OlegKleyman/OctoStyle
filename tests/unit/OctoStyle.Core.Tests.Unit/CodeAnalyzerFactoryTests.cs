@@ -12,7 +12,7 @@
     public class CodeAnalyzerFactoryTests
     {
         [TestCase(AnalysisEngine.StyleCop, @"C:\OctoStyleTest\TestProject\TestClass.cs", typeof(StyleCopCodeAnalyzer))]
-        [TestCase(AnalysisEngine.Roslyn, @"C:\OctoStyleTest\OctoStyleTest.sln", typeof(RoslynCodeAnalyzer))]
+        [TestCase(AnalysisEngine.Roslyn, @"C:\OctoStyleTest\TestProject\TestClass.cs", typeof(RoslynCodeAnalyzer))]
         public void GetAnalyzerShouldReturnAnalyzer(AnalysisEngine engine, string path, Type type)
         {
             var factory = GetCodeAnalyzerFactory();
@@ -67,6 +67,11 @@
             pathResolver.Setup(
                 resolver => resolver.GetDirectoryPath(@"C:\OctoStyleTest\TestProject\TestClass.cs", "*.csproj"))
                 .Returns(@"C:\OctoStyleTest");
+
+            pathResolver.Setup(
+                resolver => resolver.GetFilePaths(@"C:\OctoStyleTest\TestProject\TestClass.cs", "*.sln"))
+                .Returns(new[] { @"C:\OctoStyleTest\OctoStyleTest.sln" });
+
             pathResolver.Setup(resolver => resolver.GetFilePaths(@"C:\MultipleSolutionDirectory", "*.sln"))
                 .Returns(
                     new[]
