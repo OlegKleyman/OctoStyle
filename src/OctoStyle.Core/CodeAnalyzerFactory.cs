@@ -6,6 +6,18 @@
 
     public class CodeAnalyzerFactory : ICodeAnalyzerFactory
     {
+        private readonly IPathResolver pathResolver;
+
+        public CodeAnalyzerFactory(IPathResolver pathResolver)
+        {
+            if (pathResolver == null)
+            {
+                throw new ArgumentNullException(nameof(pathResolver));
+            }
+
+            this.pathResolver = pathResolver;
+        }
+
         public ICodeAnalyzer GetAnalyzer(AnalysisEngine engine, string path, params DiagnosticAnalyzer[] analyzers)
         {
             ICodeAnalyzer analyzer;

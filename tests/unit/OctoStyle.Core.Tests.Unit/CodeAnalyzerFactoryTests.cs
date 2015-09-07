@@ -35,9 +35,20 @@
 
         }
 
+        [Test]
+        public void ConstructorShouldThrowArgumentNullExceptionWhenPathResolverIsNull()
+        {
+            var ex = Assert.Throws<ArgumentNullException>(() => new CodeAnalyzerFactory(null));
+
+            Assert.That(ex.ParamName, Is.EqualTo("pathResolver"));
+            Assert.That(ex.Message, Is.EqualTo("Value cannot be null.\r\nParameter name: pathResolver"));
+        }
+
         private static ICodeAnalyzerFactory GetCodeAnalyzerFactory()
         {
-            return new CodeAnalyzerFactory();
+            var pathResolver = new Mock<IPathResolver>();
+
+            return new CodeAnalyzerFactory(pathResolver.Object);
         }
     }
 }
