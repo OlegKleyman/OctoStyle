@@ -25,7 +25,7 @@
             switch (engine)
             {
                 case AnalysisEngine.StyleCop:
-                    analyzer = new StyleCopCodeAnalyzer(path);
+                    analyzer = new StyleCopCodeAnalyzer(this.pathResolver.GetPath(path, "*.csproj"));
                     break;
                 case AnalysisEngine.Roslyn:
                     analyzer = new RoslynCodeAnalyzer(path, analyzers);

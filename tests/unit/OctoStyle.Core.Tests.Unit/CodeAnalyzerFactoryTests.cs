@@ -11,7 +11,7 @@
     [TestFixture]
     public class CodeAnalyzerFactoryTests
     {
-        [TestCase(AnalysisEngine.StyleCop, @"C:\OctoStyleTest", typeof(StyleCopCodeAnalyzer))]
+        [TestCase(AnalysisEngine.StyleCop, @"C:\OctoStyleTest\TestProject\TestClass.cs", typeof(StyleCopCodeAnalyzer))]
         [TestCase(AnalysisEngine.Roslyn, @"C:\OctoStyleTest\OctoStyleTest.sln", typeof(RoslynCodeAnalyzer))]
         public void GetAnalyzerShouldReturnAnalyzer(AnalysisEngine engine, string path, Type type)
         {
@@ -47,6 +47,8 @@
         private static ICodeAnalyzerFactory GetCodeAnalyzerFactory()
         {
             var pathResolver = new Mock<IPathResolver>();
+            pathResolver.Setup(resolver => resolver.GetPath(@"C:\OctoStyleTest\TestProject\TestClass.cs", "*.csproj"))
+                .Returns(@"C:\OctoStyleTest");
 
             return new CodeAnalyzerFactory(pathResolver.Object);
         }
