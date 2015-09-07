@@ -4,7 +4,9 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Threading.Tasks;
+    using System.Reflection;
+
+    using Microsoft.CodeAnalysis.Diagnostics;
 
     using Octokit;
     using Octokit.Internal;
@@ -16,8 +18,8 @@
     /// </summary>
     public static class Program
     {
-        private static readonly Lazy<List<Task<IEnumerable<PullRequestReviewComment>>>> Comments =
-            new Lazy<List<Task<IEnumerable<PullRequestReviewComment>>>>(() => new List<Task<IEnumerable<PullRequestReviewComment>>>());
+        private static readonly Lazy<List<IEnumerable<PullRequestReviewComment>>> Comments =
+            new Lazy<List<IEnumerable<PullRequestReviewComment>>>(() => new List<IEnumerable<PullRequestReviewComment>>());
 
         /// <summary>
         /// Gets <see cref="CommentTasks"/>.
@@ -27,7 +29,11 @@
         {
             get
             {
-                return Comments.Value.SelectMany(task => task.GetAwaiter().GetResult());
+                return Comments.Value.SelectMany(comments =>
+                    {
+                        var pullRequestReviewComments = comments as PullRequestReviewComment[] ?? comments.ToArray();
+                        return pullRequestReviewComments;
+                    });
             }
         }
 
@@ -69,18 +75,30 @@
                 if (file.FileName.EndsWith(".cs", StringComparison.OrdinalIgnoreCase))
                 {
                     var filePath = Path.Combine(arguments.SolutionDirectory, file.FileName);
-
-                    var projectPath = pathResolver.GetDirectoryPath(filePath, "*.csproj");
+                    
                     var diffRetriever = new GitHubDiffRetriever(new DifferWrapper(), new GitDiffEntryFactory());
 
                     var factory = new PullRequestCommenterFactory(client.PullRequest.Comment, repository, diffRetriever);
-                    var analyzer = new StyleCopCodeAnalyzer(projectPath);
 
-                    Comments.Value.Add(factory.GetCommenter(file.Status).Create(pullRequest, file, analyzer, filePath));
+                    var analyzerAssembly = Assembly.LoadFrom("StyleCop.Analyzers.dll");
+
+                    var analyzers =
+                        new List<DiagnosticAnalyzer>(
+                            analyzerAssembly.GetTypes()
+                                .Where(type => type.IsSubclassOf(typeof(DiagnosticAnalyzer)) && !type.IsAbstract)
+                                .Select(type => (DiagnosticAnalyzer)Activator.CreateInstance(type)));
+
+                    var analyzerFactory = new CodeAnalyzerFactory(pathResolver);
+
+                    var analyzer = analyzerFactory.GetAnalyzer(arguments.Engine, filePath, analyzers.ToArray());
+
+                    Comments.Value.Add(
+                        factory.GetCommenter(file.Status)
+                            .Create(pullRequest, file, analyzer, filePath)
+                            .GetAwaiter()
+                            .GetResult());
                 }
             }
-
-            Comments.Value.ForEach(task => task.GetAwaiter().GetResult());
         }
     }
 }
